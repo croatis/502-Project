@@ -6,7 +6,10 @@ import optparse
 import re
 
 def run():
-    # Get network file to parse
+    setUp()
+
+def setUp():
+        # Get network file to parse
     fileName = input("Please enter the name of the desired network file: ")
         #ADD error checking for input (ensure it's a valid network file)
 
@@ -50,7 +53,6 @@ def run():
 
     # print(tlAgentPools)
     # print(trafficLightNames)
-
 
     # main entry point
 if __name__ == "__main__":
