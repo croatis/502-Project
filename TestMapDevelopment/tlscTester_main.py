@@ -1,5 +1,5 @@
-# created by Christian Roatis (with files from Andrea Vidali)
-# christian.roatis@ucalgary.ca
+# created by Andrea Vidali
+# info@andreavidali.com
 
 from __future__ import absolute_import
 from __future__ import print_function
@@ -14,6 +14,10 @@ import numpy as np
 import math
 import timeit
 
+from SimRunner import SimRunner
+# from TrafficGenerator import TrafficGenerator
+# from Memory import Memory
+# from Model import Model
 
 # sumo things - we need to import python modules from the $SUMO_HOME/tools directory
 if 'SUMO_HOME' in os.environ:
