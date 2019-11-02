@@ -48,8 +48,8 @@ def run():
     for x in trafficLightDict:
         print(x, ": ", trafficLightDict[x])
 
-    # print(tlAgentPools)
-    # print(trafficLightNames)
+    print(tlAgentPools)
+
 
 
     # main entry point
