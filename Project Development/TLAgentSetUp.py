@@ -22,7 +22,7 @@ def run():
     # Open desired file
     f = open(fileName, "r")
     
-    edges = []
+    lanes = []
     # Parse file to gather information
     for x in f:
         # Determine agent pools
@@ -42,17 +42,18 @@ def run():
             temp = x.split("id=\"")
             trafficLightName = temp[1].split("\"")     #Traffic Light name; a key
             
-            # get all edges controlled by TL
-            splitForEdges = temp[1].split("incLanes=\"")
-            edgesBulk = splitForEdges[1].split("\"")
-            edgesSplit = edgesBulk[0].split()
+            # get all lanes controlled by TL
+            splitForlanes = temp[1].split("incLanes=\"")
+            lanesBulk = splitForlanes[1].split("\"")
+            lanesSplit = lanesBulk[0].split()
 
-            # Split edges into individual elements in a list
-            for e in edgesSplit:
-                edges.append(e)
+            # Split lanes into individual elements in a list
+            for e in lanesSplit:
+                lanes.append(e)
 
-            # Add traffic light and corresponding edges into the TL dictionary
-            trafficLightDict.update({trafficLightName[0]: edges})
+            # Add traffic light and corresponding lanes into the TL dictionary
+            trafficLightDict.update({trafficLightName[0]: lanes})
+            lanes = []
         
         else:
             continue
@@ -82,7 +83,7 @@ def run():
     
     for x in tlAgentPools:
         tl = tlAgentPools[x]
-        print("Pool ", x, "contains: ", tl[0].getType(), "\n")
+        print("Pool", x, "contains: \n", "Traffic light", tl[0].getName(), "of type", tl[0].getType(), "with lanes", tl[0].getLanes(), "\n")
 # main entry point
 if __name__ == "__main__":
     run()

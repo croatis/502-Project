@@ -3,10 +3,10 @@ import sys
 
 class TrafficLight:
 
-    def __init__ (self, tlType, name, edges):
+    def __init__ (self, tlType, name, lanes):
         self.tlType = tlType
         self.name = name
-        self.edges = edges
+        self.lanes = lanes
 
     def getType(self):
         return self.tlType
@@ -14,6 +14,6 @@ class TrafficLight:
     def getName(self):
         return self.name
 
-    def getEdges(self):
-        return self.edges
+    def getLanes(self):
+        return self.lanes
 
