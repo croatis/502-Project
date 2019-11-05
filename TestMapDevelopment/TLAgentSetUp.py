@@ -5,24 +5,36 @@ import sys
 import optparse
 import re
 
+from TrafficLight import TrafficLight
+
 def run():
-    # Get network file to parse
+    tlAgentPoolList = []
+    trafficLightDict = {}
+    global tlAgentPools
+
+        # Get network file to parse
     fileName = input("Please enter the name of the desired network file: ")
         #ADD error checking for input (ensure it's a valid network file)
+    # fileParser(fileName)
+
+# def fileParser(fileName):
 
     # Open desired file
     f = open(fileName, "r")
     
-    tlAgentPools = []
-    trafficLightDict = {}
     edges = []
-     # Parse file to gather information
+    # Parse file to gather information
     for x in f:
         # Determine agent pools
         if "<tlLogic" in x:
             temp = x.split("id=\"")
             trafficLightType = temp[1].split("\"")
-            tlAgentPools.append(trafficLightType[0])
+            
+            if "(" in trafficLightType:
+                isolateAgentName = trafficLightType.split("(")
+                trafficLightType = isolateAgentName[0]
+            
+            tlAgentPoolList.append(trafficLightType[0])
 
         # Gather info about individual traffic lights
         elif "<junction" and "type=\"traffic_light\"" in x:
@@ -45,13 +57,32 @@ def run():
         else:
             continue
     
-    for x in trafficLightDict:
-        print(x, ": ", trafficLightDict[x])
+    # for x in trafficLightDict:
+    #     print(x, ": ", trafficLightDict[x])
 
-    print(tlAgentPools)
+        # Close file once finished
+    f.close()
 
+# def createAgentPools():
+    tlAgentPools = {}
 
+    for agentPool in tlAgentPoolList:
+        tlAgentPools[agentPool] = []
+    
+    for tl in trafficLightDict:
+        for ap in tlAgentPoolList:
+            if tl in ap:
+                newTL = TrafficLight(ap, tl, trafficLightDict[tl])
+                tlAgentPools[ap].append(newTL)
+                newTL = TrafficLight(ap, tl, trafficLightDict[tl])
+                tlAgentPools[ap].append(newTL)                
 
-    # main entry point
+        # print("tlAgentPools conains this: ", tlAgentPools)
+
+    
+    for x in tlAgentPools:
+        tl = tlAgentPools[x]
+        print("Pool ", x, "contains: ", tl[0].getType(), "\n")
+# main entry point
 if __name__ == "__main__":
     run()

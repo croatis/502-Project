@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 10/27/19 15:47:33 by Eclipse SUMO netedit Version 1.3.1
+<!-- generated on 11/03/19 16:02:27 by Eclipse SUMO netedit Version 1.3.1
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
 
     <input>
@@ -186,7 +186,13 @@
         <lane id="incoming2four-arm_1" index="1" speed="13.89" length="778.53" shape="1173.04,51.56 394.51,47.66"/>
     </edge>
 
-    <tlLogic id="4-arm" type="static" programID="0" offset="0">
+    <tlLogic id="T-intersection" type="static" programID="0" offset="0">
+        <phase duration="78" state="GGGGg"/>
+        <phase duration="3"  state="yyyyg"/>
+        <phase duration="6"  state="rrrGG"/>
+        <phase duration="3"  state="rrryy"/>
+    </tlLogic>
+    <tlLogic id="four-arm" type="static" programID="0" offset="0">
         <phase duration="100" state="rrrGGrrrrGGr"/>
         <phase duration="100" state="rrryyrrrryyr"/>
         <phase duration="100" state="rrrrrGrrrrrG"/>
@@ -195,12 +201,6 @@
         <phase duration="100" state="yyrrrryyrrrr"/>
         <phase duration="100" state="rrGrrrrrGrrr"/>
         <phase duration="100" state="rryrrrrryrrr"/>
-    </tlLogic>
-    <tlLogic id="T-intersection" type="static" programID="0" offset="0">
-        <phase duration="78" state="GGGGg"/>
-        <phase duration="3"  state="yyyyg"/>
-        <phase duration="6"  state="rrrGG"/>
-        <phase duration="3"  state="rrryy"/>
     </tlLogic>
     <tlLogic id="incoming" type="static" programID="0" offset="0">
         <phase duration="100" state="rrGGrrGG"/>
@@ -260,9 +260,9 @@
     <connection from="EB2incoming" to="incoming2four-arm" fromLane="1" toLane="1" via=":incoming_2_1" tl="incoming" linkIndex="3" dir="s" state="O"/>
     <connection from="NEB2incoming" to="incoming2four-arm" fromLane="0" toLane="0" via=":incoming_0_0" tl="incoming" linkIndex="0" dir="r" state="o"/>
     <connection from="NEB2incoming" to="incoming2EB" fromLane="1" toLane="1" via=":incoming_1_0" tl="incoming" linkIndex="1" dir="l" state="o"/>
-    <connection from="NWB2four-arm" to="four-arm2WB" fromLane="0" toLane="0" via=":four-arm_0_0" tl="4-arm" linkIndex="0" dir="r" state="o"/>
-    <connection from="NWB2four-arm" to="four-arm2bend" fromLane="0" toLane="0" via=":four-arm_1_0" tl="4-arm" linkIndex="1" dir="s" state="o"/>
-    <connection from="NWB2four-arm" to="four-arm2incoming" fromLane="1" toLane="1" via=":four-arm_2_0" tl="4-arm" linkIndex="2" dir="l" state="o"/>
+    <connection from="NWB2four-arm" to="four-arm2WB" fromLane="0" toLane="0" via=":four-arm_0_0" tl="four-arm" linkIndex="0" dir="r" state="o"/>
+    <connection from="NWB2four-arm" to="four-arm2bend" fromLane="0" toLane="0" via=":four-arm_1_0" tl="four-arm" linkIndex="1" dir="s" state="o"/>
+    <connection from="NWB2four-arm" to="four-arm2incoming" fromLane="1" toLane="1" via=":four-arm_2_0" tl="four-arm" linkIndex="2" dir="l" state="o"/>
     <connection from="SEB2T" to="T2incoming" fromLane="0" toLane="0" via=":T-intersection_0_0" tl="T-intersection" linkIndex="0" dir="r" state="O"/>
     <connection from="SEB2T" to="T2bend" fromLane="0" toLane="0" via=":T-intersection_1_0" tl="T-intersection" linkIndex="1" dir="s" state="O"/>
     <connection from="SEB2T" to="T2bend" fromLane="1" toLane="1" via=":T-intersection_1_1" tl="T-intersection" linkIndex="2" dir="s" state="O"/>
@@ -270,21 +270,21 @@
     <connection from="T2bend" to="bend2four-arm" fromLane="1" toLane="1" via=":bend_3_0" dir="r" state="M"/>
     <connection from="T2incoming" to="incoming2EB" fromLane="0" toLane="0" via=":incoming_4_0" tl="incoming" linkIndex="4" dir="r" state="o"/>
     <connection from="T2incoming" to="incoming2four-arm" fromLane="1" toLane="1" via=":incoming_5_0" tl="incoming" linkIndex="5" dir="l" state="o"/>
-    <connection from="WB2four-arm" to="four-arm2bend" fromLane="0" toLane="0" via=":four-arm_9_0" tl="4-arm" linkIndex="9" dir="r" state="O"/>
-    <connection from="WB2four-arm" to="four-arm2incoming" fromLane="0" toLane="0" via=":four-arm_10_0" tl="4-arm" linkIndex="10" dir="s" state="O"/>
-    <connection from="WB2four-arm" to="four-arm2NWB" fromLane="1" toLane="1" via=":four-arm_11_0" tl="4-arm" linkIndex="11" dir="l" state="o"/>
+    <connection from="WB2four-arm" to="four-arm2bend" fromLane="0" toLane="0" via=":four-arm_9_0" tl="four-arm" linkIndex="9" dir="r" state="O"/>
+    <connection from="WB2four-arm" to="four-arm2incoming" fromLane="0" toLane="0" via=":four-arm_10_0" tl="four-arm" linkIndex="10" dir="s" state="O"/>
+    <connection from="WB2four-arm" to="four-arm2NWB" fromLane="1" toLane="1" via=":four-arm_11_0" tl="four-arm" linkIndex="11" dir="l" state="o"/>
     <connection from="bend2T" to="T2SEB" fromLane="0" toLane="0" via=":T-intersection_3_0" tl="T-intersection" linkIndex="3" dir="s" state="O"/>
     <connection from="bend2T" to="T2incoming" fromLane="1" toLane="1" via=":T-intersection_4_0" tl="T-intersection" linkIndex="4" dir="l" state="o"/>
-    <connection from="bend2four-arm" to="four-arm2incoming" fromLane="0" toLane="0" via=":four-arm_6_0" tl="4-arm" linkIndex="6" dir="r" state="o"/>
-    <connection from="bend2four-arm" to="four-arm2NWB" fromLane="0" toLane="0" via=":four-arm_7_0" tl="4-arm" linkIndex="7" dir="s" state="o"/>
-    <connection from="bend2four-arm" to="four-arm2WB" fromLane="1" toLane="1" via=":four-arm_8_0" tl="4-arm" linkIndex="8" dir="l" state="o"/>
+    <connection from="bend2four-arm" to="four-arm2incoming" fromLane="0" toLane="0" via=":four-arm_6_0" tl="four-arm" linkIndex="6" dir="r" state="o"/>
+    <connection from="bend2four-arm" to="four-arm2NWB" fromLane="0" toLane="0" via=":four-arm_7_0" tl="four-arm" linkIndex="7" dir="s" state="o"/>
+    <connection from="bend2four-arm" to="four-arm2WB" fromLane="1" toLane="1" via=":four-arm_8_0" tl="four-arm" linkIndex="8" dir="l" state="o"/>
     <connection from="four-arm2bend" to="bend2T" fromLane="0" toLane="0" via=":bend_0_0" dir="l" state="M"/>
     <connection from="four-arm2bend" to="bend2T" fromLane="1" toLane="1" via=":bend_1_0" dir="l" state="M"/>
     <connection from="four-arm2incoming" to="incoming2EB" fromLane="0" toLane="0" via=":incoming_6_0" tl="incoming" linkIndex="6" dir="s" state="O"/>
     <connection from="four-arm2incoming" to="incoming2EB" fromLane="1" toLane="1" via=":incoming_6_1" tl="incoming" linkIndex="7" dir="s" state="O"/>
-    <connection from="incoming2four-arm" to="four-arm2NWB" fromLane="0" toLane="0" via=":four-arm_3_0" tl="4-arm" linkIndex="3" dir="r" state="O"/>
-    <connection from="incoming2four-arm" to="four-arm2WB" fromLane="0" toLane="0" via=":four-arm_4_0" tl="4-arm" linkIndex="4" dir="s" state="O"/>
-    <connection from="incoming2four-arm" to="four-arm2bend" fromLane="1" toLane="1" via=":four-arm_5_0" tl="4-arm" linkIndex="5" dir="l" state="o"/>
+    <connection from="incoming2four-arm" to="four-arm2NWB" fromLane="0" toLane="0" via=":four-arm_3_0" tl="four-arm" linkIndex="3" dir="r" state="O"/>
+    <connection from="incoming2four-arm" to="four-arm2WB" fromLane="0" toLane="0" via=":four-arm_4_0" tl="four-arm" linkIndex="4" dir="s" state="O"/>
+    <connection from="incoming2four-arm" to="four-arm2bend" fromLane="1" toLane="1" via=":four-arm_5_0" tl="four-arm" linkIndex="5" dir="l" state="o"/>
 
     <connection from=":T-intersection_0" to="T2incoming" fromLane="0" toLane="0" dir="r" state="M"/>
     <connection from=":T-intersection_1" to="T2bend" fromLane="0" toLane="0" dir="s" state="M"/>
