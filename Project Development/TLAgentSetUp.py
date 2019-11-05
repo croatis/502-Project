@@ -48,8 +48,8 @@ def run():
             lanesSplit = lanesBulk[0].split()
 
             # Split lanes into individual elements in a list
-            for e in lanesSplit:
-                lanes.append(e)
+            for l in lanesSplit:
+                lanes.append(l)
 
             # Add traffic light and corresponding lanes into the TL dictionary
             trafficLightDict.update({trafficLightName[0]: lanes})
@@ -83,7 +83,7 @@ def run():
     
     for x in tlAgentPools:
         tl = tlAgentPools[x]
-        print("Pool", x, "contains: \n", "Traffic light", tl[0].getName(), "of type", tl[0].getType(), "with lanes", tl[0].getLanes(), "\n")
+        print("Pool", x, "contains: \n", "Traffic light", tl[0].getName(), "of type", tl[0].getType(), "with lanes", tl[0].getLanes(), "\n", "with edges:", tl[0].getEdges())
 # main entry point
 if __name__ == "__main__":
     run()
