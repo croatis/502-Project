@@ -19,8 +19,11 @@ class TrafficLight:
 
     def getLanes(self):
         return self.lanes
+
+    def getEdges(self):
+        return self.edges
     
-    def setEdges(self, lanes):
+    def _setEdges(self, lanes):
         # Determine edges from lanes
         for l in lanes:
             # Isolate edge name from lane name
@@ -28,13 +31,7 @@ class TrafficLight:
             
             # Ensure edge being added to list isn't a duplicate 
             if edge[0] in self.edges:
-                print(edge, "is in the list")
                 continue
             else:
-                print(edge, "is NOT in the list")
                 self.edges.append(edge[0])
-
-    def getEdges(self):
-        return self.edges
-
 

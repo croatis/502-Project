@@ -74,16 +74,14 @@ def run():
         for ap in tlAgentPoolList:
             if tl in ap:
                 newTL = TrafficLight(ap, tl, trafficLightDict[tl])
-                tlAgentPools[ap].append(newTL)
-                newTL = TrafficLight(ap, tl, trafficLightDict[tl])
-                tlAgentPools[ap].append(newTL)                
-
-        # print("tlAgentPools conains this: ", tlAgentPools)
-
+                tlAgentPools[ap].append(newTL)          
     
-    for x in tlAgentPools:
-        tl = tlAgentPools[x]
-        print("Pool", x, "contains: \n", "Traffic light", tl[0].getName(), "of type", tl[0].getType(), "with lanes", tl[0].getLanes(), "\n", "with edges:", tl[0].getEdges())
+    # for x in tlAgentPools:
+    #     tl = tlAgentPools[x]
+    #     print("Pool", x, "contains: \n", "Traffic light", tl[0].getName(), "of type", tl[0].getType(), "with lanes", tl[0].getLanes(), "\n", "with edges:", tl[0].getEdges())
+
+    return tlAgentPools
+    
 # main entry point
 if __name__ == "__main__":
     run()
