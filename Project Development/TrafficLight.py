@@ -8,7 +8,7 @@ class TrafficLight:
         self.name = name
         self.lanes = lanes
         self.edges = []
-        self.setEdges(self.lanes)
+        self._setEdges(self.lanes)
 
 
     def getType(self):
@@ -34,4 +34,5 @@ class TrafficLight:
                 continue
             else:
                 self.edges.append(edge[0])
+
 

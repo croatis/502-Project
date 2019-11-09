@@ -17,13 +17,22 @@ else:
 from sumolib import checkBinary  # Checks for the binary in environ vars
 import traci
 
+def get_options():
+    opt_parser = optparse.OptionParser()
+    opt_parser.add_option("--nogui", action="store_true",
+                         default=False, help="run the commandline version of sumo")
+    options, args = opt_parser.parse_args()
+    return options
+
 
 # CONTAINS MAIN TRACI SIMULATION LOOP
 def run():
     # Acquire agent pool dictionary 
     agentPool = TLAgentSetUp.run()
-    print(agentPool) 
     
+    fourArmTrafficLights = agentPool["four-arm"]
+    trafficLight = fourArmTrafficLights[0]
+
     step = 0
     edgeDensity = []
     edges = traci.edge.getIDList() 
@@ -34,6 +43,7 @@ def run():
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
         # print(step)
+        print(get_state(trafficLight))
 
         # Changes TL phase every 5 steps
         if step % 5 == 0:
@@ -49,77 +59,27 @@ def run():
             pass
 
         step+=1
-    print(traci.vehicle.getIDList())
+
     traci.close()
     sys.stdout.flush()
     
 # RETRIEVE THE STATE OF THE INTERSECTION FROM SUMO
-def _get_state(self, trafficLight):
+def get_state(trafficLight):
     state = {}
-    for lane in trafficLight.lanes():
+    for lane in trafficLight.getLanes():
         state[lane] = []
 
     for vehID in traci.vehicle.getIDList(): 
         laneID = traci.vehicle.getLaneID(vehID)
-        
         if laneID in trafficLight.getLanes():
-            lanePos = traci.vehicle.getLanePosition(vehID)
-            lanePos = 750 - lanePos  # inversion of lane pos, so if the car is close to TL, lanePos = 0
-            laneGroup = -1  # just dummy initialization
-            validCar = False  # flag for not detecting cars crossing the intersection or driving away from it
-
-            # distance in meters from the TLS -> mapping into cells
-            if lanePos < 7:
-                laneCell = 0
-            elif lanePos < 14:
-                laneCell = 1
-            elif lanePos < 21:
-                laneCell = 2
-            elif lanePos < 28:
-                laneCell = 3
-            elif lanePos < 40:
-                laneCell = 4
-            elif lanePos < 60:
-                laneCell = 5
-            elif lanePos < 100:
-                laneCell = 6
-            elif lanePos < 160:
-                laneCell = 7
-            elif lanePos < 400:
-                laneCell = 8
-            elif lanePos <= 750:
-                laneCell = 9
-
-            # finding the lane where the car is located - _max is the "turn left only" lanes if iot exists
-                
-                # EDIT THIS TO MAKE DYNAMIC FOR ANY TL
-            if laneID == "W2TL_0" or laneID == "W2TL_1" or laneID == "W2TL_2":
-                laneGroup = 0
-            elif laneID == "W2TL_3":
-                laneGroup = 1
-            elif laneID == "N2TL_0" or laneID == "N2TL_1" or laneID == "N2TL_2":
-                laneGroup = 2
-            elif laneID == "N2TL_3":
-                laneGroup = 3
-            elif laneID == "E2TL_0" or laneID == "E2TL_1" or laneID == "E2TL_2":
-                laneGroup = 4
-            elif laneID == "E2TL_3":
-                laneGroup = 5
-            elif laneID == "S2TL_0" or laneID == "S2TL_1" or laneID == "S2TL_2":
-                laneGroup = 6
-            elif laneID == "S2TL_3":
-                laneGroup = 7
-
-            if laneGroup >= 1 and laneGroup <= 7:
-                vehPosition = int(str(laneGroup) + str(laneCell))  # composition of the two postion ID to create a number in interval 0-79
-                validCar = True
-            elif laneGroup == 0:
-                vehPosition = laneCell
-                validCar = True
-
-            if validCar:
-                state[vehPosition] = 1  # write the position of the car vehID in the state array
-
+            if traci.vehicle.getSpeed(vehID) == 0:
+                if "_LT" in laneID:
+                    vehID = vehID + "_L"
+                else:
+                    vehID = vehID + "_S"
+        
+            state[laneID].append(vehID)
+            
     return state
 
 # main entry point
