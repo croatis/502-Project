@@ -509,7 +509,27 @@ def westEastPhaseIsLeftTurnYellow(tlStateArray):
         return False     
 #----------------------------- end -----------------------------#
 
+#------------------- User-defined predicates --------------------#
+def emergencyVehicleApproachingVertical(vehIDs):
+    continue
+def emergencyVehicleApproachingHorizontal(vehIDs):
+    continue
+
+def maxGreenPhaseTimeReached(maxTime, timeInPhase):
+    if timeInPhase >= maxTime:
+        return True 
+    else 
+        return False
+
+def maxYellowPhaseTimeReached(maxTime, timeInPhase):
+    if timeInPhase >= maxTime:
+        return True 
+    else 
+        return False    
+
+
     # RETURN LIST OF PREDICATE FUNCTIONS
+
 def getPredicateList():
     thisModule = sys.modules[__name__] # Get reference to this module for next operation
     methodsDict = dict(inspect.getmembers(thisModule, predicate=inspect.isfunction)) # Get a dictionary with all methods (predicates) in this module
