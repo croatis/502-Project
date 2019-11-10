@@ -36,3 +36,4 @@ class TrafficLight:
                 self.edges.append(edge[0])
 
 
+

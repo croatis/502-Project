@@ -30,8 +30,7 @@ def get_options():
 def run():
     # Acquire agent pool dictionary 
     agentPool = TLAgentSetUp.run()
-    predicateSet = PredicateSet.run()
-    
+
     fourArmTrafficLights = agentPool["four-arm"]
     trafficLight = fourArmTrafficLights[0]
 
@@ -40,22 +39,21 @@ def run():
     edges = traci.edge.getIDList() 
     trafficLights = traci.trafficlight.getIDList()
     time = traci.simulation.getTime()
-
     # Simulation loop 
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
-        # print(step)
+        print(PredicateSet.verticalPhaseIsGreen(traci.trafficlight.getPhaseName("incoming").split("_")))
         # Changes TL phase every 5 steps
         if step % 5 == 0:
-            PredicateSet.verticalPhaseIsGreen(traci.trafficlight.getPhase("four-arm"))
+            # PredicateSet.verticalPhaseIsGreen(traci.trafficlight.getPhase("four-arm"))
             carsWaiting = traci.edge.getWaitingTime
             # print(carsWaiting)
-            phase = traci.trafficlight.getPhase("four-arm")
+            phase = traci.trafficlight.getPhase("incoming")
 
-            if phase + 1 == 8:
-                traci.trafficlight.setPhase("four-arm", 0)
+            if phase + 1 == 6:
+                traci.trafficlight.setPhase("incoming", 0)
             else:
-                traci.trafficlight.setPhase("four-arm", phase + 1)           
+                traci.trafficlight.setPhase("incoming", phase + 1)           
         else:
             pass
 
