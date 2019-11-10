@@ -5,6 +5,7 @@ import sys
 import optparse
 
 import TLAgentSetUp as TLAgentSetUp
+import PredicateSet as PredicateSet
 
 # Importing needed python modules from the $SUMO_HOME/tools directory
 if 'SUMO_HOME' in os.environ:
@@ -29,6 +30,7 @@ def get_options():
 def run():
     # Acquire agent pool dictionary 
     agentPool = TLAgentSetUp.run()
+    predicateSet = PredicateSet.run()
     
     fourArmTrafficLights = agentPool["four-arm"]
     trafficLight = fourArmTrafficLights[0]
@@ -43,10 +45,9 @@ def run():
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
         # print(step)
-        print(get_state(trafficLight))
-
         # Changes TL phase every 5 steps
         if step % 5 == 0:
+            PredicateSet.verticalPhaseIsGreen(traci.trafficlight.getPhase("four-arm"))
             carsWaiting = traci.edge.getWaitingTime
             # print(carsWaiting)
             phase = traci.trafficlight.getPhase("four-arm")
