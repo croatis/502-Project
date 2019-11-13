@@ -42,7 +42,8 @@ def run():
     # Simulation loop 
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
-        print(PredicateSet.verticalPhaseIsGreen(traci.trafficlight.getPhaseName("incoming").split("_")))
+        # print(PredicateSet.verticalPhaseIsGreen(traci.trafficlight.getPhaseName("incoming").split("_")))
+        print(get_state(agentPool["four-arm"]))
         # Changes TL phase every 5 steps
         if step % 5 == 0:
             # PredicateSet.verticalPhaseIsGreen(traci.trafficlight.getPhase("four-arm"))

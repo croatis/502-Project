@@ -510,21 +510,28 @@ def westEastPhaseIsLeftTurnYellow(tlStateArray):
 #----------------------------- end -----------------------------#
 
 #------------------- User-defined predicates --------------------#
-def emergencyVehicleApproachingVertical(vehIDs):
-    continue
-def emergencyVehicleApproachingHorizontal(vehIDs):
-    continue
+def emergencyVehicleApproachingVertical(trafficLight, vehTypeIDs):
+    for vt in vehTypeIDs:
+        if vt == "emergency":
+            return True
+    return False        
+def emergencyVehicleApproachingHorizontal(vehTypeIDs):
+    # if in Vertical phase
+        for vt in vehTypeIDs:
+            if vt == "emergency":
+                return True
+        return False 
 
 def maxGreenPhaseTimeReached(maxTime, timeInPhase):
     if timeInPhase >= maxTime:
         return True 
-    else 
-        return False
+    else: 
+        return False1
 
 def maxYellowPhaseTimeReached(maxTime, timeInPhase):
     if timeInPhase >= maxTime:
         return True 
-    else 
+    else:
         return False    
 
 
