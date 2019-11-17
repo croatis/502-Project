@@ -23,25 +23,15 @@ def run():
     f = open(fileName, "r")
     
     lanes = []
-    # Parse file to gather information
+    trafficLights = []
+    # Parse file to gather information about traffic lights, and instantiate their objects
     for x in f:
-        # Determine agent pools
-        if "<tlLogic" in x:
-            temp = x.split("id=\"")
-            trafficLightType = temp[1].split("\"")
-            
-            if "(" in trafficLightType:
-                isolateAgentName = trafficLightType.split("(")
-                trafficLightType = isolateAgentName[0]
-            
-            tlAgentPoolList.append(trafficLightType[0])
-
         # Gather info about individual traffic lights
-        elif "<junction" and "type=\"traffic_light\"" in x:
+        if "<junction" and "type=\"traffic_light\"" in x:
             # isolate individual TLs
             temp = x.split("id=\"")
-            trafficLightName = temp[1].split("\"")     #Traffic Light name; a key
-            
+            trafficLightName = temp[1].split("\"")     #Traffic Light name
+
             # get all lanes controlled by TL
             splitForlanes = temp[1].split("incLanes=\"")
             lanesBulk = splitForlanes[1].split("\"")
@@ -51,36 +41,17 @@ def run():
             for l in lanesSplit:
                 lanes.append(l)
 
-            # Add traffic light and corresponding lanes into the TL dictionary
-            trafficLightDict.update({trafficLightName[0]: lanes})
+            # **ADD IN GETTING TL PHASES**
+            trafficLights.append(TrafficLight(trafficLightName[0], lanes))
             lanes = []
         
         else:
             continue
     
-    # for x in trafficLightDict:
-    #     print(x, ": ", trafficLightDict[x])
-
         # Close file once finished
     f.close()
 
-# def createAgentPools():
-    tlAgentPools = {}
-
-    for agentPool in tlAgentPoolList:
-        tlAgentPools[agentPool] = []
-    
-    for tl in trafficLightDict:
-        for ap in tlAgentPoolList:
-            if tl in ap:
-                newTL = TrafficLight(ap, tl, trafficLightDict[tl])
-                tlAgentPools[ap].append(newTL)          
-    
-    # for x in tlAgentPools:
-    #     tl = tlAgentPools[x]
-    #     print("Pool", x, "contains: \n", "Traffic light", tl[0].getName(), "of type", tl[0].getType(), "with lanes", tl[0].getLanes(), "\n", "with edges:", tl[0].getEdges())
-
-    return tlAgentPools
+    return trafficLights
     
 # main entry point
 if __name__ == "__main__":

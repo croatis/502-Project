@@ -1,22 +1,27 @@
 import os
 import sys
 import inspect
-import PredicateSet as PredicateSet
+
+from PredicateSet import PredicateSet
+from EvolutionaryLearner import EvolutionaryLearner
 
 class AgentPool:
+    global _agentRuleSet = []
+    global _sharedRuleSet = []
+    global _userDefinedRuleSet = []
 
-    def __init__():
-        self.isInit = 1
+    def __init__(self, actionSet):
+        self.actionSet = actionSet
+        self.setAgentRuleSet()
 
-    def ownRuleSet():
-        elementList = []
-    
-    def sharedRuleSet():
-        elementList = []
-    
-    def userDefinedRuleSet():
-        elementList = []
-    
+    def getActionSet():
+        return actionSet
+
+    def setAgentRuleSet():
+        agentRuleSet = EvolutionaryLearner.initRuleSet(self.actionSet)
+
+    def fit():
+        continue    
 
 def run():
     methodList = inspect.getmembers(PredicateSet, predicate=inspect.isroutine)

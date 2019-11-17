@@ -3,10 +3,10 @@ import sys
 
 class TrafficLight:
 
-    def __init__ (self, tlType, name, lanes):
-        self.tlType = tlType
+    def __init__ (self, name, lanes):
         self.name = name
         self.lanes = lanes
+        # self.numofPhases = numOfPhases
         self.edges = []
         self._setEdges(self.lanes)
 
@@ -22,6 +22,9 @@ class TrafficLight:
 
     def getEdges(self):
         return self.edges
+
+    # def getnumOfPhases(self):
+    #     return self.numOfPhases
     
     def _setEdges(self, lanes):
         # Determine edges from lanes
@@ -37,3 +40,4 @@ class TrafficLight:
 
 
 
+ 
