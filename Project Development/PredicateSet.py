@@ -526,7 +526,7 @@ def maxGreenPhaseTimeReached(maxTime, timeInPhase):
     if timeInPhase >= maxTime:
         return True 
     else: 
-        return False1
+        return False
 
 def maxYellowPhaseTimeReached(maxTime, timeInPhase):
     if timeInPhase >= maxTime:
