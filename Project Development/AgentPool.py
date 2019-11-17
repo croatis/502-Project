@@ -10,17 +10,21 @@ class AgentPool:
     global _sharedRuleSet = []
     global _userDefinedRuleSet = []
 
+        # Intialize object variables
     def __init__(self, actionSet):
-        self.actionSet = actionSet
-        self.setAgentRuleSet()
+        self._actionSet = actionSet # a integer specifying number of actions available to AgentPool
+        self._agentRuleSet()
 
-    def getActionSet():
-        return actionSet
+    def getActionSet(self):
+        return _actionSet
 
-    def setAgentRuleSet():
-        agentRuleSet = EvolutionaryLearner.initRuleSet(self.actionSet)
+    def getAgentRuleSet(self):
+        return _agentRuleSet
+    
+    def _setAgentRuleSet(self):
+        _agentRuleSet = EvolutionaryLearner.initRuleSet(self)
 
-    def fit():
+    def fit(self):
         continue    
 
 def run():

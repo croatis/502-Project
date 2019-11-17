@@ -9,6 +9,7 @@ class TrafficLight:
         # self.numofPhases = numOfPhases
         self.edges = []
         self._setEdges(self.lanes)
+        self._phases = 0
 
 
     def getType(self):
@@ -38,6 +39,11 @@ class TrafficLight:
             else:
                 self.edges.append(edge[0])
 
+    def getPhases(self):
+        return self._phases
+    
+    def setPhases(self, phases):
+        self._phases = phases
 
 
  
