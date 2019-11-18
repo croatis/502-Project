@@ -6,7 +6,7 @@ class Rule:
     def __init__(self, conditions, action, agentPool):
         self._conditions = conditions
         self._action = action
-        self._agentPool = agentPool
+        self.agentPool = agentPool
 
     def getConditions(self):
         return self._conditions
@@ -24,5 +24,5 @@ class Rule:
         return self._agentPool
 
     def setAgentPool(self, agentPool):
-        self._agentPool = agentPool
+        self.agentPool = agentPool
     

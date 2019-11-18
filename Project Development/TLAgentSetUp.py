@@ -6,11 +6,11 @@ import optparse
 import re
 
 from TrafficLight import TrafficLight
+from AgentPool import AgentPool
 
 def run():
     tlAgentPoolList = []
     trafficLightDict = {}
-    global tlAgentPools
 
         # Get network file to parse
     fileName = input("Please enter the name of the desired network file: ")
@@ -30,6 +30,7 @@ def run():
             getTLName = x.split("id=\"")
             tlNameArray = getTLName[1].split("\"")
             tlPhases[tlNameArray[0]] = 0
+                
                 # Count number of phases/actions a TL has; loop max is arbitrarily high given phase number uncertainty 
             for i in range(0, 1000):
                 x = f.readline()
@@ -42,7 +43,7 @@ def run():
         elif "<junction" and "type=\"traffic_light\"" in x:
                 # Isolate individual TLs
             temp = x.split("id=\"")
-            trafficLightName = temp[1].split("\"")     #Traffic Light name
+            trafficLightName = temp[1].split("\"") #Traffic Light name
 
                 # Get all lanes controlled by TL
             splitForlanes = temp[1].split("incLanes=\"")
@@ -67,6 +68,30 @@ def run():
             if x == tl.getName():
                 tl.setPhases(tlPhases[x])
     
+        # Create and assign agent pools
+    agentPools = []
+    for tl in trafficLights:
+        apAssigned = False
+        if len(agentPools) > 0:    
+            for ap in agentPools:
+                if tl.getPhases() == ap.getActionSet():
+                    tl.assignToAgentPool(ap)
+                    ap.addNewTrafficLight(tl)
+                    apAssigned = True
+                    break
+        
+        if apAssigned == False:
+            apID = "AP" + str(len(agentPools) + 1) # Construct new agent ID
+            agentPool = AgentPool(apID, tl.getPhases()) # Create a new agent pool for traffic light
+            agentPools.append(agentPool) # Add new pool to agent pools list
+            agentPool.addNewTrafficLight(tl) # Assign traffic light to agent pool 
+        
+        # Initialize each Agent Pool's interal rule set. Must be done after AP intialization.
+    for ap in agentPools:
+        ap.initRuleSet()
+        print(ap, "has", ap.getAssignedTrafficLights(), "assigned to it.\n")
+
+
     return trafficLights
     
 # main entry point

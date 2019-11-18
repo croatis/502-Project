@@ -9,7 +9,7 @@ class TrafficLight:
         # self.numofPhases = numOfPhases
         self.edges = []
         self._setEdges(self.lanes)
-        self._phases = 0
+        self.phases = 0
 
 
     def getType(self):
@@ -23,9 +23,6 @@ class TrafficLight:
 
     def getEdges(self):
         return self.edges
-
-    # def getnumOfPhases(self):
-    #     return self.numOfPhases
     
     def _setEdges(self, lanes):
         # Determine edges from lanes
@@ -43,7 +40,12 @@ class TrafficLight:
         return self._phases
     
     def setPhases(self, phases):
-        self._phases = phases
+        self.phases = phases
 
+    def getAgentPool(self):
+        return agentPool
+    
+    def assignToAgentPool(self, agentPool):
+        self.agentPool = agentPool
 
  

@@ -6,6 +6,7 @@ import optparse
 
 import TLAgentSetUp as TLAgentSetUp
 import PredicateSet as PredicateSet
+import EvolutionaryLearner as EvolutionaryLearner
 from Rule import Rule
 
 # Importing needed python modules from the $SUMO_HOME/tools directory
@@ -33,20 +34,22 @@ def run():
     trafficLights = TLAgentSetUp.run()
 
     trafficLight = trafficLights[1]
-    print("The traffic light edges are:", trafficLight.getEdges())
-
 
     step = 0
     time = traci.simulation.getTime()
-    rule = Rule(["numCarsWaitingToTurnLeft_0"], 0)
+    rule1 = Rule(["numCarsWaitingToTurnLeft_0"], 0)
+    rule2 = Rule(["numCarsWaitingToTurnLeft_0_15, northSouthPhaseIsLeftTurn_Green"], 0)
     # Simulation loop 
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
         # print(PredicateSet.verticalPhaseIsGreen(traci.trafficlight.getPhaseName("incoming").split("_")))
         # print(get_state(agentPool["four-arm"]))
         # Changes TL phase every 5 steps
-        print("The step is", step, ".\nRule evaluated to:", ruleEval(trafficLight, rule))
+        print("The step is", step, ".\nRule evaluated to:", ruleEval(trafficLight, rule1))
         if step % 5 == 0:
+            print("Child rule contains conditions:", EvolutionaryLearner.breed(rule1, rule2).getConditions())
+            print("Rule 1 mutated to:", EvolutionaryLearner.mutate(rule1).getConditions())
+            print("Rule 2 mutated to:", EvolutionaryLearner.mutate(rule2).getConditions())
             # PredicateSet.verticalPhaseIsGreen(traci.trafficlight.getPhase("four-arm"))
             carsWaiting = traci.edge.getWaitingTime
             # print(carsWaiting)
@@ -94,7 +97,6 @@ def get_state(trafficLight):
                 else:
                     vehID = vehID + "_S"
             
-                print("New vehicle added to state array:", vehID)
                 state[laneID].append(vehID)
             
     return state
@@ -149,7 +151,6 @@ def getPredicateParameter(trafficLight, predicate):
         state = get_state(trafficLight) # Retrieve state of specified intersection 
         for lane in state:
             if lane in trafficLight.getLanes():
-                print("The selected lane is:", lane, "\n")
                 for veh in state[lane]:
                     if "_S" in veh:
                         vehIDSplit = veh.split("_")
@@ -164,7 +165,6 @@ def getPredicateParameter(trafficLight, predicate):
         state = get_state(trafficLight) # Retrieve state of specified intersection 
         for lane in state:
             if lane in trafficLight.getLanes():
-                print("The selected lane is:", lane, "\n")
                 for veh in state[lane]:
                     if "_L" in veh:
                         vehIDSplit = veh.split("_")
@@ -176,10 +176,10 @@ def getPredicateParameter(trafficLight, predicate):
 
         return carsWaiting
     elif predicate == "timeSpentInCurrentPhase":
-        return traci.trafficlight.getPhaseDuration()
+        return traci.trafficlight.getPhaseDuration(trafficLight.getName())
     
-    elif predicate == "verticalPhaseIs" or predicate == "horizontalPhaseIs" or predicate == "northSouthPhaseIs" or predicate == "southNorthPhaseIs" or predicate == "eastWestPhaseIs" or predicate == "westEastPhaseIs":
-        return traci.trafficlight.getPhaseName()
+    elif "verticalPhaseIs" in predicate or "horizontalPhaseIs" in predicate or "northSouthPhaseIs" in predicate or "southNorthPhaseIs" in predicate or "eastWestPhaseIs" in predicate or "westEastPhaseIs" in predicate:
+        return traci.trafficlight.getPhaseName(trafficLight.getName()).split("_")
 
             
 # main entry point

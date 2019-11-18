@@ -365,145 +365,146 @@ def timeSpentInCurrentPhase_300(time):
 
 #------------------- Phase check predicates --------------------#
 def verticalPhaseIs_Green(tlPhaseArray):
-    if "V" == tlPhaseArray[0] and "G" in tlPhaseArray[2] and ("S" in tlPhaseArray[1] or "SL" in tlPhaseArray[1]):
+    if "V" == tlPhaseArray[0] and "G" == tlPhaseArray[2] and ("S" == tlPhaseArray[1] or "SL" == tlPhaseArray[1]):
         return True 
     else:
         return False
 
 def verticalPhaseIs_Yellow(tlPhaseArray):   
-    if "V" == tlPhaseArray[0] and "Y" in tlPhaseArray[2] and ("S" in tlPhaseArray[1] or "SL" in tlPhaseArray[1]):
+    if "V" == tlPhaseArray[0] and "Y" == tlPhaseArray[2] and ("S" == tlPhaseArray[1] or "SL" == tlPhaseArray[1]):
         return True 
     else:
         return False
 
 def northSouthPhaseIs_Green(tlPhaseArray):
-    if "NS" == tlPhaseArray[0] and "G" in tlPhaseArray[2] and ("S" in tlPhaseArray[1] or "SL" in tlPhaseArray[1]):
+    if "NS" == tlPhaseArray[0] and "G" == tlPhaseArray[2] and ("S" == tlPhaseArray[1] or "SL" == tlPhaseArray[1]):
         return True 
     else:
         return False
 
 def northSouthPhaseIs_Yellow(tlPhaseArray):
-    if "NS" == tlPhaseArray[0] and "Y" in tlPhaseArray[2] and ("S" in tlPhaseArray[1] or "SL" in tlPhaseArray[1]):
+    if "NS" == tlPhaseArray[0] and "Y" == tlPhaseArray[2] and ("S" == tlPhaseArray[1] or "SL" == tlPhaseArray[1]):
         return True 
     else:
         return False        
 
 def southNorthPhaseIs_Green(tlPhaseArray):
-    if "SN" == tlPhaseArray[0] and "G" in tlPhaseArray[2] and ("S" in tlPhaseArray[1] or "SL" in tlPhaseArray[1]):
+    if "SN" == tlPhaseArray[0] and "G" == tlPhaseArray[2] and ("S" == tlPhaseArray[1] or "SL" == tlPhaseArray[1]):
         return True 
     else:
         return False
 
 def southNorthPhaseIs_Yellow(tlPhaseArray):
-    if "SN" == tlPhaseArray[0] and "Y" in tlPhaseArray[2] and ("S" in tlPhaseArray[1] or "SL" in tlPhaseArray[1]):
+    if "SN" == tlPhaseArray[0] and "Y" == tlPhaseArray[2] and ("S" == tlPhaseArray[1] or "SL" == tlPhaseArray[1]):
         return True 
     else:
         return False     
 
 def verticalPhaseIsLeftTurn_Green(tlPhaseArray): 
-    if "V" == tlPhaseArray[0] and "G" in tlPhaseArray[2] and ("L" in tlPhaseArray[1] or "SL" in tlPhaseArray[1]):
+    if "V" == tlPhaseArray[0] and "G" == tlPhaseArray[2] and ("L" == tlPhaseArray[1] or "SL" == tlPhaseArray[1]):
         return True 
     else:
         return False
 
 def verticalPhaseIsLeftTurn_Yellow(tlPhaseArray):  
-    if "V" == tlPhaseArray[0] and "Y" in tlPhaseArray[2] and ("L" in tlPhaseArray[1] or "SL" in tlPhaseArray[1]):
+    if "V" == tlPhaseArray[0] and "Y" == tlPhaseArray[2] and ("L" == tlPhaseArray[1] or "SL" == tlPhaseArray[1]):
         return True 
     else:
         return False
 
 def northSouthPhaseIsLeftTurn_Green(tlPhaseArray):   
-    if "NS" == tlPhaseArray[0] and "G" in tlPhaseArray[2] and ("L" in tlPhaseArray[1] or "SL" in tlPhaseArray[1]):
+    if "NS" == tlPhaseArray[0] and "G" == tlPhaseArray[2] and ("L" == tlPhaseArray[1] or "SL" == tlPhaseArray[1]):
         return True 
     else:
         return False
 
 def northSouthPhaseIsLeftTurn_Yellow(tlPhaseArray):  
-    if "NS" == tlPhaseArray[0] and "Y" in tlPhaseArray[2] and ("L" in tlPhaseArray[1] or "SL" in tlPhaseArray[1]):
+    if "NS" == tlPhaseArray[0] and "Y" == tlPhaseArray[2] and ("L" == tlPhaseArray[1] or "SL" == tlPhaseArray[1]):
         return True 
     else:
         return False        
 
 def southNorthPhaseIsLeftTurn_Green(tlPhaseArray):    
-    if "SN" == tlPhaseArray[0] and "G" in tlPhaseArray[2] and ("L" in tlPhaseArray[1] or "SL" in tlPhaseArray[1]):
+    if "SN" == tlPhaseArray[0] and "G" == tlPhaseArray[2] and ("L" == tlPhaseArray[1] or "SL" == tlPhaseArray[1]):
         return True 
     else:
         return False
 
 def southNorthPhaseIsLeftTurn_Yellow(tlPhaseArray):    
-    if "SN" == tlPhaseArray[0] and "Y" in tlPhaseArray[2] and ("L" in tlPhaseArray[1] or "SL" in tlPhaseArray[1]):
+    if "SN" == tlPhaseArray[0] and "Y" == tlPhaseArray[2] and ("L" == tlPhaseArray[1] or "SL" == tlPhaseArray[1]):
         return True 
     else:
         return False
 
 def horizontalPhaseIs_Green(tlPhaseArray):    
-    if "H" == tlPhaseArray[0] and "G" in tlPhaseArray[2] and ("S" in tlPhaseArray[1] or "SL" in tlPhaseArray[1]):
+    if "H" == tlPhaseArray[0] and "G" == tlPhaseArray[2] and ("S" == tlPhaseArray[1] or "SL" == tlPhaseArray[1]):
         return True 
     else:
         return False
 
 def horizontalPhaseIs_Yellow(tlPhaseArray):  
-    if "H" == tlPhaseArray[0] and "Y" in tlPhaseArray[2] and ("S" in tlPhaseArray[1] or "SL" in tlPhaseArray[1]):
+    if "H" == tlPhaseArray[0] and "Y" == tlPhaseArray[2] and ("S" == tlPhaseArray[1] or "SL" == tlPhaseArray[1]):
         return True 
     else:
         return False
 
 def eastWestPhaseIs_Green(tlPhaseArray):  
-    if "EW" == tlPhaseArray[0] and "G" in tlPhaseArray[2] and ("S" in tlPhaseArray[1] or "SL" in tlPhaseArray[1]):
+    if "EW" == tlPhaseArray[0] and "G" == tlPhaseArray[2] and ("S" == tlPhaseArray[1] or "SL" == tlPhaseArray[1]):
         return True 
     else:
         return False
 
 def eastWestPhaseIs_Yellow(tlPhaseArray):   
-    if "EW" == tlPhaseArray[0] and "Y" in tlPhaseArray[2] and ("S" in tlPhaseArray[1] or "SL" in tlPhaseArray[1]):
+    if "EW" == tlPhaseArray[0] and "Y" == tlPhaseArray[2] and ("S" == tlPhaseArray[1] or "SL" == tlPhaseArray[1]):
         return True 
     else:
         return False        
 
 def westEastPhaseIs_Green(tlPhaseArray):
-    if "WE" == tlPhaseArray[0] and "G" in tlPhaseArray[2] and ("S" in tlPhaseArray[1] or "SL" in tlPhaseArray[1]):
+    if "WE" == tlPhaseArray[0] and "G" == tlPhaseArray[2] and ("S" == tlPhaseArray[1] or "SL" == tlPhaseArray[1]):
         return True 
     else:
         return False
 
 def westEastPhaseIs_Yellow(tlPhaseArray):   
-    if "WE" == tlPhaseArray[0] and "Y" in tlPhaseArray[2] and ("S" in tlPhaseArray[1] or "SL" in tlPhaseArray[1]):
+    if "WE" == tlPhaseArray[0] and "Y" == tlPhaseArray[2] and ("S" == tlPhaseArray[1] or "SL" == tlPhaseArray[1]):
         return True 
     else:
         return False     
 
 def horizontalPhaseIsLeftTurn_Green(tlPhaseArray): 
-    if "H" == tlPhaseArray[0] and "G" in tlPhaseArray[2] and ("L" in tlPhaseArray[1] or "SL" in tlPhaseArray[1]):
+    if "H" == tlPhaseArray[0] and "G" == tlPhaseArray[2] and ("L" == tlPhaseArray[1] or "SL" == tlPhaseArray[1]):
         return True 
     else:
         return False
 
 def horizontalPhaseIsLeftTurn_Yellow(tlPhaseArray):  
-    if "H" == tlPhaseArray[0] and "Y" in tlPhaseArray[2] and ("L" in tlPhaseArray[1] or "SL" in tlPhaseArray[1]):
+    print(tlPhaseArray)
+    if "H" == tlPhaseArray[0] and "Y" == tlPhaseArray[2] and ("L" == tlPhaseArray[1] or "SL" == tlPhaseArray[1]):
         return True 
     else:
         return False
 
 def eastWestPhaseIsLeftTurn_Green(tlPhaseArray):
-    if "EW" == tlPhaseArray[0] and "G" in tlPhaseArray[2] and ("L" in tlPhaseArray[1] or "SL" in tlPhaseArray[1]):
+    if "EW" == tlPhaseArray[0] and "G" == tlPhaseArray[2] and ("L" == tlPhaseArray[1] or "SL" == tlPhaseArray[1]):
         return True 
     else:
         return False
 
 def eastWestPhaseIsLeftTurn_Yellow(tlPhaseArray): 
-    if "EW" == tlPhaseArray[0] and "Y" in tlPhaseArray[2] and ("L" in tlPhaseArray[1] or "SL" in tlPhaseArray[1]):
+    if "EW" == tlPhaseArray[0] and "Y" == tlPhaseArray[2] and ("L" == tlPhaseArray[1] or "SL" == tlPhaseArray[1]):
         return True 
     else:
         return False        
 
 def westEastPhaseIsLeftTurn_Green(tlPhaseArray):
-    if "WE" == tlPhaseArray[0] and "G" in tlPhaseArray[2] and ("L" in tlPhaseArray[1] or "SL" in tlPhaseArray[1]):
+    if "WE" == tlPhaseArray[0] and "G" == tlPhaseArray[2] and ("L" == tlPhaseArray[1] or "SL" == tlPhaseArray[1]):
         return True 
     else:
         return False
 
 def westEastPhaseIsLeftTurn_Yellow(tlPhaseArray):   
-    if "WE" == tlPhaseArray[0] and "Y" in tlPhaseArray[2] and ("L" in tlPhaseArray[1] or "SL" in tlPhaseArray[1]):
+    if "WE" == tlPhaseArray[0] and "Y" == tlPhaseArray[2] and ("L" == tlPhaseArray[1] or "SL" == tlPhaseArray[1]):
         return True 
     else:
         return False     
@@ -555,13 +556,12 @@ def getPredicateList():
     for predicate in methodsDict:
         predicateList.append(predicate)
     
-    print("The list has a length of", len(predicateList), "and contains: ", predicateList)
     return predicateList
 
     # RETURN RANDOM PREDICATE FROM LIST OF PREDICATE FUNCTIONS
 def getRandomPredicate():
     predicateList = getPredicateList()
-    return (predicateList[randrange(len(predicateList)-1)])
+    return (predicateList[randrange(len(predicateList))])
 
 
 def run():
