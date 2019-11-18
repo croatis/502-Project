@@ -37,8 +37,6 @@ def run():
 
     step = 0
     time = traci.simulation.getTime()
-    rule1 = Rule(["numCarsWaitingToTurnLeft_0"], 0)
-    rule2 = Rule(["numCarsWaitingToTurnLeft_0_15, northSouthPhaseIsLeftTurn_Green"], 0)
     # Simulation loop 
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()

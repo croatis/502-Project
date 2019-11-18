@@ -18,7 +18,7 @@ class AgentPool:
         self.id = identifier
         self.actionSet = actionSet # a integer specifying number of actions available to AgentPool
         self.trafficLightsAssigned = []
-        self.number = 5
+        self.initRuleSet()
 
     def getID(self):
         return self.id

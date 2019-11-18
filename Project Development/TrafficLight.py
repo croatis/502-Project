@@ -37,7 +37,7 @@ class TrafficLight:
                 self.edges.append(edge[0])
 
     def getPhases(self):
-        return self._phases
+        return self.phases
     
     def setPhases(self, phases):
         self.phases = phases
