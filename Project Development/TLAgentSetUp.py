@@ -88,7 +88,8 @@ def run():
         
         # Initialize each Agent Pool's interal rule set. Must be done after AP intialization.
     for ap in agentPools:
-        print(ap, "has", ap.getAssignedTrafficLights(), "assigned to it.\n")
+        for r in ap.getRuleSet():
+            print("The agent pool,", ap.getID(), "contains these traffic lights:", ap.getAssignedTrafficLights()[0].getName(), "\nThe conditions of one rule are:", r.getConditions(), "and the action is:", r.getAction(), "\n\n***\n")
 
     return trafficLights
     

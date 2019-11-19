@@ -8,16 +8,18 @@ from TrafficLight import TrafficLight
 
 class AgentPool:
     
-    global agentRuleSet 
+    global ruleSet
     global sharedRuleSet 
     global userDefinedRuleSet 
-    global ruleSetInitialized
 
         # Intialize object variables
     def __init__(self, identifier, actionSet):
         self.id = identifier
         self.actionSet = actionSet # a integer specifying number of actions available to AgentPool
         self.trafficLightsAssigned = []
+        self.ruleSet = []
+        self.communicatedRuleSet = []
+        self.userDefinedRuleSet = []
         self.initRuleSet()
 
     def getID(self):
@@ -26,11 +28,11 @@ class AgentPool:
     def getActionSet(self):
         return self.actionSet
 
-    def getAgentRuleSet(self):
-        return self.agentRuleSet
+    def getRuleSet(self):
+        return self.ruleSet
     
     def initRuleSet(self):
-        agentRuleSet = EvolutionaryLearner.initRuleSet(self)
+        self.ruleSet = EvolutionaryLearner.initRuleSet(self)
 
     def addNewTrafficLight(self, trafficLight):
         self.trafficLightsAssigned.append(trafficLight)
@@ -44,7 +46,7 @@ class AgentPool:
 
     def fit(self):
         pass  
-        1
+        
 # def run():
 #     methodList = inspect.getmembers(PredicateSet, predicate=inspect.isroutine)
 #     print(methodList)
