@@ -5,6 +5,8 @@ import inspect
 import PredicateSet as PredicateSet
 import EvolutionaryLearner as EvolutionaryLearner
 from TrafficLight import TrafficLight
+from Rule import Rule
+from random import randrange
 
 class AgentPool:
     
@@ -19,7 +21,7 @@ class AgentPool:
         self.trafficLightsAssigned = []         # List of traffic lights using Agent Pool 
         self.ruleSet = []                   
         self.communicatedRuleSet = []       
-        self.userDefinedRuleSet = ["emergencyVehicleApproachingVertical", "emergencyVehicleApproachingHorizontal", "maxGreenPhaseTimeReached", "maxYellowPhaseTimeReached"]
+        self.userDefinedRuleSet = [Rule(["emergencyVehicleApproachingVertical"], 0, self), Rule(["emergencyVehicleApproachingHorizontal"], 0, self), Rule(["maxGreenPhaseTimeReached"], 0, self), Rule(["maxYellowPhaseTimeReached"], 0, self)]
         self.initRuleSet()                      # Populate Agent Pool's own rule set with random rules
 
     def getID(self):
@@ -34,15 +36,26 @@ class AgentPool:
     def initRuleSet(self):
         self.ruleSet = EvolutionaryLearner.initRuleSet(self)
 
-    def addNewTrafficLight(self, trafficLight):
-        self.trafficLightsAssigned.append(trafficLight)
-        trafficLight.assignToAgentPool(self)
-
     def getAssignedTrafficLights(self):
         return self.trafficLightsAssigned
     
     def getuserDefinedRuleSet(self):
         return self.userDefinedRuleSet
+    
+        # ***FINISH IMPLEMENTING**************************************************************************
+    def setUserDefinedRuleActions(self):
+        for rule in userDefRules:
+            for predicate in rule.getConditions():    
+                if "emergencyVehicleApproaching" in predicate:
+                    continue
+    
+    def addNewTrafficLight(self, trafficLight):
+        self.trafficLightsAssigned.append(trafficLight)
+        trafficLight.assignToAgentPool(self)
+
+        # SELECTS A RULE TO PASS TO A TRAFFIC LIGHT WHEN REQUESTED
+    def selectRule(self):
+        return self.getRuleSet()[randrange(0, len(self.getRuleSet()))] # Currently returning a random rule
 
     def fit(self):
         pass  

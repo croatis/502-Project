@@ -43,7 +43,7 @@ class TrafficLight:
         self.phases = phases
 
     def getAgentPool(self):
-        return agentPool
+        return self.agentPool
     
     def assignToAgentPool(self, agentPool):
         self.agentPool = agentPool

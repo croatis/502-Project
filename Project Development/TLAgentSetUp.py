@@ -85,8 +85,9 @@ def run():
         if apAssigned == False:
             apID = "AP" + str(len(agentPools) + 1) # Construct new agent ID
             agentPool = AgentPool(apID, tl.getPhases()) # Create a new agent pool for traffic light
-            agentPools.append(agentPool) # Add new pool to agent pools list
             agentPool.addNewTrafficLight(tl) # Assign traffic light to agent pool 
+            
+            agentPools.append(agentPool) # Add new pool to agent pools list
         
 
     return trafficLights

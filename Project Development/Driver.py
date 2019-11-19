@@ -36,9 +36,9 @@ def get_options():
 
 # CONTAINS MAIN TRACI SIMULATION LOOP
 def run():
-    # Acquire agent pool dictionary 
+    # Run set-up script and acquire list of traffic light agents in simulation
     trafficLights = TLAgentSetUp.run()
- 
+    
         # Simulation loop 
     step = 0
     while traci.simulation.getMinExpectedNumber() > 0:
@@ -46,20 +46,28 @@ def run():
             
             # Traffic Light agents reevaluate their state every 5 seconds
         if step % 5 == 0:
+                # For every traffic light in simulation, select and evaluate new rule from its agent pool
             for tl in trafficLights:
-
-
+                rule = tl.getAgentPool().selectRule() # Get a rule from Agent Pool
+                print("Rule selected for", tl.getName(), ". It's conditions are:", rule.getConditions())    
+                    # If rule conditions are satisfied, apply its action. Otherwise, do nothing.
+                if evaluateRule(tl, rule):
+                    print("The rule is applicable. The action being applied is:", rule.getAction(),"\n\nRULE APPLIED\n")
+                    traci.trafficlight.setPhase(tl.getName(), rule.getAction())
+                else:
+                    print("The rule is not applicable.\n\n")
         else:
             pass
 
-        step+=1
+        step += 1 
 
-    traci.close()
-    sys.stdout.flush()
+    traci.close()       # End simulation
+    sys.stdout.flush()  
     
 # RETRIEVE THE STATE OF THE INTERSECTION FROM SUMO
 def get_state(trafficLight):
     state = {}
+    leftTurnLane = ""
     for lane in trafficLight.getLanes():
         state[lane] = []
 
@@ -72,7 +80,6 @@ def get_state(trafficLight):
         if laneID in tlLanes:
                 # Determine left turn lane if it exists
             if "_LTL" in laneID:
-                leftTurnLane = ""
                 maxLaneNum = 0
                 for lane in tlLanes:
                     if lane == laneID:
@@ -107,10 +114,9 @@ def evaluateRule(trafficLight, rule):
     
     return True # if all predicates return true, evaluate rule as True
     
-    # EVALUATE USER-DEFINED RULE VALIDITY
+    # EVALUATE USER-DEFINED RULE VALIDITY AND SET APPROPRIATE ACTION FOR IT
 def evaluateUserDefinedRule(trafficLight):
-    userDefRules = trafficLight.getAgentPool().getUserDefinedRuleSet()
-
+    pass
 
     # PROVIDE SIMULATION RELEVANT PARAMETERS
 def getPredicateParameter(trafficLight, predicate):
@@ -176,7 +182,6 @@ def getPredicateParameter(trafficLight, predicate):
     elif "verticalPhaseIs" in predicate or "horizontalPhaseIs" in predicate or "northSouthPhaseIs" in predicate or "southNorthPhaseIs" in predicate or "eastWestPhaseIs" in predicate or "westEastPhaseIs" in predicate:
         return traci.trafficlight.getPhaseName(trafficLight.getName()).split("_")
 
-            
 # main entry point
 if __name__ == "__main__":
     options = get_options()
