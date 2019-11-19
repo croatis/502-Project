@@ -6,84 +6,92 @@ import optparse
 import re
 
 from TrafficLight import TrafficLight
+from AgentPool import AgentPool
 
 def run():
     tlAgentPoolList = []
     trafficLightDict = {}
-    global tlAgentPools
 
         # Get network file to parse
     fileName = input("Please enter the name of the desired network file: ")
-        #ADD error checking for input (ensure it's a valid network file)
-    # fileParser(fileName)
 
-# def fileParser(fileName):
+#ADD error checking for input (ensure it's a valid network file)
 
     # Open desired file
     f = open(fileName, "r")
     
     lanes = []
-    # Parse file to gather information
+    trafficLights = []
+    tlPhases = {}
+    # Parse file to gather information about traffic lights, and instantiate their objects
     for x in f:
-        # Determine agent pools
+            # Create an action set dictionary for each traffic light
         if "<tlLogic" in x:
-            temp = x.split("id=\"")
-            trafficLightType = temp[1].split("\"")
-            
-            if "(" in trafficLightType:
-                isolateAgentName = trafficLightType.split("(")
-                trafficLightType = isolateAgentName[0]
-            
-            tlAgentPoolList.append(trafficLightType[0])
+            getTLName = x.split("id=\"")
+            tlNameArray = getTLName[1].split("\"")
+            tlPhases[tlNameArray[0]] = 0
+                
+                # Count number of phases/actions a TL has; loop max is arbitrarily high given phase number uncertainty 
+            for i in range(0, 1000):
+                x = f.readline()
+                if "<phase" in x:
+                    tlPhases[tlNameArray[0]] += 1
+                else:
+                    break
 
-        # Gather info about individual traffic lights
+            # Gather info about individual traffic lights
         elif "<junction" and "type=\"traffic_light\"" in x:
-            # isolate individual TLs
+                # Isolate individual TLs
             temp = x.split("id=\"")
-            trafficLightName = temp[1].split("\"")     #Traffic Light name; a key
-            
-            # get all lanes controlled by TL
+            trafficLightName = temp[1].split("\"") #Traffic Light name
+
+                # Get all lanes controlled by TL
             splitForlanes = temp[1].split("incLanes=\"")
             lanesBulk = splitForlanes[1].split("\"")
             lanesSplit = lanesBulk[0].split()
 
-            # Split lanes into individual elements in a list
-            for e in lanesSplit:
-                lanes.append(e)
+                # Split lanes into individual elements in a list
+            for l in lanesSplit:
+                lanes.append(l)
 
-            # Add traffic light and corresponding lanes into the TL dictionary
-            trafficLightDict.update({trafficLightName[0]: lanes})
+            trafficLights.append(TrafficLight(trafficLightName[0], lanes))
             lanes = []
-        
+
         else:
             continue
     
-    # for x in trafficLightDict:
-    #     print(x, ": ", trafficLightDict[x])
+    f.close() # Close file once finished
 
-        # Close file once finished
-    f.close()
-
-# def createAgentPools():
-    tlAgentPools = {}
-
-    for agentPool in tlAgentPoolList:
-        tlAgentPools[agentPool] = []
+        # Set number of phases for each traffic light
+    for x in tlPhases:
+        for tl in trafficLights:
+            if x == tl.getName():
+                tl.setPhases(tlPhases[x])
     
-    for tl in trafficLightDict:
-        for ap in tlAgentPoolList:
-            if tl in ap:
-                newTL = TrafficLight(ap, tl, trafficLightDict[tl])
-                tlAgentPools[ap].append(newTL)
-                newTL = TrafficLight(ap, tl, trafficLightDict[tl])
-                tlAgentPools[ap].append(newTL)                
+        # Create and assign agent pools    FYI: THIS ASSUMES PHASE NUMBER = SAME POOL; LIKELY NOT TRUE
+    agentPools = []
+    for tl in trafficLights:
+        apAssigned = False
+            # If agent pool(s) already exist, check to see its ability to host the traffic light
+        if len(agentPools) > 0:    
+            for ap in agentPools:
+                    # An agent pool can realistically host more than one traffic light iff at minimum all TL's using the pool share the same number of phases
+                if tl.getPhases() == ap.getActionSet(): 
+                    tl.assignToAgentPool(ap)
+                    ap.addNewTrafficLight(tl)
+                    apAssigned = True
+                    break
+        
+        if apAssigned == False:
+            apID = "AP" + str(len(agentPools) + 1) # Construct new agent ID
+            agentPool = AgentPool(apID, tl.getPhases()) # Create a new agent pool for traffic light
+            agentPool.addNewTrafficLight(tl) # Assign traffic light to agent pool 
+            
+            agentPools.append(agentPool) # Add new pool to agent pools list
+        
 
-        # print("tlAgentPools conains this: ", tlAgentPools)
-
+    return trafficLights
     
-    for x in tlAgentPools:
-        tl = tlAgentPools[x]
-        print("Pool", x, "contains: \n", "Traffic light", tl[0].getName(), "of type", tl[0].getType(), "with lanes", tl[0].getLanes(), "\n")
 # main entry point
 if __name__ == "__main__":
     run()
