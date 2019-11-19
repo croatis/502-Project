@@ -9,6 +9,12 @@ import PredicateSet as PredicateSet
 import EvolutionaryLearner as EvolutionaryLearner
 from Rule import Rule
 
+global maxGreenPhaseTime
+global maxYellowPhaseTime
+
+maxGreenPhaseTime = 225
+maxYellowPhaseTime = 5
+
 # Importing needed python modules from the $SUMO_HOME/tools directory
 if 'SUMO_HOME' in os.environ:
     tools = os.path.join(os.environ['SUMO_HOME'], 'tools')
@@ -32,31 +38,17 @@ def get_options():
 def run():
     # Acquire agent pool dictionary 
     trafficLights = TLAgentSetUp.run()
-
-    trafficLight = trafficLights[1]
-
+ 
+        # Simulation loop 
     step = 0
-    time = traci.simulation.getTime()
-    # Simulation loop 
     while traci.simulation.getMinExpectedNumber() > 0:
-        traci.simulationStep()
-        # print(PredicateSet.verticalPhaseIsGreen(traci.trafficlight.getPhaseName("incoming").split("_")))
-        # print(get_state(agentPool["four-arm"]))
-        # Changes TL phase every 5 steps
-        print("The step is", step, ".\nRule evaluated to:", ruleEval(trafficLight, rule1))
+        traci.simulationStep() # Advance SUMO simulation one step (1 second)
+            
+            # Traffic Light agents reevaluate their state every 5 seconds
         if step % 5 == 0:
-            print("Child rule contains conditions:", EvolutionaryLearner.breed(rule1, rule2).getConditions())
-            print("Rule 1 mutated to:", EvolutionaryLearner.mutate(rule1).getConditions())
-            print("Rule 2 mutated to:", EvolutionaryLearner.mutate(rule2).getConditions())
-            # PredicateSet.verticalPhaseIsGreen(traci.trafficlight.getPhase("four-arm"))
-            carsWaiting = traci.edge.getWaitingTime
-            # print(carsWaiting)
-            phase = traci.trafficlight.getPhase("four-arm")
+            for tl in trafficLights:
 
-            if phase + 1 == 6:
-                traci.trafficlight.setPhase("four-arm", 0)
-            else:
-                traci.trafficlight.setPhase("four-arm", phase + 1)           
+
         else:
             pass
 
@@ -98,8 +90,9 @@ def get_state(trafficLight):
                 state[laneID].append(vehID)
             
     return state
+    
     # EVALUATE RULE VALIDITY
-def ruleEval(trafficLight, rule):
+def evaluateRule(trafficLight, rule):
     tlName = trafficLight.getName()
 
         # For each condition, its parameters are acquired and the condition predicate is evaluated
@@ -113,6 +106,11 @@ def ruleEval(trafficLight, rule):
             return False
     
     return True # if all predicates return true, evaluate rule as True
+    
+    # EVALUATE USER-DEFINED RULE VALIDITY
+def evaluateUserDefinedRule(trafficLight):
+    userDefRules = trafficLight.getAgentPool().getUserDefinedRuleSet()
+
 
     # PROVIDE SIMULATION RELEVANT PARAMETERS
 def getPredicateParameter(trafficLight, predicate):
@@ -171,8 +169,7 @@ def getPredicateParameter(trafficLight, predicate):
                             carsWaiting += 1
 
         return carsWaiting
-
-        return carsWaiting
+    
     elif predicate == "timeSpentInCurrentPhase":
         return traci.trafficlight.getPhaseDuration(trafficLight.getName())
     

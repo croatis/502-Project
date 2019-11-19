@@ -68,13 +68,15 @@ def run():
             if x == tl.getName():
                 tl.setPhases(tlPhases[x])
     
-        # Create and assign agent pools
+        # Create and assign agent pools    FYI: THIS ASSUMES PHASE NUMBER = SAME POOL; LIKELY NOT TRUE
     agentPools = []
     for tl in trafficLights:
         apAssigned = False
+            # If agent pool(s) already exist, check to see its ability to host the traffic light
         if len(agentPools) > 0:    
             for ap in agentPools:
-                if tl.getPhases() == ap.getActionSet():
+                    # An agent pool can realistically host more than one traffic light iff at minimum all TL's using the pool share the same number of phases
+                if tl.getPhases() == ap.getActionSet(): 
                     tl.assignToAgentPool(ap)
                     ap.addNewTrafficLight(tl)
                     apAssigned = True
@@ -86,10 +88,6 @@ def run():
             agentPools.append(agentPool) # Add new pool to agent pools list
             agentPool.addNewTrafficLight(tl) # Assign traffic light to agent pool 
         
-        # Initialize each Agent Pool's interal rule set. Must be done after AP intialization.
-    for ap in agentPools:
-        for r in ap.getRuleSet():
-            print("The agent pool,", ap.getID(), "contains these traffic lights:", ap.getAssignedTrafficLights()[0].getName(), "\nThe conditions of one rule are:", r.getConditions(), "and the action is:", r.getAction(), "\n\n***\n")
 
     return trafficLights
     
