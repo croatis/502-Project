@@ -26,7 +26,7 @@ def initRSIndividuals(agentPool):
         for i in range(maxRules):
             ruleSet.append(createRandomRule(agentPool))
         
-        individuals.append(Individual(x, ruleSet))
+        individuals.append(Individual(x+1, ruleSet))
     
     return individuals
     

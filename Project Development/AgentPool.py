@@ -19,7 +19,7 @@ class AgentPool:
         self.trafficLightsAssigned = []         # List of traffic lights using Agent Pool 
         self.individuals = []                   
         self.userDefinedRuleSet = [Rule(["emergencyVehicleApproachingVertical"], -1, self), Rule(["emergencyVehicleApproachingHorizontal"], -1, self), Rule(["maxGreenPhaseTimeReached"], -1, self), Rule(["maxYellowPhaseTimeReached"], -1, self)]
-        self.initRuleSet()                      # Populate Agent Pool's own rule set with random rules
+        self.initIndividuals()                      # Populate Agent Pool's own rule set with random rules
 
     def getID(self):
         return self.id
@@ -31,7 +31,7 @@ class AgentPool:
         return self.rsIndividuals
     
     def initIndividuals(self):
-        self.rsIndividuals = EvolutionaryLearner.initrsIndividuals(self)
+        self.rsIndividuals = EvolutionaryLearner.initRSIndividuals(self)
 
     def getAssignedTrafficLights(self):
         return self.trafficLightsAssigned
@@ -47,9 +47,12 @@ class AgentPool:
     def fit(self):
         pass  
         
-def run():
-    ap = AgentPool("ap1", ["H_S_G", "H_S_Y", "H_L_G", "H_L_Y"])
-    print(ap.getIndividualsSet())
+# def run():
+#     ap = AgentPool("ap1", ["H_S_G", "H_S_Y", "H_L_G", "H_L_Y"])
+#     for i in ap.getIndividualsSet():    
+#         print("Individual", i.getID(), "has rules with the following conditions and actions:\n")
+#         for r in i.getRuleSet():
+#             print(r.getConditions(), "and the action is:", r.getAction(), "\n\n")
 
-if __name__ == "__main__":
-    run()
+# if __name__ == "__main__":
+#     run()

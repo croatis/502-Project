@@ -4,13 +4,15 @@ import os
 import sys
 import optparse
 
-import TLAgentSetUp as TLAgentSetUp
+import InitSetUp as InitSetUp
 import PredicateSet as PredicateSet
 import EvolutionaryLearner as EvolutionaryLearner
 from Rule import Rule
 
 global maxGreenPhaseTime
 global maxYellowPhaseTime
+global userDefinedRules
+global trafficLights
 
 maxGreenPhaseTime = 225
 maxYellowPhaseTime = 5
@@ -36,10 +38,12 @@ def get_options():
 
 # CONTAINS MAIN TRACI SIMULATION LOOP
 def run():
-    # Run set-up script and acquire list of traffic light agents in simulation
-    trafficLights = TLAgentSetUp.run()
+    # Run set-up script and acquire list of user defined rules and traffic light agents in simulation
+    setUpTuple = InitSetUp.run()
+    userDefinedRules = setUpTuple[0]
+    trafficLights = setUpTuple[1]
 
-    # Assign each traffic light an individual from their agent pool for this simulation run
+        # Assign each traffic light an individual from their agent pool for this simulation run
     for tl in trafficLights:
         trafficLights.assignIndividual()
     
@@ -56,7 +60,7 @@ def run():
                     
                     # If no user-defined rules can be applied, get a rule from Agent Pool
                 if rule == False:    
-                    rule = tl.getAgentPool().selectIndividual() # Get a rule from Agent Pool
+                    rule = tl.getAssignedIndividual().selectRule() # Get a rule from assigned rsIndividual
                         # If rule conditions are satisfied, apply its action. Otherwise, do nothing.
                     if evaluateRule(tl, rule):
                         traci.trafficlight.setPhase(tl.getName(), rule.getAction())                
@@ -108,8 +112,6 @@ def get_state(trafficLight):
     
     # EVALUATE RULE VALIDITY (fEval)
 def evaluateRule(trafficLight, rule):
-    tlName = trafficLight.getName()
-
         # For each condition, its parameters are acquired and the condition predicate is evaluated
     for cond in rule.getConditions():
         predicateSplit = cond.split("_")
@@ -124,9 +126,6 @@ def evaluateRule(trafficLight, rule):
     
     # DETERMINE IF ANY USER DEFINED RULES ARE APPLICABLE
 def applicableUserDefinedRule(trafficLight):
-    tlName = trafficLight.getName()
-    userDefinedRules = trafficLight.getAgentPool().getUserDefinedRuleSet()
-        
         # Evaluate each user define rule
     for rule in userDefinedRules:
             # For each rule, its parameters are acquired and the condition predicate is evaluated
@@ -146,33 +145,19 @@ def applicableUserDefinedRule(trafficLight):
 
     # APPLIES USER DEFINED ACTIONS
 def applyUserDefinedRuleAction(trafficLight, currPhaseName, rule):
+        # If max green phase time reached, switch phase to yellow in same direction
     if rule.getConditions()[0] == "maxGreenPhaseTimeReached":
         currPhase = traci.trafficlight.getPhaseName(trafficLight.getName())
         currPhase[5] = "Y"
         traci.trafficlight.setPhase(trafficLight.getName(), currPhase)
-    
-    elif rule.getConditions()[0] == "maxYellowPhaseTimeReached":
-        print("\n\n**** maxYellowPhaseTimeReached action being applied*****\n\n")
-        currPhaseDirection = currPhaseName[0:4]
         
-        while True:
-            rule = trafficLight.getAgentPool().selectIndividual() # Get a rule from Agent Pool
-            print("Searching for a valid rule.")
-                # Prepare relevant information for comparison
-            newPhaseName = trafficLight.getAgentPool().getActionSet()[rule.getAction()]
-            newPhaseDirection = newPhaseName[0:4]
-            newPhase = newPhaseName.split("_")
-            print("Current phase direction:", currPhaseDirection)
-            print("New phase direction:", newPhaseDirection)
-            print("New phase:", newPhase)
+        # If max yellow phase time reached, switch to next phase in the schedule 
+    elif rule.getConditions()[0] == "maxYellowPhaseTimeReached":
+        if trafficLight.getPhase(trafficLight.getName()) == len(trafficLight.getPhases() - 1):
+            traci.trafficlight.setPhase(trafficLight.getName(), 0)
+        else:
+            traci.trafficlight.setPhase(trafficLight.getName(), trafficLight.getPhase(trafficLight.getName()) + 1)
 
-
-                # If action doesn't involve another yellow phase, or another green phase for the same direction, apply its action. Otherwise, do nothing.
-            if "G" in newPhase[2] and newPhaseDirection != currPhaseDirection:
-                traci.trafficlight.setPhase(trafficLight.getName(), rule.getAction())                
-                validRuleFound = True
-                print("Rule selected for", trafficLight.getName(), ". It's conditions are:", rule.getConditions())    
-                break
 
     # PROVIDE SIMULATION RELEVANT PARAMETERS
 def getPredicateParameters(trafficLight, predicate):
