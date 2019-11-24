@@ -523,14 +523,15 @@ def emergencyVehicleApproachingHorizontal(tlPhaseArray, vehTypeIDs):
                 return True
         return False 
 
-def maxGreenPhaseTimeReached(phase, maxTime, timeInPhase):
+def maxGreenPhaseTimeReached(phase, timeInPhase, maxTime):
     if phase == "G":    
         if timeInPhase >= maxTime:
             return True 
         else: 
             return False
 
-def maxYellowPhaseTimeReached(phase, tlPhaseArray, maxTime, timeInPhase):
+def maxYellowPhaseTimeReached(phase, timeInPhase, maxTime):
+    print("\n**Evaluating maxYellowPhaseTimeWasReached rule.**\n\n")
     if phase == "Y":    
         if timeInPhase >= maxTime:
             return True 

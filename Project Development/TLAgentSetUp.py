@@ -29,13 +29,16 @@ def run():
         if "<tlLogic" in x:
             getTLName = x.split("id=\"")
             tlNameArray = getTLName[1].split("\"")
-            tlPhases[tlNameArray[0]] = 0
+            tlPhases[tlNameArray[0]] = []
                 
                 # Count number of phases/actions a TL has; loop max is arbitrarily high given phase number uncertainty 
             for i in range(0, 1000):
                 x = f.readline()
+                    # For each phase, record its phase name
                 if "<phase" in x:
-                    tlPhases[tlNameArray[0]] += 1
+                    phaseNameSplit = x.split("name=")
+                    phaseName = phaseNameSplit[1].split("\"")
+                    tlPhases[tlNameArray[0]].append(phaseName[1])
                 else:
                     break
 
