@@ -5,7 +5,7 @@ import sys
 import optparse
 
 import InitSetUp as InitSetUp
-import PredicateSet as PredicateSet
+import PredicateSet 
 import EvolutionaryLearner as EvolutionaryLearner
 from Rule import Rule
 
@@ -16,6 +16,7 @@ global trafficLights
 
 maxGreenPhaseTime = 225
 maxYellowPhaseTime = 5
+
 
 # Importing needed python modules from the $SUMO_HOME/tools directory
 if 'SUMO_HOME' in os.environ:
@@ -38,14 +39,22 @@ def get_options():
 
 # CONTAINS MAIN TRACI SIMULATION LOOP
 def run():
-    # Run set-up script and acquire list of user defined rules and traffic light agents in simulation
+    modulename = 'PredicateSet'
+    if modulename not in sys.modules:
+        print("You have not imported the {}", module.format(modulename))
+    else:
+        print("Module imported successfully")
+        # Run set-up script and acquire list of user defined rules and traffic light agents in simulation
     setUpTuple = InitSetUp.run()
     userDefinedRules = setUpTuple[0]
     trafficLights = setUpTuple[1]
+    for x in userDefinedRules:
+        print("User defined rules contains the conditions:", x.getConditions())
+    print("trafficLights contains:", trafficLights)
 
         # Assign each traffic light an individual from their agent pool for this simulation run
     for tl in trafficLights:
-        trafficLights.assignIndividual()
+        tl.assignIndividual()
     
         # Simulation loop 
     step = 0
@@ -56,7 +65,7 @@ def run():
         if step % 5 == 0:
                 # For every traffic light in simulation, select and evaluate new rule from its agent pool
             for tl in trafficLights:
-                rule = applicableUserDefinedRule(tl)
+                rule = applicableUserDefinedRule(tl, userDefinedRules)
                     
                     # If no user-defined rules can be applied, get a rule from Agent Pool
                 if rule == False:    
@@ -125,22 +134,23 @@ def evaluateRule(trafficLight, rule):
     return True # if all predicates return true, evaluate rule as True
     
     # DETERMINE IF ANY USER DEFINED RULES ARE APPLICABLE
-def applicableUserDefinedRule(trafficLight):
+def applicableUserDefinedRule(trafficLight, userDefinedRules):
         # Evaluate each user define rule
     for rule in userDefinedRules:
             # For each rule, its parameters are acquired and the condition predicate is evaluated
-        for cond in rule.getConditions():            
-            print("The current user defined rule is:", cond)
-            if "emergencyVehicleApproaching" in cond:
-                continue
-            else:
-                parameters = getPredicateParameters(trafficLight, cond)
-                predCall = getattr(PredicateSet, cond)(parameters[0], parameters[1], parameters[2]) # Construct predicate fuction call
-                
-                # Determine validity of predicate
-            if predCall == True:
-                print("User defined rule applicable:", rule.getConditions())
-                return rule
+        cond = rule.getConditions()          
+        print("The current user defined rule is:", cond)
+        if "emergencyVehicleApproaching" in cond:
+            continue
+        else:
+            parameters = getPredicateParameters(trafficLight, cond)
+            print("The parameters are:", parameters)
+            predCall = getattr(PredicateSet, cond)("H_S_Y", 5, 6) # Construct predicate fuction call
+            
+            # Determine validity of predicate
+        if predCall == True:
+            print("User defined rule applicable:", rule.getConditions())
+            return rule
     return False # if no user-defined predicates are applicable, return False
 
     # APPLIES USER DEFINED ACTIONS

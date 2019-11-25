@@ -51,9 +51,9 @@ class TrafficLight:
         self.agentPool = agentPool
 
     def getAssignedIndividual(self):
-        return assignedIndividual
+        return self.assignedIndividual
     
     def assignIndividual(self):
-        assignedIndividual = agentPool.selectIndividual()
+        assignedIndividual = self.agentPool.selectIndividual()
         
 

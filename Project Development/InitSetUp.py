@@ -7,24 +7,28 @@ import re
 
 from TrafficLight import TrafficLight
 from AgentPool import AgentPool
+from Rule import Rule
 
 def run():
     tlAgentPoolList = []
     trafficLightDict = {}
     userDefinedRules = []
-
+        
         # Parse user defined rules file and create rules for each
-    f = open(UserDefinedRules.txt, "r")
+    f = open("UserDefinedRules.txt", "r")
         # Parse file to gather information about traffic lights, and instantiate their objects
     for x in f:
+            # Ignore comment sections of input file
+        if "//" in x:
+            continue
             # For each user defined rule, create a rule with its conditions
-        if "udr" in x:
+        elif "udr" in x:
             ruleComponents = x.split(": ")
-            userDefinedRules.append(Rule(ruleComponents[1], -1, None)   # User defined rules have only defined conditions; actions are predefined in Driver.py and they apply to all Agent Pools
-        
-        # Close file before moving on
-    f.close()
+            userDefinedRules.append(Rule(ruleComponents[1], -1, None)) # User defined rules have only defined conditions; actions are predefined in Driver.py and they apply to all Agent Pools
 
+    f.close() # Close file before moving on
+
+        
         # Get SUMO network file to parse
     fileName = input("Please enter the name of the desired network file: ")
 
