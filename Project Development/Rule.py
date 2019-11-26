@@ -34,5 +34,5 @@ class Rule:
         return self.weight
         
         # UPDATE WEIGHT OF RULE AFTER SIMULATION RUN
-    def setWeight(self, weight):
+    def updateWeight(self, weight):
         self.weight = weight

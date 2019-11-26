@@ -4,15 +4,18 @@ import os
 import sys
 import optparse
 
-import InitSetUp as InitSetUp
+import InitSetUp 
 import PredicateSet 
-import EvolutionaryLearner as EvolutionaryLearner
+import EvolutionaryLearner 
+import ReinforcementLearner
 from Rule import Rule
 
 global maxGreenPhaseTime
 global maxYellowPhaseTime
 global userDefinedRules
 global trafficLights
+global rule
+global nextRule
 
 maxGreenPhaseTime = 225
 maxYellowPhaseTime = 5
@@ -43,42 +46,70 @@ def run():
     setUpTuple = InitSetUp.run()
     userDefinedRules = setUpTuple[0]
     trafficLights = setUpTuple[1]
+    rule = None 
+    nextRule = None
 
-        # Assign each traffic light an individual from their agent pool for this simulation run
+        # Assign each traffic light an individual from their agent pool for this simulation run, and a starting rule
     for tl in trafficLights:
         tl.assignIndividual()
-    
+        rule = applicableUserDefinedRule(tl, userDefinedRules) # Check user-defined rules
+            
+            # If no user-defined rules can be applied, get a rule from Agent Pool
+        if rule == False:    
+            rule = tl.getAssignedIndividual().selectRule(getValidRules(tl, tl.getAssignedIndividual())) # Get a rule from assigned rsIndividual
+                # If rule conditions are satisfied, apply its action. Otherwise, do nothing.
+            if evaluateRule(tl, rule):
+                traci.trafficlight.setPhase(tl.getName(), rule.getAction())                
+                print("Rule selected for", tl.getName(), ". It's conditions are:", rule.getConditions())    
+
+        else:
+            applyUserDefinedRuleAction(tl, traci.trafficlight.getPhaseName(tl.getName()), rule)
+
         # Simulation loop 
     step = 0
+    carsWaitingAfter = 0
+    waitingTimeAfter = 0
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep() # Advance SUMO simulation one step (1 second)
             
             # Traffic Light agents reevaluate their state every 5 seconds
-        if step % 5 == 0:
+        if step % 5 == 0:  
                 # For every traffic light in simulation, select and evaluate new rule from its agent pool
             for tl in trafficLights:
-                rule = applicableUserDefinedRule(tl, userDefinedRules) # Check user-defined rules
+                carsWaitingAfter = carsWaitingCount(tl) 
+                waitingTimeAfter = getWaitingTime(tl)
+                    
+                nextRule = applicableUserDefinedRule(tl, userDefinedRules) # Check if a user-defined rule can be applied
                    
                     # If no user-defined rules can be applied, get a rule from Agent Pool
-                if rule == False:    
-                    rule = tl.getAssignedIndividual().selectRule() # Get a rule from assigned rsIndividual
-                        # If rule conditions are satisfied, apply its action. Otherwise, do nothing.
-                    if evaluateRule(tl, rule):
-                        traci.trafficlight.setPhase(tl.getName(), rule.getAction())                
-                        print("Rule selected for", tl.getName(), ". It's conditions are:", rule.getConditions())    
+                if nextRule == False:    
+                    nextRule = tl.getAssignedIndividual().selectRule(getValidRules(tl, tl.getAssignedIndividual())) # Get a rule from assigned rsIndividual
+
+                        # If applied rule isn't user-defined, update its weight
+                    if rule not in userDefinedRules:
+                        rule.updateWeight(ReinforcementLearner.updatedWeight(rule, nextRule, (tl.getCarsWaitingCount() - carsWaitingAfter), (tl.getWaitTime() - waitingTimeAfter)))
+                        print("Rule with conditions:", rule.getConditions(), "now has a weight of:", rule.getWeight(), "\n\n")
+                            
+                            # If nextRule conditions are satisfied, apply its action. Otherwise, do nothing.
+                    traci.trafficlight.setPhase(tl.getName(), nextRule.getAction())                
+                    print("Rule selected for", tl.getName(), ". It's conditions are:", nextRule.getConditions())    
 
                 else:
-                    print("\n\n Applying user defined action.\n")
-                    applyUserDefinedRuleAction(tl, traci.trafficlight.getPhaseName(tl.getName()), rule)
-                    print("Applying action of", rule.getConditions())         
+                    applyUserDefinedRuleAction(tl, traci.trafficlight.getPhaseName(tl.getName()), nextRule)
+                    print("Applying action of", nextRule.getConditions())  
+
+                    # Update values before proceeding
+                rule = nextRule
+                tl.setCarsWaitingCount(carsWaitingAfter)
+                tl.setWaitTime(waitingTimeAfter)             
         
-        step += 1 
+        step += 1  # Increment step in line with simulator
 
     traci.close()       # End simulation
     sys.stdout.flush()  
     
 # RETRIEVE THE STATE OF THE INTERSECTION FROM SUMO
-def get_state(trafficLight):
+def getState(trafficLight):
     state = {}
     leftTurnLane = ""
     for lane in trafficLight.getLanes():
@@ -110,7 +141,33 @@ def get_state(trafficLight):
                 state[laneID].append(vehID)
             
     return state
+
+def carsWaitingCount(trafficLight):
+    state = getState(trafficLight)
+    carsWaiting = 0
+        # Count all vehicles in the state dictionary
+    for lanes in state:
+        carsWaiting += len(state[lanes])
     
+    return carsWaiting
+
+def getWaitingTime(trafficLight):
+    waitTime = 0
+        # Sum waiting time of each edge controlled by the traffic light
+    for edge in trafficLight.getEdges():
+        waitTime += traci.edge.getWaitingTime(edge)
+    
+    return waitTime
+
+def getValidRules(trafficLight, individual):
+    validRules = []
+
+    for rule in individual.getRuleSet():
+        if evaluateRule(trafficLight, rule):
+            validRules.append(rule)
+    
+    return validRules
+
     # EVALUATE RULE VALIDITY (fEval)
 def evaluateRule(trafficLight, rule):
         # For each condition, its parameters are acquired and the condition predicate is evaluated
@@ -131,7 +188,6 @@ def applicableUserDefinedRule(trafficLight, userDefinedRules):
     for rule in userDefinedRules:
             # For each rule, its parameters are acquired and the condition predicate is evaluated
         for cond in rule.getConditions():    
-            print("The current user defined rule is:", cond)
             if "emergencyVehicleApproaching" in cond:
                 continue
             else:
@@ -166,7 +222,7 @@ def getPredicateParameters(trafficLight, predicate):
     if predicate == "longestTimeWaitedToProceedStraight":
             # Find max wait time for relevant intersection
         maxWaitTime = 0
-        state = get_state(trafficLight) # Retrieve state of specified intersection 
+        state = getState(trafficLight) # Retrieve state of specified intersection 
         for lane in state:
             if lane in trafficLight.getLanes():
                 for veh in state[lane]:
@@ -180,7 +236,7 @@ def getPredicateParameters(trafficLight, predicate):
     elif predicate == "longestTimeWaitedToTurnLeft":
             # Find max wait time for relevant intersection
         maxWaitTime = 0
-        state = get_state(trafficLight) # Retrieve state of specified intersection 
+        state = getState(trafficLight) # Retrieve state of specified intersection 
         for lane in state:
             if lane in trafficLight.getLanes():
                 for veh in state[lane]:
@@ -193,7 +249,7 @@ def getPredicateParameters(trafficLight, predicate):
 
     elif predicate == "numCarsWaitingToProceedStraight":
         carsWaiting = 0
-        state = get_state(trafficLight) # Retrieve state of specified intersection 
+        state = getState(trafficLight) # Retrieve state of specified intersection 
         for lane in state:
             if lane in trafficLight.getLanes():
                 for veh in state[lane]:
@@ -207,7 +263,7 @@ def getPredicateParameters(trafficLight, predicate):
 
     elif predicate == "numCarsWaitingToTurnLeft":
         carsWaiting = 0
-        state = get_state(trafficLight) # Retrieve state of specified intersection 
+        state = getState(trafficLight) # Retrieve state of specified intersection 
         for lane in state:
             if lane in trafficLight.getLanes():
                 for veh in state[lane]:
@@ -243,7 +299,6 @@ def getPredicateParameters(trafficLight, predicate):
         
         parameters.append(traci.trafficlight.getPhaseDuration(trafficLight.getName()) - (traci.trafficlight.getNextSwitch(trafficLight.getName()) - traci.simulation.getTime()))
         parameters.append(maxYellowPhaseTime)
-        print("The current phase is:", parameters[0], "and the phase time is:", parameters[1], "\n\n")
 
         return parameters        
 # main entry point
