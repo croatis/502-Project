@@ -39,18 +39,10 @@ def get_options():
 
 # CONTAINS MAIN TRACI SIMULATION LOOP
 def run():
-    modulename = 'PredicateSet'
-    if modulename not in sys.modules:
-        print("You have not imported the {}", module.format(modulename))
-    else:
-        print("Module imported successfully")
         # Run set-up script and acquire list of user defined rules and traffic light agents in simulation
     setUpTuple = InitSetUp.run()
     userDefinedRules = setUpTuple[0]
     trafficLights = setUpTuple[1]
-    for x in userDefinedRules:
-        print("User defined rules contains the conditions:", x.getConditions())
-    print("trafficLights contains:", trafficLights)
 
         # Assign each traffic light an individual from their agent pool for this simulation run
     for tl in trafficLights:
@@ -65,8 +57,8 @@ def run():
         if step % 5 == 0:
                 # For every traffic light in simulation, select and evaluate new rule from its agent pool
             for tl in trafficLights:
-                rule = applicableUserDefinedRule(tl, userDefinedRules)
-                    
+                rule = applicableUserDefinedRule(tl, userDefinedRules) # Check user-defined rules
+                   
                     # If no user-defined rules can be applied, get a rule from Agent Pool
                 if rule == False:    
                     rule = tl.getAssignedIndividual().selectRule() # Get a rule from assigned rsIndividual
@@ -138,19 +130,19 @@ def applicableUserDefinedRule(trafficLight, userDefinedRules):
         # Evaluate each user define rule
     for rule in userDefinedRules:
             # For each rule, its parameters are acquired and the condition predicate is evaluated
-        cond = rule.getConditions()          
-        print("The current user defined rule is:", cond)
-        if "emergencyVehicleApproaching" in cond:
-            continue
-        else:
-            parameters = getPredicateParameters(trafficLight, cond)
-            print("The parameters are:", parameters)
-            predCall = getattr(PredicateSet, cond)("H_S_Y", 5, 6) # Construct predicate fuction call
-            
-            # Determine validity of predicate
-        if predCall == True:
-            print("User defined rule applicable:", rule.getConditions())
-            return rule
+        for cond in rule.getConditions():    
+            print("The current user defined rule is:", cond)
+            if "emergencyVehicleApproaching" in cond:
+                continue
+            else:
+                parameters = getPredicateParameters(trafficLight, cond)
+                print("The parameters are:", parameters)
+                predCall = getattr(PredicateSet, cond)(parameters[0], parameters[1], parameters[2]) # Construct predicate fuction call
+                
+                # Determine validity of predicate
+            if predCall == True:
+                print("User defined rule applicable:", rule.getConditions())
+                return rule
     return False # if no user-defined predicates are applicable, return False
 
     # APPLIES USER DEFINED ACTIONS
@@ -163,10 +155,10 @@ def applyUserDefinedRuleAction(trafficLight, currPhaseName, rule):
         
         # If max yellow phase time reached, switch to next phase in the schedule 
     elif rule.getConditions()[0] == "maxYellowPhaseTimeReached":
-        if trafficLight.getPhase(trafficLight.getName()) == len(trafficLight.getPhases() - 1):
+        if traci.trafficlight.getPhase(trafficLight.getName()) == (len(trafficLight.getPhases()) - 1):
             traci.trafficlight.setPhase(trafficLight.getName(), 0)
         else:
-            traci.trafficlight.setPhase(trafficLight.getName(), trafficLight.getPhase(trafficLight.getName()) + 1)
+            traci.trafficlight.setPhase(trafficLight.getName(), traci.trafficlight.getPhase(trafficLight.getName()) + 1)
 
 
     # PROVIDE SIMULATION RELEVANT PARAMETERS

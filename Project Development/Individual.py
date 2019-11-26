@@ -1,5 +1,6 @@
 import os
 import sys
+from random import randrange
 
 class Individual:
     

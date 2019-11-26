@@ -516,6 +516,7 @@ def emergencyVehicleApproachingVertical(tlPhaseArray, vehTypeIDs):
         if vt == "emergency":
             return True
     return False        
+
 def emergencyVehicleApproachingHorizontal(tlPhaseArray, vehTypeIDs):
     # if in Vertical phase
         for vt in vehTypeIDs:
@@ -568,7 +569,7 @@ def getRandomPredicate():
 
 
 def run():
-    print("\nThe random predicate chosen is:", getRandomPredicate())
+    print("\nThe predicate list is:", getPredicateList())
 
 if __name__ == "__main__":
     run()

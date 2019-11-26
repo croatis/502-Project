@@ -24,8 +24,9 @@ def run():
             # For each user defined rule, create a rule with its conditions
         elif "udr" in x:
             ruleComponents = x.split(": ")
-            userDefinedRules.append(Rule(ruleComponents[1], -1, None)) # User defined rules have only defined conditions; actions are predefined in Driver.py and they apply to all Agent Pools
-
+            ruleComponents = ruleComponents[1].split()
+            userDefinedRules.append(Rule([ruleComponents[0]], -1, None)) # User defined rules have only defined conditions; actions are predefined in Driver.py and they apply to all Agent Pools
+            print("The rule being added is:", ruleComponents[0], ".")
     f.close() # Close file before moving on
 
         
