@@ -2,6 +2,7 @@ import os
 import sys
 import PredicateSet as PredicateSet
 from Rule import Rule
+from Individual import Individual
 from random import randrange
 from random import randint
 
@@ -10,18 +11,24 @@ from random import randint
 
 global maxRulePredicates
 global maxRules
+global maxIndividuals
 
 maxRulePredicates = 3
-maxRules = 5
+maxRules = 10
+maxIndividuals = 5
 
-    # CREATE RANDOM RULES FOR RULE SETS BEFORE FIRST RUN
-def initRuleSet(agentPool):
-    ruleSet = [] # Rule sets are lists of rules
-
-    for i in range(maxRules):
-        ruleSet.append(createRandomRule(agentPool))
+    # CREATE INDIVIDUALS WITH RANDOM RULES POPULATING THEIR RULE SETS BEFORE FIRST RUN
+def initRSIndividuals(agentPool):
+    individuals = []
+    for x in range(maxIndividuals):    
+        ruleSet = [] # Rule sets are lists of rules
+            # Populate a rule set
+        for i in range(maxRules):
+            ruleSet.append(createRandomRule(agentPool))
+        
+        individuals.append(Individual(x+1, ruleSet))
     
-    return ruleSet
+    return individuals
     
     # CREATE A RANDOM RULE USING RANDOM PREDICATES AND AN AGENT POOL RELATED ACTION
 def createRandomRule(agentPool):
@@ -32,8 +39,10 @@ def createRandomRule(agentPool):
         newCond = PredicateSet.getRandomPredicate()
         if checkValidCond(newCond, conditions):
             conditions.append(newCond)
-    
-    action = randrange(0,agentPool.getActionSet()) # Set rule action to a random action from ActionSet pertaining to Agent Pool being serviced
+        
+        # Get index of possible action. SUMO changes phases on indexes
+    action = randrange(0, len(agentPool.getActionSet()))     # Set rule action to a random action from ActionSet pertaining to Agent Pool being serviced
+    print("The action is:", action)
     rule = Rule(conditions, action, agentPool)
 
     return rule   
@@ -61,7 +70,6 @@ def breed(rule1, rule2):
 
     else: 
         numOfChildCond = randint(condLen1, condLen2)
-    print("Child will have", numOfChildCond, "conditions.\n")
 
         # Populate child conditions with predicates from its two parents
     for x in range(numOfChildCond):
@@ -69,11 +77,9 @@ def breed(rule1, rule2):
 
         if chooseParent == 1:
             childConditions.append(conditionsSet1[randrange(condLen1)]) # Assign random predicate from parent/rule1 
-            print("Parent 1 chosen. Child conditions now contains:", childConditions, "\n")
 
         else:
             childConditions.append(conditionsSet2[randrange(condLen2)]) # Assign random predicate from parent/rule1 
-            print("Parent 2 chosen. Child conditions now contains:", childConditions, "\n")
 
         # Determine whose action the child will take
     actionToChoose = randint(1, 2) 
@@ -121,13 +127,9 @@ def mutate(rule):
 
         # Change action a specified % of the time to a random, permitted action 
     if randrange(0, 25) == 1:
-        rule.setAction(randrange(0, rule.getAgentPool().getActionSet())) 
+        rule.setAction(randrange(0, len(rule.getAgentPool().getActionSet())))
     
     return rule
-
-        # Change action a specified % of the time to a random, permitted action 
-    if randint(0, 25) == 1:
-        rule.setAction(randrange(rule.getAgentPool().getActionSet())) 
 
     # ENSURE UNIQUE PREDICATE TYPES IN CONDITIONS 
 def checkValidCond(cond, conditions):        

@@ -516,6 +516,7 @@ def emergencyVehicleApproachingVertical(tlPhaseArray, vehTypeIDs):
         if vt == "emergency":
             return True
     return False        
+
 def emergencyVehicleApproachingHorizontal(tlPhaseArray, vehTypeIDs):
     # if in Vertical phase
         for vt in vehTypeIDs:
@@ -523,14 +524,15 @@ def emergencyVehicleApproachingHorizontal(tlPhaseArray, vehTypeIDs):
                 return True
         return False 
 
-def maxGreenPhaseTimeReached(phase, maxTime, timeInPhase):
+def maxGreenPhaseTimeReached(phase, timeInPhase, maxTime):
     if phase == "G":    
         if timeInPhase >= maxTime:
             return True 
         else: 
             return False
 
-def maxYellowPhaseTimeReached(phase, tlPhaseArray, maxTime, timeInPhase):
+def maxYellowPhaseTimeReached(phase, timeInPhase, maxTime):
+    print("\n**Evaluating maxYellowPhaseTimeWasReached rule.**\n\n")
     if phase == "Y":    
         if timeInPhase >= maxTime:
             return True 
@@ -567,7 +569,7 @@ def getRandomPredicate():
 
 
 def run():
-    print("\nThe random predicate chosen is:", getRandomPredicate())
+    print("\nThe predicate list is:", getPredicateList())
 
 if __name__ == "__main__":
     run()

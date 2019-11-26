@@ -3,6 +3,8 @@ import sys
 
 class TrafficLight:
 
+    global assignedIndividual
+
     def __init__ (self, name, lanes):
         self.name = name
         self.lanes = lanes
@@ -48,4 +50,10 @@ class TrafficLight:
     def assignToAgentPool(self, agentPool):
         self.agentPool = agentPool
 
- 
+    def getAssignedIndividual(self):
+        return self.assignedIndividual
+    
+    def assignIndividual(self):
+        self.assignedIndividual = self.agentPool.selectIndividual()
+        
+
