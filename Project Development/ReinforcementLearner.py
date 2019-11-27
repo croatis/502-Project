@@ -20,3 +20,4 @@ def updatedWeight(rule, nextRule, throughput, waitTimeReduced):
 #*** Add in something for basing reward as performance relative to average rates in simulation maybe***
 def determineReward(throughput, waitTimeReduced):
     return (throughputFactor*throughput + waitTimeReducedFactor*waitTimeReduced)
+
