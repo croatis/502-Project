@@ -3,8 +3,10 @@ import sys
 import random
 
 class Individual:
-    global epsilon 
-    epsilon = 0.5        # paramater between 0 and 1 used to determine importance of doing exploration (higher epsilon = more exploration)
+    global epsilon          # paramater between 0 and 1 used to determine importance of doing exploration (higher epsilon = more exploration)
+    global minProbability   # minimum probability a rule can have for being selected
+    epsilon = 0.5      
+    minProbability = 1  
     
         # INTIALIZE OBJECT VARIABLES
     def __init__(self, identifier, agentPool, ruleSet):
@@ -35,7 +37,7 @@ class Individual:
             return -1
         
         ruleSets = self.subDivideValidRules(validRules)
-        ruleSelectionList = []                      # A list of 100 valid rules. Number of times any one rule appears in list is relative to their probability of being selected 
+        ruleSelectionList = []                      # A list of valid rules. Number of times any one rule appears in list is relative to their probability of being selected 
 
         if len(ruleSets[0]) > 0:    
                 # Add a number of max weight rules to selection set relative to their probabilities
@@ -68,21 +70,21 @@ class Individual:
     def getRuleProbabilityMax(self, rule, rsMax):
         weight = rule.getWeight()
         
-        #TEMP WORK AROUND set weight to smallest number in Python to avoid dividing by 0
+            #Set weight to smallest number in Python to avoid dividing by 0
         if weight == 0:
             weight = 2.2250738585072014e-308
 
-        return ((1-epsilon)*(weight/(weight*len(rsMax))))
+        return max(minProbability, ((1-epsilon)*(weight/(weight*len(rsMax)))))
     
         # RETURN PROBABILITY OF SELECTION FOR A RULE IN rsRest
     def getRuleProbabilityRest(self, rule, rsRest):
         weight = rule.getWeight()
         
-        #TEMP WORK AROUND set weight to smallest number in Python to avoid dividing by 0
+        #Set weight to smallest number in Python to avoid dividing by 0
         if weight == 0:
             weight = 2.2250738585072014e-308
         
-        return (epsilon*(weight/self.getSumOfWeights(rsRest)))
+        return max(minProbability, (epsilon*(weight/self.getSumOfWeights(rsRest))))
 
         # RETURN SUM OF ALL WEIGHTS IN A RULE SET
     def getSumOfWeights(self, setOfRules):

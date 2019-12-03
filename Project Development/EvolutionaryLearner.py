@@ -17,6 +17,42 @@ maxRulePredicates = 3
 maxRules = 10
 maxIndividuals = 5
 
+    # How much runtime and rule weights matter when determining fitness of a simulation run
+global runtimeFactor        
+global ruleWeightFactor
+
+runtimeFactor = 1
+ruleWeightFactor = 0.5
+
+    # FITNESS FUNCTION FOR ONE SIMULATION SET
+def fit(simTime, agentPools):
+    ruleWeights = getSumRuleWeights(agentPools)
+    fit = runtimeFactor*(1/simTime) + ruleWeightFactor*(1-(1/ruleWeights))
+
+    createNewGeneration(individuals)
+    return fit
+
+def createNewGeneration(agentPools):
+    pass
+
+    # RETURN SUM OF ALL WEIGHTS IN A RULE SET
+def getSumRuleWeights(agentPools):
+    weightSum = 0
+
+    for ap in agentPools:
+        individuals = ap.getIndividualsSet()    
+        # For each individual, sum all their rule weights
+        for i in individuals:
+            ruleSet = i.getRuleSet()    
+                # Sum the weights of all the rules in the set
+            for rule in ruleSet:
+                weightSum += rule.getWeight()
+    
+    if weightSum == 0:
+        weightSum = 2.2250738585072014e-308
+
+    return weightSum
+
     # CREATE INDIVIDUALS WITH RANDOM RULES POPULATING THEIR RULE SETS BEFORE FIRST RUN
 def initRSIndividuals(agentPool):
     individuals = []
