@@ -13,6 +13,7 @@ class TrafficLight:
         self.phases = 0
         self.carsWaiting = 0
         self.waitTime = 0
+        self.doNothingCount = 0
 
         # RETURNS THE TRAFFIC LIGHT'S NAME
     def getName(self):
@@ -87,3 +88,9 @@ class TrafficLight:
         # SETS THE TOTAL WAIT TIME OF CARS WAITING AT THE TRAFFIC LIGHT'S INTERSECTION
     def setWaitTime(self, waitTime):
         self.waitTime = waitTime
+
+    def doNothing(self):
+        self.doNothingCount += 1
+    
+    def getDoNothingCount(self):
+        return self.doNothingCount

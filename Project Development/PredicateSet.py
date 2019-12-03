@@ -532,7 +532,6 @@ def maxGreenPhaseTimeReached(phase, timeInPhase, maxTime):
             return False
 
 def maxYellowPhaseTimeReached(phase, timeInPhase, maxTime):
-    print("\n**Evaluating maxYellowPhaseTimeWasReached rule.**\n\n")
     if phase == "Y":    
         if timeInPhase >= maxTime:
             return True 

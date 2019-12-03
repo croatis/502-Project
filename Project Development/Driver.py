@@ -57,11 +57,18 @@ def run():
             # If no user-defined rules can be applied, get a rule from Agent Pool
         if rule == False:    
             rule = tl.getAssignedIndividual().selectRule(getValidRules(tl, tl.getAssignedIndividual())) # Get a rule from assigned rsIndividual
-                # If rule conditions are satisfied, apply its action. Otherwise, do nothing.
-            if evaluateRule(tl, rule):
-                traci.trafficlight.setPhase(tl.getName(), rule.getAction())                
-                print("Rule selected for", tl.getName(), ". It's conditions are:", rule.getConditions())    
+                
+                # if no valid rule applicable, apply the Do Nothing rule.
+            if rule == -1:
+                print("No valid rule. Do Nothing action applied.") 
+                tl.doNothing()  # Update traffic light's Do Nothing counter
 
+            else:       
+                    # If rule conditions are satisfied, apply its action. Otherwise, do nothing.
+                if evaluateRule(tl, rule):
+                    traci.trafficlight.setPhase(tl.getName(), rule.getAction())                
+                    print("Rule selected for", tl.getName(), ". It's conditions are:", rule.getConditions())    
+        
         else:
             applyUserDefinedRuleAction(tl, traci.trafficlight.getPhaseName(tl.getName()), rule)
 
@@ -84,15 +91,23 @@ def run():
                     # If no user-defined rules can be applied, get a rule from Agent Pool
                 if nextRule == False:    
                     nextRule = tl.getAssignedIndividual().selectRule(getValidRules(tl, tl.getAssignedIndividual())) # Get a rule from assigned rsIndividual
+                
+                        # if no valid rule applicable, apply the Do Nothing rule.
+                    if nextRule == -1:
+                        print("No valid rule. Do Nothing action applied.") 
+                        tl.doNothing()  # Update traffic light's Do Nothing counter
 
-                        # If applied rule isn't user-defined, update its weight
-                    if rule not in userDefinedRules:
-                        rule.updateWeight(ReinforcementLearner.updatedWeight(rule, nextRule, (tl.getCarsWaitingCount() - carsWaitingAfter), (tl.getWaitTime() - waitingTimeAfter)))
-                        print("Rule with conditions:", rule.getConditions(), "now has a weight of:", rule.getWeight(), "\n\n")
-                            
-                            # If nextRule conditions are satisfied, apply its action. Otherwise, do nothing.
-                    traci.trafficlight.setPhase(tl.getName(), nextRule.getAction())                
-                    print("Rule selected for", tl.getName(), ". It's conditions are:", nextRule.getConditions())    
+                    else: 
+                        print("In else. Rule is", rule)
+                            # If applied rule isn't user-defined, update its weight
+                        if rule not in userDefinedRules:
+                            if rule != -1:
+                                rule.updateWeight(ReinforcementLearner.updatedWeight(rule, nextRule, (tl.getCarsWaitingCount() - carsWaitingAfter), (tl.getWaitTime() - waitingTimeAfter)))
+                                print("Rule with conditions:", rule.getConditions(), "now has a weight of:", rule.getWeight(), "\n\n")
+                                
+                                # If nextRule conditions are satisfied, apply its action.
+                            traci.trafficlight.setPhase(tl.getName(), nextRule.getAction())                
+                            print("Rule selected for", tl.getName(), ". It's conditions are:", nextRule.getConditions())    
 
                 else:
                     applyUserDefinedRuleAction(tl, traci.trafficlight.getPhaseName(tl.getName()), nextRule)
@@ -192,7 +207,6 @@ def applicableUserDefinedRule(trafficLight, userDefinedRules):
                 continue
             else:
                 parameters = getPredicateParameters(trafficLight, cond)
-                print("The parameters are:", parameters)
                 predCall = getattr(PredicateSet, cond)(parameters[0], parameters[1], parameters[2]) # Construct predicate fuction call
                 
                 # Determine validity of predicate
@@ -284,6 +298,11 @@ def getPredicateParameters(trafficLight, predicate):
     elif "maxGreenPhaseTimeReached" == predicate:
         parameters = []
         parameters.append(traci.trafficlight.getPhaseName(trafficLight.getName()))
+        
+            # Get phase (G or Y) from phase name
+        getPhase = parameters[0].split("_")
+        parameters[0] = getPhase[2]
+        
         parameters.append(traci.trafficlight.getPhaseDuration(trafficLight.getName()) - (traci.trafficlight.getNextSwitch(trafficLight.getName()) - traci.simulation.getTime()))
         parameters.append(maxGreenPhaseTime)
 

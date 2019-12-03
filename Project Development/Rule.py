@@ -8,6 +8,7 @@ class Rule:
         self.action = action            # Action to carry out if all conditions are true 
         self.agentPool = agentPool      # Agent pool rule originated from (used for updating actions of rule)
         self.weight = 0                 # Weight of rule (used during a TL agent's process of selecting a rule)
+        self.timesSelected = 0          # Keep track of how many times a rule was selected
 
     def getConditions(self):
         return self.conditions
@@ -36,3 +37,9 @@ class Rule:
         # UPDATE WEIGHT OF RULE AFTER SIMULATION RUN
     def updateWeight(self, weight):
         self.weight = weight
+    
+    def selected(self):
+        self.timesSelected += 1
+    
+    def getTimesSelected(self):
+        return self.timesSelected
