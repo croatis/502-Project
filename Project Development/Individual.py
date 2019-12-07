@@ -1,6 +1,6 @@
 import os
 import sys
-import random
+from numpy.random import choice
 
 class Individual:
     global epsilon          # paramater between 0 and 1 used to determine importance of doing exploration (higher epsilon = more exploration)
@@ -10,10 +10,11 @@ class Individual:
     
         # INTIALIZE OBJECT VARIABLES
     def __init__(self, identifier, agentPool, ruleSet):
-        self.id = identifier                    # AgentPool name
+        self.id = identifier                    
         self.ruleSet = ruleSet                  # Set of rules contained within individual
         self.selectedCount = 0                  # Number of times individual has been chosen during a training period                  
-        self.agentPool = agentPool
+        self.agentPool = agentPool              # AgentPool name
+        self.fitness = 0
         
         # RETURN INDIVIDUAL IDENTIFIER
     def getID(self):
@@ -26,10 +27,20 @@ class Individual:
         # INCREMENT selectedCount BY ONE FOR EVOLUTIONARY LEARNING PURPOSES
     def selected(self):
         self.selectedCount += 1
-        
+
+        # RESET selectedCount TO ZERO
+    def resetSelectedCount(self):
+        self.selectedCount = 0
+
         # RETURN selectedCount 
     def getSelectedCount(self):
         return self.selectedCount
+    
+    def getFitness(self):
+        return self.fitness
+    
+    def updateFitness(self, fitness):
+        self.fitness = fitness
 
         # RETURN A RULE BASED ON THEIR PROBABILITIES 
     def selectRule(self, validRules):
@@ -37,26 +48,34 @@ class Individual:
             return -1
         
         ruleSets = self.subDivideValidRules(validRules)
-        ruleSelectionList = []                      # A list of valid rules. Number of times any one rule appears in list is relative to their probability of being selected 
 
-        if len(ruleSets[0]) > 0:    
+        if len(ruleSets[0]) > 0:  
+            rules = []
+            probabilities = []  
                 # Add a number of max weight rules to selection set relative to their probabilities
             for rule in ruleSets[0]:
-                probability = int(self.getRuleProbabilityMax(rule, ruleSets[0])) * 100
+                probability = int(self.getRuleProbabilityMax(rule, ruleSets[0])) 
                 print("Rule with conditions:", rule.getConditions(), "is in the MAX GROUP with probability", probability, "\n\n")
-                for i in range(probability + 1):
-                    ruleSelectionList.append(rule)
+                rules.append(rule)
+                probabilities.append(probability)
         
-        if len(ruleSets[1]) > 0:    
-                # Add a number of the rest of the rules to selection set relative to their probabilities
-            for rule in ruleSets[1]:
-                probability = int(self.getRuleProbabilityRest(rule, ruleSets[1])) * 100
-                print("Rule with conditions:", rule.getConditions(), "is in the REST GROUP with probability", probability, "\n\n")
-                for i in range(probability + 1):
-                    ruleSelectionList.append(rule)
+        rule = choice(rules, 1, p = probabilities)  # Returns a list (of size 1) of rules based on their probabilities
+        return rule[0]
+    
+    #     # CODE PROVIDED BY DAVID (https://stackoverflow.com/users/53192/david)
+    # def weighted_choice(self, items):
+    #     """returns a function that fetches a random item from items
 
-        print("The rule selection list has", len(ruleSelectionList), "rules in it!")
-        return random.choice(ruleSelectionList)
+    #     items is a list of tuples in the form (item, weight)"""
+    #     weight_total = sum((item[1] for item in items))
+    #     def choice(uniform = random.uniform):
+    #         n = uniform(0, weight_total)
+    #         for item, weight in items:
+    #             if n < weight:
+    #                 return item
+    #             n = n - weight
+    #         return item
+    #     return choice
 
         # RETURN A RANDOM RULE FROM INDIVIDUAL RULE SET
     def selectRandomRule(self, validRules):
@@ -84,15 +103,11 @@ class Individual:
         if weight == 0:
             weight = 2.2250738585072014e-308
         
-        return max(minProbability, (epsilon*(weight/self.getSumOfWeights(rsRest))))
+        return max(minProbability, (epsilon*(weight/self.getSumOfWeights)))
 
         # RETURN SUM OF ALL WEIGHTS IN A RULE SET
     def getSumOfWeights(self, setOfRules):
-        weightSum = 0
-            
-            # Sum the weights of all the rules in the set
-        for rule in setOfRules:
-            weightSum += rule.getWeight()
+        weightSum = sum(rule.getWeight() for rule in setOfRules)
         
         if weightSum == 0:
             weightSum = 2.2250738585072014e-308

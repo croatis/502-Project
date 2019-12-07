@@ -9,7 +9,7 @@ from TrafficLight import TrafficLight
 from AgentPool import AgentPool
 from Rule import Rule
 
-def run():
+def run(sumoNetworkName):
     tlAgentPoolList = []
     trafficLightDict = {}
     userDefinedRules = []
@@ -31,12 +31,12 @@ def run():
 
         
         # Get SUMO network file to parse
-    fileName = input("Please enter the name of the desired network file: ")
+    # fileName = input("Please enter the name of the desired network file: ")
 
 #ADD error checking for input (ensure it's a valid network file)
 
     # Open desired file
-    f = open(fileName, "r")
+    f = open(sumoNetworkName, "r")
     
     lanes = []
     trafficLights = []
@@ -111,7 +111,7 @@ def run():
             agentPools.append(agentPool) # Add new pool to agent pools list
         
 
-    return (userDefinedRules, trafficLights)
+    return (userDefinedRules, trafficLights, agentPools)
     
 # main entry point
 if __name__ == "__main__":

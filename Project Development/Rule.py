@@ -43,3 +43,4 @@ class Rule:
     
     def getTimesSelected(self):
         return self.timesSelected
+    
