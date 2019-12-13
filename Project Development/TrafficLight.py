@@ -1,6 +1,8 @@
 import os
 import sys
 
+import Communicator 
+
 class TrafficLight:
 
     global assignedIndividual
@@ -14,6 +16,9 @@ class TrafficLight:
         self.carsWaiting = 0
         self.waitTime = 0
         self.doNothingCount = 0
+        self.communicationPartners = []
+        self.communicatedIntentions = {}
+        self.recievedIntentions = {}
 
         # RETURNS THE TRAFFIC LIGHT'S NAME
     def getName(self):
@@ -44,9 +49,8 @@ class TrafficLight:
                 self.edges.append(edge[0])
             
             else:
-                print("Unprocessable edge detected:", edge)
+                print("Edge already exists or is unprocessable:", edge)
 
-                
        
         # RETURNS THE PHASES AVAILBLE TO THE TRAFFIC LIGHT
     def getPhases(self):
@@ -89,8 +93,37 @@ class TrafficLight:
     def setWaitTime(self, waitTime):
         self.waitTime = waitTime
 
+        # INCREMENTS THE NUMBER OF TIMES THE TL HAS APPLIED THE Do Nothing ACTION
     def doNothing(self):
         self.doNothingCount += 1
-    
+        
+        # RETURN THE doNothingCount 
     def getDoNothingCount(self):
         return self.doNothingCount
+
+        # RETURN LIST OF COMMUNICATION PARTNERS
+    def getCommunicationPartners(self):
+        return self.communicationPartners
+        
+        # SET LIST OF COMMUNICATION PARTNERS
+    def setCommunicationPartners(self, commPartners):
+        self.communicationPartners = commPartners
+
+        # SET TL'S NEXT INTENDED ACTION
+    def setIntention(self, intention):
+        self.communicateIntention(intention)
+        self.communicatedIntentions[intention.getTurn()] = intention
+
+        # COMMUNICATE INTENTION TO ALL COMMUNICATION PARTNERS
+    def communicateIntention(self, intention):
+        for tl in communicationPartners:
+            tl.recieveIntention(intention)
+
+        # RECIEVE AN INTENTION FROM A COMMUNICATION PARTNER
+    def recieveIntention(self, intention):
+        if intention.getTurn() not in self.recievedIntentions:
+            self.recievedIntentions[intention.getTurn()] = []
+        
+        self.recievedIntentions[intention.getTurn()].append(intention)
+
+

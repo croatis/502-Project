@@ -13,6 +13,8 @@ def run(sumoNetworkName):
     tlAgentPoolList = []
     trafficLightDict = {}
     userDefinedRules = []
+    edgePartners = {}
+    communicationPartners = {}
         
         # Parse user defined rules file and create rules for each
     f = open("UserDefinedRules.txt", "r")
@@ -35,8 +37,8 @@ def run(sumoNetworkName):
 
 #ADD error checking for input (ensure it's a valid network file)
 
-    # Open desired file
-    f = open(sumoNetworkName, "r")
+    
+    f = open(sumoNetworkName, "r")                                     # Open desired file
     
     lanes = []
     trafficLights = []
@@ -64,7 +66,7 @@ def run(sumoNetworkName):
         elif "<junction" and "type=\"traffic_light\"" in x:
                 # Isolate individual TLs
             temp = x.split("id=\"")
-            trafficLightName = temp[1].split("\"") #Traffic Light name
+            trafficLightName = temp[1].split("\"")                      # Traffic Light name
 
                 # Get all lanes controlled by TL
             splitForlanes = temp[1].split("incLanes=\"")
@@ -78,18 +80,47 @@ def run(sumoNetworkName):
             trafficLights.append(TrafficLight(trafficLightName[0], lanes))
             lanes = []
 
+        elif "<edge id=" in x and "function" not in x:
+            isolateFrom = x.split("from=\"")
+            isolateTo = x.split("to=\"")
+
+            isolateFrom = isolateFrom[1].split("\"")
+            fromJunction = isolateFrom[0]
+
+            isolateTo = isolateTo[1].split("\"")
+            toJunction = isolateTo[0]
+
+                # Create new dictionary entry for junctions if they doesn't already exist
+            if toJunction not in edgePartners:
+                edgePartners[toJunction] = []          
+            if fromJunction not in edgePartners:
+                edgePartners[fromJunction] = []
+
+                # Add edges to each others dictionary entries if not already there
+            if fromJunction not in edgePartners[toJunction]:
+                edgePartners[toJunction].append(fromJunction)            
+            if toJunction not in edgePartners[fromJunction]:
+                edgePartners[fromJunction].append(toJunction)
+
         else:
             continue
     
-    f.close() # Close file once finished
+    f.close()                                                           # Close file once finished
+
 
         # Set number of phases for each traffic light
     for x in tlPhases:
         for tl in trafficLights:
             if x == tl.getName():
                 tl.setPhases(tlPhases[x])
+            
+        # Create entries for traffic lights in the communicationPartners dict based on edgePartners data
+    for junction in edgePartners:
+        for t in trafficLights:
+            if junction == t.getName():
+                communicationPartners[t] = []
     
-        # Create and assign agent pools    FYI: THIS ASSUMES PHASE NUMBER = SAME POOL; LIKELY NOT TRUE
+        # Create and assign agent pools; populate communicationPartners dictionary 
     agentPools = []
     for tl in trafficLights:
         apAssigned = False
@@ -104,15 +135,22 @@ def run(sumoNetworkName):
                     break
         
         if apAssigned == False:
-            apID = "AP" + str(len(agentPools) + 1) # Construct new agent ID
-            agentPool = AgentPool(apID, tl.getPhases()) # Create a new agent pool for traffic light
-            agentPool.addNewTrafficLight(tl) # Assign traffic light to agent pool 
+            apID = "AP" + str(len(agentPools) + 1)                      # Construct new agent ID
+            agentPool = AgentPool(apID, tl.getPhases())                 # Create a new agent pool for traffic light
+            agentPool.addNewTrafficLight(tl)                            # Assign traffic light to agent pool 
             
-            agentPools.append(agentPool) # Add new pool to agent pools list
+            agentPools.append(agentPool)                                # Add new pool to agent pools list
+
+            # Determine a traffic light's communication partners
+        for p in edgePartners[tl.getName()]:
+            for t in trafficLights:
+                if p == t.getName():
+                    communicationPartners[tl].append(t)                # If edge partner is a traffic light, add it to tl's entry in communicationPartner 
         
+        tl.setCommunicationPartners(communicationPartners[tl])         # Set each TL's communication partners list
 
     return (userDefinedRules, trafficLights, agentPools)
     
 # main entry point
 if __name__ == "__main__":
-    run()
+    run("simpleNetwork.net.xml")
