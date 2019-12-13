@@ -81,8 +81,8 @@ class Driver:
                     
                         # If no user-defined rules can be applied, get a rule from Agent Pool
                     if nextRule == False:    
-                        nextRule = tl.getAssignedIndividual().selectRule(self.getValidRules(tl, tl.getAssignedIndividual())) # Get a rule from assigned rsIndividual
-                        tl.setIntention(Intention(tl, nextRule, traci.simulation.getTime()))
+                        nextRule = tl.getNextRule(self.getValidRules(tl, tl.getAssignedIndividual()), traci.simulation.getTime()) # Get next rule to be applied to tl
+
                             # if no valid rule applicable, apply the Do Nothing rule.
                         if nextRule == -1:
                             # print("No valid rule. Do Nothing action applied.") 
@@ -116,6 +116,7 @@ class Driver:
             # Update the fitnesses of the individuals involved in the simulation based on their fitnesses
         simRunTime = traci.simulation.getTime()
         for tl in trafficLights:
+            print(tl.getName(), "has these communicated intentions:", tl.getCommunicatedIntentions())
             i = tl.getAssignedIndividual()
             i.updateLastRunTime = simRunTime
             i.updateFitness(EvolutionaryLearner.rFit(simRunTime, i.getSumRuleWeights()))

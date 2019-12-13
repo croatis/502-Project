@@ -1,11 +1,13 @@
 import os
 import sys
 
-import Communicator 
-
+from Intention import Intention
 class TrafficLight:
 
+    global pCoop                    # Probability of choosing rule from RS vs RSint as defined in "Learning cooperative behaviour for the shout-ahead architecture" (2014) 
     global assignedIndividual
+
+    pCoop = 0.5
 
     def __init__ (self, name, lanes):
         self.name = name
@@ -116,7 +118,7 @@ class TrafficLight:
 
         # COMMUNICATE INTENTION TO ALL COMMUNICATION PARTNERS
     def communicateIntention(self, intention):
-        for tl in communicationPartners:
+        for tl in self.communicationPartners:
             tl.recieveIntention(intention)
 
         # RECIEVE AN INTENTION FROM A COMMUNICATION PARTNER
@@ -125,5 +127,18 @@ class TrafficLight:
             self.recievedIntentions[intention.getTurn()] = []
         
         self.recievedIntentions[intention.getTurn()].append(intention)
+        print(self.getName(), "recieved an intention from", intention.getTrafficLight().getName(), "\n")
 
+    def getCommunicatedIntentions(self):
+        return self.recievedIntentions
 
+        # DECIDE WHICH RULE TO APPLY AT CURRENT ACTION STEP
+    def getNextRule(self, validRulesRS, time): # add , validRulesRSint
+        intendedRule = self.getAssignedIndividual().selectRule(validRulesRS)    # Get intended rule to apply
+        if intendedRule == -1:
+            return -1
+            
+        print('The intended rule is:', intendedRule)
+        self.setIntention(Intention(self, intendedRule.getAction(), time))
+
+        return intendedRule
