@@ -25,7 +25,7 @@ class Rule:
         self._action = action
     
     def getAgentPool(self):
-        return self._agentPool
+        return self.agentPool
         
         # UPDATE AGENT POOL RULE ORIGINATED FROM
     def setAgentPool(self, agentPool):

@@ -23,7 +23,7 @@ if __name__ == "__main__":
 
     # --- TRAINING OPTIONS ---
     gui = False
-    totalGenerations = 1
+    totalGenerations = 5
     gamma = 0.75
     batch_size = 100
     memory_size = 50000
@@ -63,6 +63,7 @@ if __name__ == "__main__":
         for ap in setUpTuple[2]:
             for i in ap.getIndividualsSet():
                 i.resetSelectedCount()
+                print("Generation includes Individual:", i.getID())
 
         # Reinforcement learning loop
         while not allIndividualsTested:
@@ -87,7 +88,13 @@ if __name__ == "__main__":
                     for i in ap.getIndividualsSet():
                         print(i, "has a selected count of:", i.getSelectedCount())
 
-        setUpTuple[2] = EvolutionaryLearner.createNewGeneration(resultingAgentPools)     # Provide simulation run Set Up Tuple with new generations within the agent pools
+        for ap in setUpTuple[2]:
+            for i in ap.getIndividualsSet():
+                i.resetSelectedCount()
+                print("Generation includes Individual:", i.getID())
+        
+        if generations + 1 < totalGenerations:
+            EvolutionaryLearner.createNewGeneration(setUpTuple[2])     # Update agent pools with a new generation of individuals
         generations += 1        
 
     print("----- End time:", datetime.datetime.now())

@@ -12,7 +12,7 @@ from random import randint
     # How many of the top individuals to breed for new generation
 global maxIndexToBreed
 global maxChildrenToMutate
-maxIndexToBreed = 6   
+maxIndexToBreed = 4   
 maxChildrenToMutate = 5
 
     # Specifications for making Individuals and Rules
@@ -32,35 +32,53 @@ runtimeFactor = 1
 ruleWeightFactor = 1
     
     # FITNESS FUNCTION FOR AN INDIVIDUAL AFTER ONE SIMULATION RUN/EPISODE
-def rFit(simTime, individual):
-    ruleWeights = getSumRuleWeights(individual)
-    rFit = runtimeFactor*(1/simTime) + ruleWeightFactor*(1-(1/ruleWeights))
-
-    return rFit
+def rFit(simTime, sumOfRuleWeights):
+    return runtimeFactor*(1/simTime) + ruleWeightFactor*(1-(1/sumOfRuleWeights))
 
     # FITNESS FUNCTION FOR ONE GENERATION
 def fit(simTime, agentPools):
-    ruleWeights = getSumRuleWeightsAP(agentPools)
+    ruleWeights = getSumRuleWeights(agentPools)
     fit = runtimeFactor*(1/simTime) + ruleWeightFactor*(1-(1/ruleWeights))
 
     return fit
 
-    # Creates new generation after a simulation run
+    # CREATES NEW GENERATION AFTER A SIMULATION RUN AND UPDATES AGENT POOLS' INDIVIDUAL SET WITH NEW GEN
 def createNewGeneration(agentPools):
     for ap in agentPools:
         individuals = ap.getIndividualsSet()
-        individuals.sort(key=lambda, x: x.getFitness(), reverse = True)
+        individuals.sort(key=lambda x: x.getFitness(), reverse = True)
 
-        newGenPool = [individuals[0], individuals[maxIndexToBreed]]
+
+        newGenPool = individuals[0:maxIndexToBreed]
+        print(newGenPool)
         children = []
             # Create children 
         for i in newGenPool:
             for partner in newGenPool:
                 if i != partner:
-                    children.append(crossover(i, partner))
+                    child = crossover(i, partner)
+                    child.updateFitness(rFit(((i.getLastRunTime() + partner.getLastRunTime())/2), child.getSumRuleWeights())) 
+                    children.append(child)
+
+            # Randomly mutate a random number of the children
+        # ** THIS NEEDS TO BE UPDATED TO RESOLVE THE NEW RFIT VALUE****
+        for i in range(randint(1, maxChildrenToMutate)):
+            childToMutate = children[randrange(0, len(children))]
+            children.append(mutate(childToMutate))
+            children.remove(childToMutate)
+        
+            # Add children to new generation selection pool
+        for c in children:
+            newGenPool.append(c)
+        
+        newGenPool.sort(key=lambda x: x.getFitness(), reverse = True)
+        newGeneration = newGenPool[0:maxIndividuals - 2] # Fill all but one spot of the new generation with the best children
+        newGeneration.append(newGenPool[randrange(maxIndividuals - 1, len(newGenPool))])
+
+        ap.updateIndividualsSet(newGeneration)
             
             # Randomly mutate a random number of the children
-        for i in range(randint(maxChildrenToMutate)):
+        for i in range(randint(1, maxChildrenToMutate)):
             childToMutate = children[randrange(len(children))]
             children.append(mutate(childToMutate))
             children.remove(childToMutate)
@@ -90,7 +108,7 @@ def createRandomRule(agentPool):
         
         # Get index of possible action. SUMO changes phases on indexes
     action = randrange(0, len(agentPool.getActionSet()))     # Set rule action to a random action from ActionSet pertaining to Agent Pool being serviced
-    print("The action is:", action)
+    # print("The action is:", action)
     rule = Rule(conditions, action, agentPool)
 
     return rule   
@@ -103,7 +121,7 @@ def crossover(indiv1, indiv2):
     superRuleSet = indiv1.getRuleSet() + indiv2.getRuleSet()    
     superRuleSet.sort(key=lambda x: x.getWeight(), reverse = True)
 
-    newRuleSet = [superRuleSet[0], superRuleSet[maxRules-1]]
+    newRuleSet = [superRuleSet[0], superRuleSet[len(superRuleSet)-1]]
 
         # Ensure the same rule with different weights haven't been added to rule set. If they have, keep the one with the higher weight and mutate the other
     for rule in newRuleSet:
@@ -123,7 +141,9 @@ def mutate(individual):
     newRule = mutateRule(chosenRule)
 
     individual.getRuleSet().append(newRule)
-    individual.getRuleSet().remove(chosenRule)    
+    individual.getRuleSet().remove(chosenRule)
+
+    return individual    
     
     # MUTATES A RULE A RANDOM NUMBER OF TIMES (MAX MUTATIONS IS USER-DEFINED)
 def mutateRule(rule):
@@ -131,7 +151,7 @@ def mutateRule(rule):
     ruleCond = rule.getConditions()
     
         # Remove a random number of conditions and add a random number of random conditions
-    for x in range(1, randint(maxNumOfMutations)):
+    for x in range(1, randint(1, maxNumOfMutations)):
         
         numCondToRemove = randrange(1, len(ruleCond))
         for i in range(numCondToRemove):
@@ -162,7 +182,7 @@ def checkValidCond(cond, conditions):
         return True
 
     # RETURN SUM OF ALL WEIGHTS IN A RULE SET
-def getSumRuleWeightsAP(agentPools):
+def getSumRuleWeights(agentPools):
     weightSum = 0
 
     for ap in agentPools:
@@ -177,14 +197,3 @@ def getSumRuleWeightsAP(agentPools):
 
     return weightSum
 
-    # RETURN SUM OF ALL WEIGHTS IN A RULE SET
-def getSumRuleWeights(individuals):
-    weightSum = 0
-    
-    ruleSet = i.getRuleSet()    
-    weightSum = sum(rule.getWeight() for rule in ruleSet)
-    
-    if weightSum == 0:
-        weightSum = 2.2250738585072014e-308
-
-    return weightSum

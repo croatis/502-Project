@@ -9,6 +9,7 @@ import PredicateSet
 import EvolutionaryLearner 
 import ReinforcementLearner
 from Rule import Rule
+from Intention import Intention
 
 class Driver:
 
@@ -81,7 +82,7 @@ class Driver:
                         # If no user-defined rules can be applied, get a rule from Agent Pool
                     if nextRule == False:    
                         nextRule = tl.getAssignedIndividual().selectRule(self.getValidRules(tl, tl.getAssignedIndividual())) # Get a rule from assigned rsIndividual
-                    
+                        tl.setIntention(Intention(tl, nextRule, traci.simulation.getTime()))
                             # if no valid rule applicable, apply the Do Nothing rule.
                         if nextRule == -1:
                             # print("No valid rule. Do Nothing action applied.") 
@@ -116,7 +117,8 @@ class Driver:
         simRunTime = traci.simulation.getTime()
         for tl in trafficLights:
             i = tl.getAssignedIndividual()
-            i.updateFitness(EvolutionaryLearner.rFit(simRunTime, i))
+            i.updateLastRunTime = simRunTime
+            i.updateFitness(EvolutionaryLearner.rFit(simRunTime, i.getSumRuleWeights()))
             print(i, "has a fitness value of:", i.getFitness())
             # for rule in i.getRuleSet():
             #     print("Rule with conditions", rule.getConditions(), "has an end weight of:", rule.getWeight(), "\n\n")

@@ -30,6 +30,9 @@ class AgentPool:
     def getIndividualsSet(self):
         return self.rsIndividuals
     
+    def updateIndividualsSet(self, individuals):
+        self.rsIndividuals = individuals
+    
     def initIndividuals(self):
         self.rsIndividuals = EvolutionaryLearner.initRSIndividuals(self)
 
