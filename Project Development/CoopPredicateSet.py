@@ -246,13 +246,13 @@ def customPredicate(predicate, intention):
         return False
 
     # RETURN LIST OF PREDICATE FUNCTIONS AS DEFINED ABOVE
-def getPredicateList(agentPool):
+def getPredicateSet(agentPool):
     thisModule = sys.modules[__name__] # Get reference to this module for next operation
     methodsDict = dict(inspect.getmembers(thisModule, predicate=inspect.isfunction)) # Get a dictionary with all methods (predicates) in this module
         # Remove all methods that are not predicates from dictionary 
-    methodsDict.pop("getPredicateList")
+    methodsDict.pop("getPredicateSet")
     methodsDict.pop("getRandomPredicate") 
-    methodsDict.pop("getPredicateListFromFile")
+    methodsDict.pop("getPredicateSetFromFile")
     methodsDict.pop("run")
 
         # Seperate methods/predicates from rest of data in dictionary into a list
@@ -265,7 +265,7 @@ def getPredicateList(agentPool):
     return predicateList
     
     # RETURN LIST OF PREDICATE FUNCTIONS FROM AN INPUT FILE
-def getPredicateListFromFile(file):
+def getPredicateSetFromFile(file):
     predicateList = []
     f = open(file, "r")                                     # Open desired file
     for x in f:
@@ -282,7 +282,7 @@ def getPredicateListFromFile(file):
     # RETURN RANDOM PREDICATE FROM LIST OF PREDICATE FUNCTIONS
 def getRandomPredicate(agentPool):
     # Add some ap specific stuff here
-    predicateList = getPredicateList(agentPool)
+    predicateList = getPredicateSet(agentPool)
     return (predicateList[randrange(len(predicateList))])
 
 def getAgentSpecificPredicates(agentPool):
@@ -296,7 +296,7 @@ def getAgentSpecificPredicates(agentPool):
     return customPredicates
 
 def run():
-    print("\nThe predicate list is:", getPredicateListFromFile("predicatesForRSint.txt"))
+    print("\nThe predicate list is:", getPredicateSetFromFile("predicatesForRSint.txt"))
 
 if __name__ == "__main__":
     run()

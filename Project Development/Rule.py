@@ -12,7 +12,7 @@ class Rule:
         self.timesSelected = 0          # Keep track of how many times a rule was selected
         
         # GET RULE TYPE
-    def getRuleType(self):
+    def getType(self):
         return self.type
 
         # GET RULE CONDITIONS

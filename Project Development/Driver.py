@@ -43,7 +43,8 @@ class Driver:
                 
                 # If no user-defined rules can be applied, get a rule from Agent Pool
             if rule == False:    
-                rule = tl.getAssignedIndividual().selectRule(self.getValidRules(tl, tl.getAssignedIndividual())) # Get a rule from assigned rsIndividual
+                validRules = self.getValidRules(tl, tl.getAssignedIndividual())
+                rule = tl.getNextRule(validRules[0], validRules[1], traci.simulation.getTime()) # Get a rule from assigned Individual
                     
                     # if no valid rule applicable, apply the Do Nothing rule.
                 if rule == -1:
@@ -52,10 +53,13 @@ class Driver:
 
                 else:       
                         # If rule conditions are satisfied, apply its action. Otherwise, do nothing.
-                    if self.evaluateRule(tl, rule):
+                    if rule.getType() == 0:
                         traci.trafficlight.setPhase(tl.getName(), rule.getAction())                
                         print("Rule selected for", tl.getName(), ". It's conditions are:", rule.getConditions())    
-            
+
+                    elif rule.getType() == 1:
+                            traci.trafficlight.setPhase(tl.getName(), rule.getAction())                
+                            print("Rule selected for", tl.getName(), ". It's conditions are:", rule.getConditions())    
             else:
                 self.applyUserDefinedRuleAction(tl, traci.trafficlight.getPhaseName(tl.getName()), rule)
 
@@ -82,7 +86,8 @@ class Driver:
                     
                         # If no user-defined rules can be applied, get a rule from Agent Pool
                     if nextRule == False:    
-                        nextRule = tl.getNextRule(self.getValidRules(tl, tl.getAssignedIndividual()), traci.simulation.getTime()) # Get next rule to be applied to tl
+                        validRules = self.getValidRules(tl, tl.getAssignedIndividual())
+                        nextRule = tl.getNextRule(validRules[0], validRules[1], traci.simulation.getTime()) # Get a rule from assigned Individual
 
                             # if no valid rule applicable, apply the Do Nothing rule.
                         if nextRule == -1:
@@ -99,8 +104,11 @@ class Driver:
                                     rule.updateWeight(ReinforcementLearner.updatedWeight(rule, nextRule, (tl.getCarsWaitingCount() - carsWaitingAfter), (tl.getWaitTime() - waitingTimeAfter)))
                                     
                                     # If nextRule conditions are satisfied, apply its action.
-                                traci.trafficlight.setPhase(tl.getName(), nextRule.getAction())                
-                                # print("Rule selected for", tl.getName(), ". It's conditions are:", nextRule.getConditions())    
+                                if rule.getType() == 0:
+                                    traci.trafficlight.setPhase(tl.getName(), nextRule.getAction())                
+
+                                elif rule.getType() == 1:
+                                    traci.trafficlight.setPhase(tl.getName(), nextRule.getAction())                
 
                     else:
                         self.applyUserDefinedRuleAction(tl, traci.trafficlight.getPhaseName(tl.getName()), nextRule)
@@ -222,7 +230,7 @@ class Driver:
                 predicateSplit = cond.split("_")
                 predicate = predicateSplit[0]
 
-                predCall = getattr(CoopPredicateSet, cond)(self.getPredicateParameters(trafficLight, predicate, i)) # Construct predicate fuction call
+                predCall = getattr(CoopPredicateSet, cond)(self.getCoopPredicateParameters(trafficLight, predicate, i)) # Construct predicate fuction call
                     # Determine validity of predicate
                 if predCall == False:
                     return False
@@ -230,7 +238,7 @@ class Driver:
         return True # if all predicates return true, evaluate rule as True
 
         # DETERMINE IF ANY USER DEFINED RULES ARE APPLICABLE
-    def applicableUserDefinedRule(self, trafficLight, userDefinedRules):
+    def applicableUserDefinedRule(self, trafficLight, userDefinedRules):    
             # Evaluate each user define rule
         for rule in userDefinedRules:
                 # For each rule, its parameters are acquired and the condition predicate is evaluated
@@ -257,14 +265,14 @@ class Driver:
             
             # If max yellow phase time reached, switch to next phase in the schedule 
         elif rule.getConditions()[0] == "maxYellowPhaseTimeReached":
-            if traci.trafficlight.getPhase(trafficLight.getName()) == (len(trafficLight.getPhases()) - 1):
+            if traci.trafficlight.getPhase(trafficLight.getName()) >= (len(trafficLight.getPhases()) - 1):
                 traci.trafficlight.setPhase(trafficLight.getName(), 0)
             else:
                 traci.trafficlight.setPhase(trafficLight.getName(), traci.trafficlight.getPhase(trafficLight.getName()) + 1)
 
 
         # PROVIDE SIMULATION RELEVANT PARAMETERS
-    def getPredicateParameters(self, trafficLight, predicate, intention):
+    def getPredicateParameters(self, trafficLight, predicate):
         if predicate == "longestTimeWaitedToProceedStraight":
                 # Find max wait time for relevant intersection
             maxWaitTime = 0
@@ -353,7 +361,9 @@ class Driver:
 
             return parameters 
         
-        elif "timeSinceCommunication" == predicate:
+        # PROVIDE SIMULATION RELEVANT PARAMETERS
+    def getCoopPredicateParameters(self, trafficLight, predicate, intention):        
+        if "timeSinceCommunication" == predicate:
             timeSent = intention.getTime()            
             return timeSent - traci.simulation.getTime()
         
@@ -361,7 +371,7 @@ class Driver:
             return intention.getAction()
         
         else:       # equivalent to: elif "customPredicate" == predicate:
-            return (str(intention.getTrafficLight().getName()) + "_" + str(intention.getAction()))
+            return (str(intention.getTrafficLight().getName()) + "_" + str(intention.getAction()), intention)
 
 # main entry point
 if __name__ == "__main__":

@@ -2,8 +2,8 @@ import os
 import sys
 import inspect
 
-import PredicateSet as PredicateSet
-import CoopPredicateSet as CoopPredicateSet
+import PredicateSet 
+import CoopPredicateSet
 
 import EvolutionaryLearner as EvolutionaryLearner
 from TrafficLight import TrafficLight
@@ -19,8 +19,8 @@ class AgentPool:
         self.trafficLightsAssigned = []                                 # List of traffic lights using Agent Pool 
         self.individuals = []                   
         self.userDefinedRuleSet = [Rule(-1, ["emergencyVehicleApproachingVertical"], -1, self), Rule(-1, ["emergencyVehicleApproachingHorizontal"], -1, self), Rule(-1, ["maxGreenPhaseTimeReached"], -1, self), Rule(-1, ["maxYellowPhaseTimeReached"], -1, self)]
+        self.coopPredicates = self.initCoopPredicates()                 # Store Observations of communicated intentions here since they are agent specific
         self.initIndividuals()                                          # Populate Agent Pool's own rule set with random rules
-        self.coopPredicates = CoopPredicateSet.getPredicateSet(self)    # Store Observations of communicated intentions here since they are agent specific
 
     def getID(self):
         return self.id
@@ -54,6 +54,9 @@ class AgentPool:
         # RETURN RANDOM PREDICATE FROM coopPredicate LIST FOR A RULE IN RSint
     def getRandomRSintPredicate(self):
         return self.coopPredicates[randrange(len(self.coopPredicates))]
+    
+    def initCoopPredicates(self):
+        return CoopPredicateSet.getPredicateSet(self)
 
 # def run():
 #     ap = AgentPool("ap1", ["H_S_G", "H_S_Y", "H_L_G", "H_L_Y"])
