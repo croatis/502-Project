@@ -7,9 +7,10 @@ class Individual:
     epsilon = 0.5      
     
         # INTIALIZE OBJECT VARIABLES
-    def __init__(self, identifier, agentPool, ruleSet):
+    def __init__(self, identifier, agentPool, RS, RSint):
         self.id = identifier                    
-        self.ruleSet = ruleSet                  # Set of rules contained within individual
+        self.RS = RS                  # Set of rules without observations of communicated intentions
+        self.RSint = RSint                    # Set of rules with observations of communicated intentions
         self.selectedCount = 0                  # Number of times individual has been chosen during a training period                  
         self.agentPool = agentPool              # AgentPool name
         self.fitness = 0
@@ -21,8 +22,12 @@ class Individual:
         return self.id
 
         # RETURN INDIVIDUAL'S RULE SET
-    def getRuleSet(self):
-        return self.ruleSet
+    def getRS(self):
+        return self.RS
+
+        # RETURN INDIVIDUAL'S RULE SET
+    def getRSint(self):
+        return self.RSint
     
         # INCREMENT selectedCount BY ONE FOR EVOLUTIONARY LEARNING PURPOSES
     def selected(self):
@@ -36,21 +41,26 @@ class Individual:
     def getSelectedCount(self):
         return self.selectedCount
     
+        # RETURN INDIVIDUAL'S FITNESS SCORE
     def getFitness(self):
         return self.fitness
-    
+        
+        # UPDATE INDIVIDUAL'S FITNESS SCORE
     def updateFitness(self, fitness):
         self.fitness = fitness
 
+        # RETURN THE LENGTH OF THE LAST RUN THE INDIVIDUAL PARTICIPATED IN
+    # ** note that one bad individual can affect the run time of all the others**
     def getLastRunTime(self):
         return self.lastRunTime
-    
+
+        # UPDATE THE LENGTH OF THE LAST RUN THE INDIVIDUAL PARTICIPATED IN
     def updateLastRunTime(self, runtime):
         self.lastRunTime = runtime
 
         # RETURN SUM OF ALL WEIGHTS IN A RULE SET
     def getSumRuleWeights(self):        
-        ruleSet = self.getRuleSet()    
+        ruleSet = self.getRS()    
         self.ruleWeightSum = sum(rule.getWeight() for rule in ruleSet)
         
         if self.ruleWeightSum == 0:
@@ -58,7 +68,7 @@ class Individual:
 
         return self.ruleWeightSum
 
-        # RETURN A RULE BASED ON THEIR PROBABILITIES 
+        # RETURN A RULE FROM RS BASED ON THEIR PROBABILITIES 
     def selectRule(self, validRules):
         if len(validRules) == 0:
             return -1
@@ -87,26 +97,44 @@ class Individual:
                 probabilities[i] = 1/len(probabilities)
             print("Probabilities have been edited and have a sum of:", sum(probabilities))
         rule = choice(rules, 1, p = probabilities)  # Returns a list (of size 1) of rules based on their probabilities
-        return rule[0]
-    
-    #     # CODE PROVIDED BY DAVID (https://stackoverflow.com/users/53192/david)
-    # def weighted_choice(self, items):
-    #     """returns a function that fetches a random item from items
+        
+        return rule[0]  # Choice function returns an array, so we take the only element in it
+            
+            # RETURN A RULE FROM RSint BASED ON THEIR PROBABILITIES 
+    def selectCoopRule(self, validRules):
+        if len(validRules) == 0:
+            return -1
+        
+        ruleSets = self.subDivideValidRules(validRules)
 
-    #     items is a list of tuples in the form (item, weight)"""
-    #     weight_total = sum((item[1] for item in items))
-    #     def choice(uniform = random.uniform):
-    #         n = uniform(0, weight_total)
-    #         for item, weight in items:
-    #             if n < weight:
-    #                 return item
-    #             n = n - weight
-    #         return item
-    #     return choice
+        if len(ruleSets[0]) > 0:  
+            rules = []
+            probabilities = []  
+                # Add a number of max weight rules to selection set relative to their probabilities
+            for rule in ruleSets[0]:
+                probability = int(self.getRuleProbabilityMax(rule, ruleSets[0], ruleSets[1])) 
+                print("Rule with conditions:", rule.getConditions(), "is in the MAX GROUP with probability", probability, "\n\n")
+                rules.append(rule)
+                probabilities.append(probability)
+            
+            for rule in ruleSets[1]:
+                probability = int(self.getRuleProbabilityRest(rule, probabilities, ruleSets[1])) 
+                print("Rule with conditions:", rule.getConditions(), "is in the REST GROUP with probability", probability, "\n\n")
+                rules.append(rule)
+                probabilities.append(probability)
+        
+        print("Probabilities have a sum of:", sum(probabilities))
+        if sum(probabilities) == 0:
+            for i in range(len(probabilities)):
+                probabilities[i] = 1/len(probabilities)
+            print("Probabilities have been edited and have a sum of:", sum(probabilities))
+        rule = choice(rules, 1, p = probabilities)  # Returns a list (of size 1) of rules based on their probabilities
+        
+        return rule[0]  # Choice function returns an array, so we take the only element in it
 
-        # RETURN A RANDOM RULE FROM INDIVIDUAL RULE SET
+        # RETURN A RANDOM RULE FROM RS
     def selectRandomRule(self, validRules):
-        return self.ruleSet[randrange(0, len(self.ruleSet))]    # Return a random rule
+        return self.RS[randrange(0, len(self.ruleSet))]    # Return a random rule
 
         # RETURN AGENT POOL THE INDIVIDUAL BELONGS TO
     def getAgentPool(self):

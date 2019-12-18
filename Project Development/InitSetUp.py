@@ -27,7 +27,7 @@ def run(sumoNetworkName):
         elif "udr" in x:
             ruleComponents = x.split(": ")
             ruleComponents = ruleComponents[1].split()
-            userDefinedRules.append(Rule([ruleComponents[0]], -1, None)) # User defined rules have only defined conditions; actions are predefined in Driver.py and they apply to all Agent Pools
+            userDefinedRules.append(Rule(-1, [ruleComponents[0]], -1, None)) # User defined rules have only defined conditions; actions are predefined in Driver.py and they apply to all Agent Pools
             print("The rule being added is:", ruleComponents[0], ".")
     f.close() # Close file before moving on
 
@@ -112,7 +112,7 @@ def run(sumoNetworkName):
     for x in tlPhases:
         for tl in trafficLights:
             if x == tl.getName():
-                tl.setPhases(tlPhases[x])
+                tl.addPhase(tlPhases[x])
             
         # Create entries for traffic lights in the communicationPartners dict based on edgePartners data
     for junction in edgePartners:

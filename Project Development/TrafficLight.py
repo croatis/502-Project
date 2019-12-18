@@ -1,5 +1,6 @@
 import os
 import sys
+from numpy.random import choice
 
 from Intention import Intention
 class TrafficLight:
@@ -14,7 +15,7 @@ class TrafficLight:
         self.lanes = lanes
         self.edges = []
         self._setEdges(self.lanes)
-        self.phases = 0
+        self.phases = []
         self.carsWaiting = 0
         self.waitTime = 0
         self.doNothingCount = 0
@@ -62,6 +63,11 @@ class TrafficLight:
     def setPhases(self, phases):
         self.phases = phases
 
+        # SETS THE PHASES AVAILBLE TO THE TRAFFIC LIGHT
+    def addPhase(self, phase):
+        self.phases.append(phase)
+        print("Adding a new phase to TL. Phases now include:", self.phases)
+        
         # RETURNS THE AGENT POOL OF THE TRAFFIC LIGHT
     def getAgentPool(self):
         return self.agentPool
@@ -133,12 +139,22 @@ class TrafficLight:
         return self.recievedIntentions
 
         # DECIDE WHICH RULE TO APPLY AT CURRENT ACTION STEP
-    def getNextRule(self, validRulesRS, time): # add , validRulesRSint
+    def getNextRule(self, validRulesRS, validRulesRSint, time): 
+            # First, select a rule from RS and communicate it
         intendedRule = self.getAssignedIndividual().selectRule(validRulesRS)    # Get intended rule to apply
+
         if intendedRule == -1:
             return -1
-            
+
         print('The intended rule is:', intendedRule)
         self.setIntention(Intention(self, intendedRule.getAction(), time))
+            
+            # If intended rule isn't user-defined, select a rule from RSint and then decide between the two
+        coopRule = self.getAssignedIndividual().selectCoopRule(validRulesRSint)
 
-        return intendedRule
+        if coopRule.getWeight() >= intendedRule.getWeight():
+            return coopRule
+        else:
+            rule = choice([coopRule, intendedRule], 1, p = [pCoop, (1-pCoop)])  # Select one of the two rules based on pCoop value
+            return rule[0]                                                      # Choice returns an array, so we take the only element of it
+        

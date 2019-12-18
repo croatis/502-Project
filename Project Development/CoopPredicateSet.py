@@ -4,6 +4,7 @@ import optparse
 import inspect
 from random import randrange
 
+#------------------------ intendedAction predicates -------------------------#
 def intendedActionIs_H_S_G(action):
     if action == "H_S_G":
         return True
@@ -194,8 +195,10 @@ def intendedActionIs_WE_L_Y(action):
     if action == "WE_L_Y":
         return True
     else:
-        return False
+        return False       
+#---------------------------------- end ---------------------------------------#
 
+#------------------- timeSinceLastCommunication predicates --------------------#
 def timeSinceCommunication_0(timeSinceCommunication):
     if timeSinceCommunication == 0:
         return True
@@ -231,9 +234,19 @@ def timeSinceCommunication_20_25(timeSinceCommunication):
         return True
     else:
         return False
+#---------------------------------- end ----------------------------------#
+
+    # EVALUATES VALIDITY OF A CUSTOM PREDICATE RELATIVE TO A COMMUNICATED INTENTION
+def customPredicate(predicate, intention):
+    predicate = predicate.split("_")
+
+    if predicate[0] == intention.getTrafficLight().getName() and predicate[1] == intention.getAction():
+        return True
+    else:
+        return False
 
     # RETURN LIST OF PREDICATE FUNCTIONS AS DEFINED ABOVE
-def getPredicateList():
+def getPredicateList(agentPool):
     thisModule = sys.modules[__name__] # Get reference to this module for next operation
     methodsDict = dict(inspect.getmembers(thisModule, predicate=inspect.isfunction)) # Get a dictionary with all methods (predicates) in this module
         # Remove all methods that are not predicates from dictionary 
@@ -246,6 +259,8 @@ def getPredicateList():
     predicateList = []
     for predicate in methodsDict:
         predicateList.append(predicate)
+    
+    predicateList = predicateList + getAgentSpecificPredicates(agentPool)
     
     return predicateList
     
@@ -265,10 +280,20 @@ def getPredicateListFromFile(file):
     return predicateList
 
     # RETURN RANDOM PREDICATE FROM LIST OF PREDICATE FUNCTIONS
-def getRandomPredicate():
-    predicateList = getPredicateList()
+def getRandomPredicate(agentPool):
+    # Add some ap specific stuff here
+    predicateList = getPredicateList(agentPool)
     return (predicateList[randrange(len(predicateList))])
 
+def getAgentSpecificPredicates(agentPool):
+    customPredicates = []
+    for tl in agentPool.getAssignedTrafficLights():
+        for partner in tl.getCommunicationPartners():
+            for action in partner.getActionSet():
+                pred = partner.getName() + "_" + action
+                customPredicates.append(pred)
+    
+    return customPredicates
 
 def run():
     print("\nThe predicate list is:", getPredicateListFromFile("predicatesForRSint.txt"))

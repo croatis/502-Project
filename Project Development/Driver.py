@@ -6,6 +6,7 @@ import optparse
 import traci
 
 import PredicateSet 
+import CoopPredicateSet
 import EvolutionaryLearner 
 import ReinforcementLearner
 from Rule import Rule
@@ -60,7 +61,7 @@ class Driver:
 
         for tl in trafficLights:
             i = tl.getAssignedIndividual()
-            for rule in i.getRuleSet():
+            for rule in i.getRS():
                 print("\nRule with conditions", rule.getConditions(), "has a starting weight of:", rule.getWeight(), "\n\n")
 
             # Simulation loop 
@@ -121,7 +122,7 @@ class Driver:
             i.updateLastRunTime = simRunTime
             i.updateFitness(EvolutionaryLearner.rFit(simRunTime, i.getSumRuleWeights()))
             print(i, "has a fitness value of:", i.getFitness())
-            # for rule in i.getRuleSet():
+            # for rule in i.getRS():
             #     print("Rule with conditions", rule.getConditions(), "has an end weight of:", rule.getWeight(), "\n\n")
 
         traci.close()       # End simulation
@@ -182,13 +183,20 @@ class Driver:
         return waitTime
 
     def getValidRules(self, trafficLight, individual):
-        validRules = []
-
-        for rule in individual.getRuleSet():
+        validRS = []
+        validRSint = []
+            
+            # Find valid RS rules
+        for rule in individual.getRS():
             if self.evaluateRule(trafficLight, rule):
-                validRules.append(rule)
-        
-        return validRules
+                validRS.append(rule)
+            
+            # Find valid RSint rules
+        for rule in individual.getRSint():
+            if self.evaluateCoopRule(trafficLight, rule):
+                validRSint.append(rule)
+
+        return (validRS, validRSint)
 
         # EVALUATE RULE VALIDITY (fEval)
     def evaluateRule(self, trafficLight, rule):
@@ -203,7 +211,24 @@ class Driver:
                 return False
         
         return True # if all predicates return true, evaluate rule as True
+
+        # EVALUATE RULE VALIDITY (fEval)
+    def evaluateCoopRule(self, trafficLight, rule):
+        intentions = trafficLight.getCommunicatedIntentions()   
+
+        for i in intentions:
+                # For each condition, its parameters are acquired and the condition predicate is evaluated
+            for cond in rule.getConditions():
+                predicateSplit = cond.split("_")
+                predicate = predicateSplit[0]
+
+                predCall = getattr(CoopPredicateSet, cond)(self.getPredicateParameters(trafficLight, predicate, i)) # Construct predicate fuction call
+                    # Determine validity of predicate
+                if predCall == False:
+                    return False
         
+        return True # if all predicates return true, evaluate rule as True
+
         # DETERMINE IF ANY USER DEFINED RULES ARE APPLICABLE
     def applicableUserDefinedRule(self, trafficLight, userDefinedRules):
             # Evaluate each user define rule
@@ -239,7 +264,7 @@ class Driver:
 
 
         # PROVIDE SIMULATION RELEVANT PARAMETERS
-    def getPredicateParameters(self, trafficLight, predicate):
+    def getPredicateParameters(self, trafficLight, predicate, intention):
         if predicate == "longestTimeWaitedToProceedStraight":
                 # Find max wait time for relevant intersection
             maxWaitTime = 0
@@ -327,7 +352,16 @@ class Driver:
             parameters.append(self.maxYellowPhaseTime)
 
             return parameters 
-
+        
+        elif "timeSinceCommunication" == predicate:
+            timeSent = intention.getTime()            
+            return timeSent - traci.simulation.getTime()
+        
+        elif "intendedActionIs" == predicate:
+            return intention.getAction()
+        
+        else:       # equivalent to: elif "customPredicate" == predicate:
+            return (str(intention.getTrafficLight().getName()) + "_" + str(intention.getAction()))
 
 # main entry point
 if __name__ == "__main__":

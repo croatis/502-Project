@@ -1,6 +1,8 @@
 import os
 import sys
 import PredicateSet as PredicateSet
+import CoopPredicateSet as CoopPredicateSet
+
 from Rule import Rule
 from Individual import Individual
 from random import randrange
@@ -84,64 +86,91 @@ def createNewGeneration(agentPools):
             children.remove(childToMutate)
 
     # CREATE INDIVIDUALS WITH RANDOM RULES POPULATING THEIR RULE SETS BEFORE FIRST RUN
-def initRSIndividuals(agentPool):
+def initIndividuals(agentPool):
     individuals = []
     for x in range(maxIndividuals):    
-        ruleSet = [] # Rule sets are lists of rules
+        RS = []     # RS is a rule set with no shout-ahead predicates
+        RSint = []  # RSint is a rule set with shout-ahead predicates
             # Populate a rule set
         for i in range(maxRules):
-            ruleSet.append(createRandomRule(agentPool))
+            RS.append(createRandomRule(agentPool, 0))
+            RSint.append(createRandomRule(agentPool, 1))
         
-        individuals.append(Individual(x+1, agentPool, ruleSet))
+        individuals.append(Individual(x+1, agentPool, RS, RSint))
     
     return individuals
     
     # CREATE A RANDOM RULE USING RANDOM PREDICATES AND AN AGENT POOL RELATED ACTION
-def createRandomRule(agentPool):
+def createRandomRule(agentPool, ruleType):
     conditions = [] # Conditions for a rule
-    
-        # Set conditions of rules as a random amount of random predicates
-    for i in range(randint(1, maxRulePredicates)):
-        newCond = PredicateSet.getRandomPredicate()
-        if checkValidCond(newCond, conditions):
-            conditions.append(newCond)
         
+        # RS rule
+    if ruleType == 0:
+            # Set conditions of rules as a random amount of random predicates
+        for i in range(randint(1, maxRulePredicates)):
+            newCond = PredicateSet.getRandomPredicate()
+            if checkValidCond(newCond, conditions):
+                conditions.append(newCond)
+        
+        # RSint rule
+    elif ruleType == 1:
+            # Set conditions of rules as a random amount of random predicates
+        for i in range(randint(1, maxRulePredicates)):
+            newCond = agentPool.getRandomRSintPredicate()
+            if checkValidCond(newCond, conditions):
+                conditions.append(newCond)
+
         # Get index of possible action. SUMO changes phases on indexes
     action = randrange(0, len(agentPool.getActionSet()))     # Set rule action to a random action from ActionSet pertaining to Agent Pool being serviced
     # print("The action is:", action)
-    rule = Rule(conditions, action, agentPool)
+    rule = Rule(ruleType, conditions, action, agentPool)
 
     return rule   
     
     # CREATE A CHILD RULE BY BREEDING TWO PARENT RULES
 def crossover(indiv1, indiv2):
-    identifier = indiv1.getID() + indiv2.getID()
+    identifier = str(indiv1.getID()) + "." + str(indiv2.getID())
     agentPool = indiv1.getAgentPool()
 
-    superRuleSet = indiv1.getRuleSet() + indiv2.getRuleSet()    
-    superRuleSet.sort(key=lambda x: x.getWeight(), reverse = True)
+    superRS = indiv1.getRS() + indiv2.getRS()    
+    superRS.sort(key=lambda x: x.getWeight(), reverse = True)
+    
+    superRSint = indiv1.getRSint() + indiv2.getRSint()    
+    superRSint.sort(key=lambda x: x.getWeight(), reverse = True)
 
-    newRuleSet = [superRuleSet[0], superRuleSet[len(superRuleSet)-1]]
+    newRS = [superRS[0], superRS[len(superRS)-1]]
+    newRSint = [superRSint[0], superRSint[len(superRSint)-1]]
 
         # Ensure the same rule with different weights haven't been added to rule set. If they have, keep the one with the higher weight and mutate the other
-    for rule in newRuleSet:
-        for r in newRuleSet:
+    for rule in newRS:
+        for r in newRS:
             if rule != r and rule.getConditions() == r.getConditions():
                 if rule.getWeight > r.getWeight():
-                    newRuleSet.append(mutateRule(r))
-                    newRuleSet.remove(r)
+                    newRS.append(mutateRule(r))
+                    newRS.remove(r)
                 else:
-                    newRuleSet.append(mutateRule(rule))
-                    newRuleSet.remove(rule)
+                    newRS.append(mutateRule(rule))
+                    newRS.remove(rule)
 
-    return Individual(identifier, agentPool, newRuleSet)
+        # Ensure the same rule with different weights haven't been added to rule set. If they have, keep the one with the higher weight and mutate the other
+    for rule in newRSint:
+        for r in newRSint:
+            if rule != r and rule.getConditions() == r.getConditions():
+                if rule.getWeight > r.getWeight():
+                    newRSint.append(mutateRule(r))
+                    newRSint.remove(r)
+                else:
+                    newRSint.append(mutateRule(rule))
+                    newRSint.remove(rule)
+
+    return Individual(identifier, agentPool, newRS, newRSint)
 
 def mutate(individual):
-    chosenRule = individual.getRuleSet()[randrange(0,len(individual.getRuleSet()))]
+    chosenRule = individual.getRS()[randrange(0,len(individual.getRS()))]
     newRule = mutateRule(chosenRule)
 
-    individual.getRuleSet().append(newRule)
-    individual.getRuleSet().remove(chosenRule)
+    individual.getRS().append(newRule)
+    individual.getRS().remove(chosenRule)
 
     return individual    
     
@@ -158,13 +187,25 @@ def mutateRule(rule):
             ruleCond.remove(randrange(len(ruleCond)))
         
         numCondToAdd = randint(1, maxRulePredicates - len(ruleCond))
-        for i in range(numCondToAdd):
-            newPredicate = PredicateSet.getRandomPredicate()  
+            
+            # If rule is from RS
+        if rule.getType() == 0:
+            for i in range(numCondToAdd):
+                newPredicate = PredicateSet.getRandomPredicate()  
 
-                # If new random predicate is valid, append it to the conditions list
-            if checkValidCond(newPredicate, ruleCond):
-                ruleCond.append(newPredicate)
-    
+                    # If new random predicate is valid, append it to the conditions list
+                if checkValidCond(newPredicate, ruleCond):
+                    ruleCond.append(newPredicate)
+            
+            # If rule is from RSint
+        elif rule.getType() == 1:
+            for i in range(numCondToAdd):
+                newPredicate = PredicateSet.getRandomPredicate()  
+
+                    # If new random predicate is valid, append it to the conditions list
+                if checkValidCond(newPredicate, ruleCond):
+                    ruleCond.append(newPredicate)
+                    
     rule.setConditions(ruleCond) # set rule's new conditions
     rule.setAction(rule.getAgentPool().getActionSet()[randrange(0, len(rule.getAgentPool().getActionSet()))])
     rule.updateWeight(0)
@@ -189,7 +230,7 @@ def getSumRuleWeights(agentPools):
         individuals = ap.getIndividualsSet()    
         # For each individual, sum all their rule weights
         for i in individuals:
-            ruleSet = i.getRuleSet()    
+            ruleSet = i.getRS()    
             weightSum += sum(rule.getWeight() for rule in ruleSet)
     
     if weightSum == 0:
