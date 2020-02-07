@@ -81,21 +81,21 @@ class Individual:
                 # Add a number of max weight rules to selection set relative to their probabilities
             for rule in ruleSets[0]:
                 probability = int(self.getRuleProbabilityMax(rule, ruleSets[0], ruleSets[1])) 
-                print("Rule with conditions:", rule.getConditions(), "is in the MAX GROUP with probability", probability, "\n\n")
+                # print("Rule with conditions:", rule.getConditions(), "is in the MAX GROUP with probability", probability, "\n\n")
                 rules.append(rule)
                 probabilities.append(probability)
             
             for rule in ruleSets[1]:
                 probability = int(self.getRuleProbabilityRest(rule, probabilities, ruleSets[1])) 
-                print("Rule with conditions:", rule.getConditions(), "is in the REST GROUP with probability", probability, "\n\n")
+                # print("Rule with conditions:", rule.getConditions(), "is in the REST GROUP with probability", probability, "\n\n")
                 rules.append(rule)
                 probabilities.append(probability)
         
-        print("Probabilities have a sum of:", sum(probabilities))
+        # print("Probabilities have a sum of:", sum(probabilities))
         if sum(probabilities) == 0:
             for i in range(len(probabilities)):
                 probabilities[i] = 1/len(probabilities)
-            print("Probabilities have been edited and have a sum of:", sum(probabilities))
+            # print("Probabilities have been edited and have a sum of:", sum(probabilities))
         rule = choice(rules, 1, p = probabilities)  # Returns a list (of size 1) of rules based on their probabilities
         
         return rule[0]  # Choice function returns an array, so we take the only element in it
@@ -113,21 +113,21 @@ class Individual:
                 # Add a number of max weight rules to selection set relative to their probabilities
             for rule in ruleSets[0]:
                 probability = int(self.getRuleProbabilityMax(rule, ruleSets[0], ruleSets[1])) 
-                print("Rule with conditions:", rule.getConditions(), "is in the MAX GROUP with probability", probability, "\n\n")
+                # print("Rule with conditions:", rule.getConditions(), "is in the MAX GROUP with probability", probability, "\n\n")
                 rules.append(rule)
                 probabilities.append(probability)
             
             for rule in ruleSets[1]:
                 probability = int(self.getRuleProbabilityRest(rule, probabilities, ruleSets[1])) 
-                print("Rule with conditions:", rule.getConditions(), "is in the REST GROUP with probability", probability, "\n\n")
+                # print("Rule with conditions:", rule.getConditions(), "is in the REST GROUP with probability", probability, "\n\n")
                 rules.append(rule)
                 probabilities.append(probability)
         
-        print("Probabilities have a sum of:", sum(probabilities))
+        # print("Probabilities have a sum of:", sum(probabilities))
         if sum(probabilities) == 0:
             for i in range(len(probabilities)):
                 probabilities[i] = 1/len(probabilities)
-            print("Probabilities have been edited and have a sum of:", sum(probabilities))
+            # print("Probabilities have been edited and have a sum of:", sum(probabilities))
         rule = choice(rules, 1, p = probabilities)  # Returns a list (of size 1) of rules based on their probabilities
         
         return rule[0]  # Choice function returns an array, so we take the only element in it
@@ -182,11 +182,11 @@ class Individual:
             # Add rules with highest weight into rsMax, and then remove them from primary list
         for rule in validRules:
             if rule.getWeight() == ruleWeights[0]:
-                print(rule, "has a weight of", rule.getWeight(), "and the highest weight is:", ruleWeights[0])
+                # print(rule, "has a weight of", rule.getWeight(), "and the highest weight is:", ruleWeights[0])
                 rsMax.append(rule)
                 validRules.remove(rule)
 
-        print("RSMax contains:", rsMax, "\nRSRest contains:", validRules)
+        # print("RSMax contains:", rsMax, "\nRSRest contains:", validRules)
         return (rsMax, validRules)       # Return the two rule sets (validRules now serves as rsRest)
 
         

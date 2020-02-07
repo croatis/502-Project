@@ -253,6 +253,7 @@ def getPredicateSet(agentPool):
     methodsDict.pop("getPredicateSet")
     methodsDict.pop("getRandomPredicate") 
     methodsDict.pop("getPredicateSetFromFile")
+    methodsDict.pop("getAgentSpecificPredicates")
     methodsDict.pop("run")
 
         # Seperate methods/predicates from rest of data in dictionary into a list
@@ -283,7 +284,7 @@ def getPredicateSetFromFile(file):
 def getRandomPredicate(agentPool):
     # Add some ap specific stuff here
     predicateList = getPredicateSet(agentPool)
-    return (predicateList[randrange(len(predicateList))])
+    return predicateList[randrange(len(predicateList))]
 
 def getAgentSpecificPredicates(agentPool):
     customPredicates = []
@@ -296,7 +297,7 @@ def getAgentSpecificPredicates(agentPool):
     return customPredicates
 
 def run():
-    print("\nThe predicate list is:", getPredicateSetFromFile("predicatesForRSint.txt"))
+     print("\nThe predicate list is:", getPredicateSetFromFile("predicatesForRSint.txt"))
 
 if __name__ == "__main__":
     run()

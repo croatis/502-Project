@@ -23,7 +23,7 @@ if __name__ == "__main__":
 
     # --- TRAINING OPTIONS ---
     gui = False
-    totalGenerations = 2
+    totalGenerations = 20
     gamma = 0.75
     batch_size = 100
     memory_size = 50000
@@ -91,7 +91,7 @@ if __name__ == "__main__":
         for ap in setUpTuple[2]:
             for i in ap.getIndividualsSet():
                 i.resetSelectedCount()
-                print("Generation includes Individual:", i.getID())
+                print("Generation includes Individual:", i.getID(), ";\n")
         
         if generations + 1 < totalGenerations:
             EvolutionaryLearner.createNewGeneration(setUpTuple[2])     # Update agent pools with a new generation of individuals

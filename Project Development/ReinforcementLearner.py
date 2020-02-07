@@ -15,7 +15,6 @@ waitTimeReducedFactor = 1
 def updatedWeight(rule, nextRule, throughput, waitTimeReduced):
        # Returns the updated weight based on the Sarsa learning method
     updatedWeight = rule.getWeight() + learningFactor*(determineReward(throughput, waitTimeReduced) + (discountRate*nextRule.getWeight() - rule.getWeight()))
-    print("Updated weight:", updatedWeight)    
         # Ensure no rules have negative weights
     if updatedWeight < 0:
         return 0

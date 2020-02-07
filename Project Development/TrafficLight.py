@@ -66,7 +66,7 @@ class TrafficLight:
         # SETS THE PHASES AVAILBLE TO THE TRAFFIC LIGHT
     def addPhase(self, phase):
         self.phases.append(phase)
-        print("Adding a new phase to TL. Phases now include:", self.phases)
+        # print("Adding a new phase to TL. Phases now include:", self.phases)
         
         # RETURNS THE AGENT POOL OF THE TRAFFIC LIGHT
     def getAgentPool(self):
@@ -133,7 +133,7 @@ class TrafficLight:
             self.recievedIntentions[intention.getTurn()] = []
         
         self.recievedIntentions[intention.getTurn()].append(intention)
-        print(self.getName(), "recieved an intention from", intention.getTrafficLight().getName(), "\n")
+        # print(self.getName(), "recieved an intention from", intention.getTrafficLight().getName(), "\n")
 
     def getCommunicatedIntentions(self):
         return self.recievedIntentions
@@ -146,11 +146,15 @@ class TrafficLight:
         if intendedRule == -1:
             return -1
 
-        print('The intended rule is:', intendedRule)
+        # print('The intended rule is:', intendedRule)
         self.setIntention(Intention(self, intendedRule.getAction(), time))
             
             # If intended rule isn't user-defined, select a rule from RSint and then decide between the two
         coopRule = self.getAssignedIndividual().selectCoopRule(validRulesRSint)
+
+            # If no valid rules apply from RSint, return the intented rule from RS
+        if coopRule == -1:
+            return intendedRule
 
         if coopRule.getWeight() >= intendedRule.getWeight():
             return coopRule

@@ -48,26 +48,27 @@ class Driver:
                     
                     # if no valid rule applicable, apply the Do Nothing rule.
                 if rule == -1:
-                    print("No valid rule. Do Nothing action applied.") 
+                    # print("No valid rule. Do Nothing action applied.") 
                     tl.doNothing()  # Update traffic light's Do Nothing counter
 
                 else:       
                         # If rule conditions are satisfied, apply its action. Otherwise, do nothing.
                     if rule.getType() == 0:
                         traci.trafficlight.setPhase(tl.getName(), rule.getAction())                
-                        print("Rule selected for", tl.getName(), ". It's conditions are:", rule.getConditions())    
+                        # print("Rule selected for", tl.getName(), ". It's conditions are:", rule.getConditions())    
 
                     elif rule.getType() == 1:
                             traci.trafficlight.setPhase(tl.getName(), rule.getAction())                
-                            print("Rule selected for", tl.getName(), ". It's conditions are:", rule.getConditions())    
+                            # # print("Rule selected for", tl.getName(), ". It's conditions are:", rule.getConditions())    
             else:
                 self.applyUserDefinedRuleAction(tl, traci.trafficlight.getPhaseName(tl.getName()), rule)
 
         for tl in trafficLights:
             i = tl.getAssignedIndividual()
             for rule in i.getRS():
-                print("\nRule with conditions", rule.getConditions(), "has a starting weight of:", rule.getWeight(), "\n\n")
-
+                # print("\nRule with conditions", rule.getConditions(), "has a starting weight of:", rule.getWeight(), "\n\n")
+                continue
+                
             # Simulation loop 
         step = 0
         carsWaitingAfter = 0
@@ -91,16 +92,16 @@ class Driver:
 
                             # if no valid rule applicable, apply the Do Nothing rule.
                         if nextRule == -1:
-                            # print("No valid rule. Do Nothing action applied.") 
+                            # # print("No valid rule. Do Nothing action applied.") 
                             tl.doNothing()  # Update traffic light's Do Nothing counter
                             break
 
                         else: 
-                            print("In else. Rule is", rule)
+                            # # print("In else. Rule is", rule)
                                 # If applied rule isn't user-defined, update its weight
                             if rule not in userDefinedRules:
                                 if rule != -1:
-                                    print("Rule", rule, "with conditions:", rule.getConditions(), "is getting its weight updated\n\n")
+                                    # # print("Rule", rule, "with conditions:", rule.getConditions(), "is getting its weight updated\n\n")
                                     rule.updateWeight(ReinforcementLearner.updatedWeight(rule, nextRule, (tl.getCarsWaitingCount() - carsWaitingAfter), (tl.getWaitTime() - waitingTimeAfter)))
                                     
                                     # If nextRule conditions are satisfied, apply its action.
@@ -112,10 +113,10 @@ class Driver:
 
                     else:
                         self.applyUserDefinedRuleAction(tl, traci.trafficlight.getPhaseName(tl.getName()), nextRule)
-                        # print("Applying action of", nextRule.getConditions())  
+                        # # print("Applying action of", nextRule.getConditions())  
 
                         # Update values before proceeding
-                    print("Last rule was", rule, "and the next rule is:", nextRule)
+                    # # print("Last rule was", rule, "and the next rule is:", nextRule)
                     rule = nextRule
                     tl.setCarsWaitingCount(carsWaitingAfter)
                     tl.setWaitTime(waitingTimeAfter)             
@@ -125,13 +126,13 @@ class Driver:
             # Update the fitnesses of the individuals involved in the simulation based on their fitnesses
         simRunTime = traci.simulation.getTime()
         for tl in trafficLights:
-            print(tl.getName(), "has these communicated intentions:", tl.getCommunicatedIntentions())
+            # # print(tl.getName(), "has these communicated intentions:", tl.getCommunicatedIntentions())
             i = tl.getAssignedIndividual()
             i.updateLastRunTime = simRunTime
             i.updateFitness(EvolutionaryLearner.rFit(simRunTime, i.getSumRuleWeights()))
-            print(i, "has a fitness value of:", i.getFitness())
+            # # print(i, "has a fitness value of:", i.getFitness())
             # for rule in i.getRS():
-            #     print("Rule with conditions", rule.getConditions(), "has an end weight of:", rule.getWeight(), "\n\n")
+            #     # print("Rule with conditions", rule.getConditions(), "has an end weight of:", rule.getWeight(), "\n\n")
 
         traci.close()       # End simulation
         
@@ -224,17 +225,23 @@ class Driver:
     def evaluateCoopRule(self, trafficLight, rule):
         intentions = trafficLight.getCommunicatedIntentions()   
 
-        for i in intentions:
-                # For each condition, its parameters are acquired and the condition predicate is evaluated
-            for cond in rule.getConditions():
-                predicateSplit = cond.split("_")
-                predicate = predicateSplit[0]
+        for x in intentions:
+            for i in intentions[x]:
+                    # For each condition, its parameters are acquired and the condition predicate is evaluated
+                for cond in rule.getConditions():
+                    predicateSplit = cond.split("_")
+                    predicate = predicateSplit[0]
+                    
+                    parameters = self.getCoopPredicateParameters(trafficLight, predicate, i)
+                    # # print("Parameters are:", parameters)
+                    if isinstance(parameters, int) or isinstance(parameters, float) or isinstance(parameters, str):
+                        predCall = getattr(CoopPredicateSet, cond)(parameters) # Construct predicate fuction call
+                    else:
+                        predCall = getattr(CoopPredicateSet, cond)(parameters[0], parameters[1]) # Construct predicate fuction call
+                        # Determine validity of predicate
+                    if predCall == False:
+                        return False
 
-                predCall = getattr(CoopPredicateSet, cond)(self.getCoopPredicateParameters(trafficLight, predicate, i)) # Construct predicate fuction call
-                    # Determine validity of predicate
-                if predCall == False:
-                    return False
-        
         return True # if all predicates return true, evaluate rule as True
 
         # DETERMINE IF ANY USER DEFINED RULES ARE APPLICABLE
@@ -251,7 +258,7 @@ class Driver:
                     
                     # Determine validity of predicate
                 if predCall == True:
-                    # print("User defined rule applicable:", rule.getConditions())
+                    # # print("User defined rule applicable:", rule.getConditions())
                     return rule
         return False # if no user-defined predicates are applicable, return False
 
@@ -365,7 +372,7 @@ class Driver:
     def getCoopPredicateParameters(self, trafficLight, predicate, intention):        
         if "timeSinceCommunication" == predicate:
             timeSent = intention.getTime()            
-            return timeSent - traci.simulation.getTime()
+            return traci.simulation.getTime() - timeSent
         
         elif "intendedActionIs" == predicate:
             return intention.getAction()
