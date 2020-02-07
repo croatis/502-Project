@@ -1,0 +1,6 @@
+Instructions to run program:
+
+1. Download and install SUMO for Windows: http://sumo.sourceforge.net/ 
+2. Simply run main.py from the folder it is located in
+
+SUMO GUI is not currently enabled. Number of generations is currently set to 20; can be adjusted on line 26 of main.py
