@@ -9,6 +9,7 @@ import EvolutionaryLearner as EvolutionaryLearner
 from TrafficLight import TrafficLight
 from Rule import Rule
 from random import randrange
+from operator import attrgetter
 
 class AgentPool:
                 
@@ -57,6 +58,11 @@ class AgentPool:
     
     def initCoopPredicates(self):
         return CoopPredicateSet.getPredicateSet(self)
+    
+    def getBestIndividual(self):
+        bestIndivList = sorted(self.individuals, key=lambda x: x.getFitness(self))
+        return bestIndivList[0]
+
 
 # def run():
 #     ap = AgentPool("ap1", ["H_S_G", "H_S_Y", "H_L_G", "H_L_Y"])

@@ -7,6 +7,7 @@ import timeit
 
 from Driver import Driver
 import EvolutionaryLearner
+# import OutputManager
 
 # Importing needed python modules from the $SUMO_HOME/tools directory
 if 'SUMO_HOME' in os.environ:
@@ -23,7 +24,7 @@ if __name__ == "__main__":
 
     # --- TRAINING OPTIONS ---
     gui = False
-    totalGenerations = 20
+    totalGenerations = 1
     gamma = 0.75
     batch_size = 100
     memory_size = 50000
@@ -44,9 +45,8 @@ if __name__ == "__main__":
 
     # initializations
     #sumoCmd = [sumoBinary, "-c", "intersection/tlcs_config_train.sumocfg", "--no-step-log", "true", "--waiting-time-memory", str(max_steps)]
-    sumoCmd = [sumoBinary, "-c", "config_file.sumocfg", "--tripinfo-output", "tripinfo.xml"]
+    sumoCmd = [sumoBinary, "-c", "config_file.sumocfg"]
         
-    print("PATH:", path)
     print("----- Start time:", datetime.datetime.now())
     setUpTuple = InitSetUp.run(sumoNetworkName)
     simRunner = Driver(sumoCmd, setUpTuple, maxGreenPhaseTime, maxYellowPhaseTime)
@@ -63,11 +63,11 @@ if __name__ == "__main__":
         for ap in setUpTuple[2]:
             for i in ap.getIndividualsSet():
                 i.resetSelectedCount()
-                print("Generation includes Individual:", i.getID())
+                # print("Generation includes Individual:", i.getID())
 
         # Reinforcement learning loop
         while not allIndividualsTested:
-            print('----- Episode {}'.format(episode+1))
+            print('----- Episode {}'.format(episode+1), "of GENERATION {} of {}".format(generations+1, totalGenerations))
             start = timeit.default_timer()
             resultingAgentPools = simRunner.run()  # run the simulation
             stop = timeit.default_timer()
@@ -86,15 +86,29 @@ if __name__ == "__main__":
                 allIndividualsTested = True
                 for ap in resultingAgentPools:
                     for i in ap.getIndividualsSet():
-                        print(i, "has a selected count of:", i.getSelectedCount())
+                        continue # print(i, "has a selected count of:", i.getSelectedCount())
 
         for ap in setUpTuple[2]:
             for i in ap.getIndividualsSet():
                 i.resetSelectedCount()
-                print("Generation includes Individual:", i.getID(), ";\n")
+                # print("Generation includes Individual:", i.getID(), ";\n")
         
         if generations + 1 < totalGenerations:
             EvolutionaryLearner.createNewGeneration(setUpTuple[2])     # Update agent pools with a new generation of individuals
+            sys.stdout.flush()
+        else:
+            OutputManager.run(setUpTuple[2])
+            print("Output file created.")
+        
+        #     bestIndividuals = []
+        #     for ap in setUpTuple[2]:
+        #         bestIndividuals.append(ap.getBestIndividual())
+            
+        #     f = open("bestIndividuals.txt", "w")
+            
+        #     for i in bestIndividuals:
+        #         f.write("The best individual in Agent Pool", i.getAgentPool().getID(), "is", i.getID(), "comprised of conditions:", i.getConditions(), "and action:", i.getAction(), "\n\n")
+        
         generations += 1        
 
     print("----- End time:", datetime.datetime.now())
