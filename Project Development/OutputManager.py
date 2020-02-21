@@ -3,29 +3,45 @@ import sys
 import optparse
 import traci
 
+from operator import attrgetter
+
 def run(agentPools):
     avgGenRuntime = 0
     finalGenRuntime = 0
 
     # Create new output file and add generation runtime information 
     f = open("simOutputData", "w")
-    f.write("Final Generation Stats\n\nGeneration runtime:", finalGenRuntime, "\nAverage Generation runtime:", avgGenRuntime, "\n---------------------------\n\nBest Individuals per Agent Pool\n")
+    f.write("Final Generation Stats\n\nGeneration runtime:" + str(finalGenRuntime) + "\nAverage Generation runtime:" + str(avgGenRuntime) + "\n---------------------------\n\nBest Individuals per Agent Pool\n")
 
     for ap in agentPools:
-        f.write("Agent Pool", ap.getID(), "\n")
+        actionSet = "" 
+        for aSet in ap.getActionSet():
+            for a in aSet:
+                actionSet += "," + a + " "        
+        
+        f.write("Agent Pool" + ap.getID() + "\n" + "This agent pool has an action set of:" + str(actionSet))
+    
         individuals = ap.getIndividualsSet()
-        topIndividual = max(individuals, key=attrgetter('getFitness'))
+        topIndividual = max(individuals, key=attrgetter('fitness'))
         f.write("The top individual's RS and RSint sets contain the following rules (formatted as \"<conditions>, <action>\"):\n\n RS:\n")
         
         ruleCount = 1
-        for rule in topIndividual.getRuleSet():
-            f.write("Rule", ruleCount, ": <", rule.getConditions(), ">, <", rule.getAction(), ">\n\n")
+        for rule in topIndividual.getRS():
+            cond = ""
+            for c in rule.getConditions():
+                cond += "," + c + " "
+            
+            f.write("Rule" + str(ruleCount) + ": <" + cond + ">, <" + str(rule.getAction()) + ">\n\n")
             ruleCount += 1
 
         f.write("RSint:\n")
         ruleCount = 1
-        for rule in topIndividual.getRuleSet():
-            f.write("Rule", ruleCount, ": <", rule.getConditions(), ">, <", rule.getAction(), ">\n\n")
+        for rule in topIndividual.getRSint():
+            cond = ""
+            for c in rule.getConditions():
+                cond += "," + c + " "
+
+            f.write("Rule" + str(ruleCount) + ": <" + cond + ">, <" + str(rule.getAction()) + ">\n\n")
             ruleCount += 1
 
         f.write("*******\n")

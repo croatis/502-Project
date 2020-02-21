@@ -1,13 +1,14 @@
 import os
 import sys
 import InitSetUp 
+import OutputManager
 
 import datetime
 import timeit
 
 from Driver import Driver
 import EvolutionaryLearner
-# import OutputManager
+
 
 # Importing needed python modules from the $SUMO_HOME/tools directory
 if 'SUMO_HOME' in os.environ:

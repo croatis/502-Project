@@ -1,0 +1,145 @@
+Final Generation Stats
+
+Generation runtime:0
+Average Generation runtime:0
+---------------------------
+
+Best Individuals per Agent Pool
+Agent PoolAP1
+This agent pool has an action set of:,H_S_G ,H_S_Y ,EW_SL_G ,EW_SL_Y The top individual's RS and RSint sets contain the following rules (formatted as "<conditions>, <action>"):
+
+ RS:
+Rule1: <,westEastPhaseIsLeftTurn_Green >, <0>
+
+Rule2: <,longestTimeWaitedToTurnLeft_270_300 ,verticalPhaseIsLeftTurn_Green ,numCarsWaitingToTurnLeft_6_9 >, <0>
+
+Rule3: <,longestTimeWaitedToProceedStraight_0 ,longestTimeWaitedToProceedStraight_0_15 >, <0>
+
+Rule4: <,westEastPhaseIs_Green ,longestTimeWaitedToProceedStraight_0_15 ,timeSpentInCurrentPhase_30_45 >, <0>
+
+Rule5: <,northSouthPhaseIsLeftTurn_Yellow ,northSouthPhaseIsLeftTurn_Green >, <0>
+
+Rule6: <,horizontalPhaseIs_Green >, <0>
+
+Rule7: <,southNorthPhaseIs_Green >, <0>
+
+Rule8: <,horizontalPhaseIs_Yellow ,timeSpentInCurrentPhase_120_150 >, <0>
+
+Rule9: <,horizontalPhaseIsLeftTurn_Yellow ,numCarsWaitingToProceedStraight_5_10 ,longestTimeWaitedToProceedStraight_0_15 >, <0>
+
+Rule10: <,numCarsWaitingToProceedStraight_0 >, <0>
+
+RSint:
+Rule1: <,intendedActionIs_SN_L_Y >, <0>
+
+Rule2: <,intendedActionIs_V_S_G ,intendedActionIs_NS_SL_G >, <0>
+
+Rule3: <,intendedActionIs_SN_S_Y ,intendedActionIs_SN_L_G ,intendedActionIs_H_S_Y >, <0>
+
+Rule4: <,timeSinceCommunication_10_15 ,timeSinceCommunication_5_10 >, <0>
+
+Rule5: <,intendedActionIs_WE_SL_Y >, <0>
+
+Rule6: <,intendedActionIs_WE_L_Y ,intendedActionIs_EW_S_Y ,intendedActionIs_H_S_Y >, <0>
+
+Rule7: <,intendedActionIs_H_L_G >, <0>
+
+Rule8: <,intendedActionIs_V_S_G ,intendedActionIs_WE_SL_Y ,intendedActionIs_WE_SL_G >, <0>
+
+Rule9: <,intendedActionIs_V_S_Y ,intendedActionIs_WE_S_Y ,intendedActionIs_H_L_G >, <0>
+
+Rule10: <,intendedActionIs_WE_SL_G >, <0>
+
+*******
+Agent PoolAP2
+This agent pool has an action set of:,H_S_G ,H_S_Y ,H_L_G ,H_L_Y ,V_S_G ,V_S_Y ,V_L_G ,V_L_Y The top individual's RS and RSint sets contain the following rules (formatted as "<conditions>, <action>"):
+
+ RS:
+Rule1: <,timeSpentInCurrentPhase_0_15 ,longestTimeWaitedToTurnLeft_120_150 >, <0>
+
+Rule2: <,numCarsWaitingToProceedStraight_45 ,longestTimeWaitedToTurnLeft_270_300 ,timeSpentInCurrentPhase_45_60 >, <0>
+
+Rule3: <,timeSpentInCurrentPhase_240_270 ,timeSpentInCurrentPhase_180_210 ,longestTimeWaitedToProceedStraight_210_240 >, <0>
+
+Rule4: <,northSouthPhaseIsLeftTurn_Yellow ,longestTimeWaitedToTurnLeft_60_90 ,numCarsWaitingToProceedStraight_5_10 >, <0>
+
+Rule5: <,westEastPhaseIsLeftTurn_Yellow ,verticalPhaseIs_Green ,timeSpentInCurrentPhase_300 >, <0>
+
+Rule6: <,numCarsWaitingToProceedStraight_35_45 ,longestTimeWaitedToProceedStraight_15_30 ,eastWestPhaseIs_Green >, <0>
+
+Rule7: <,numCarsWaitingToProceedStraight_5_10 >, <0>
+
+Rule8: <,numCarsWaitingToProceedStraight_45 ,longestTimeWaitedToProceedStraight_180_210 ,longestTimeWaitedToProceedStraight_120_150 >, <0>
+
+Rule9: <,longestTimeWaitedToTurnLeft_0_15 >, <0>
+
+Rule10: <,longestTimeWaitedToProceedStraight_15_30 ,longestTimeWaitedToProceedStraight_45_60 ,verticalPhaseIs_Green >, <0>
+
+RSint:
+Rule1: <,intendedActionIs_EW_L_Y ,intendedActionIs_NS_SL_G ,timeSinceCommunication_0 >, <0>
+
+Rule2: <,intendedActionIs_SN_L_Y >, <0>
+
+Rule3: <,intendedActionIs_EW_L_Y ,timeSinceCommunication_0_5 >, <0>
+
+Rule4: <,intendedActionIs_WE_S_Y >, <0>
+
+Rule5: <,intendedActionIs_EW_SL_Y ,customPredicate >, <0>
+
+Rule6: <,timeSinceCommunication_15_20 ,intendedActionIs_V_S_Y >, <0>
+
+Rule7: <,timeSinceCommunication_10_15 >, <0>
+
+Rule8: <,timeSinceCommunication_10_15 ,timeSinceCommunication_15_20 >, <0>
+
+Rule9: <,intendedActionIs_NS_S_Y >, <0>
+
+Rule10: <,intendedActionIs_SN_SL_G ,intendedActionIs_V_L_Y ,intendedActionIs_V_L_Y >, <0>
+
+*******
+Agent PoolAP3
+This agent pool has an action set of:,H_S_G ,H_S_Y ,SN_L_G ,SN_L_Y ,NS_L_G ,NS_L_Y The top individual's RS and RSint sets contain the following rules (formatted as "<conditions>, <action>"):
+
+ RS:
+Rule1: <,longestTimeWaitedToProceedStraight_180_210 >, <0>
+
+Rule2: <,horizontalPhaseIsLeftTurn_Green ,verticalPhaseIs_Yellow ,numCarsWaitingToProceedStraight_0 >, <0>
+
+Rule3: <,numCarsWaitingToTurnLeft_0_3 ,horizontalPhaseIs_Green >, <0>
+
+Rule4: <,longestTimeWaitedToTurnLeft_0 >, <0>
+
+Rule5: <,eastWestPhaseIsLeftTurn_Green ,horizontalPhaseIsLeftTurn_Green ,numCarsWaitingToProceedStraight_0 >, <0>
+
+Rule6: <,longestTimeWaitedToProceedStraight_180_210 >, <0>
+
+Rule7: <,timeSpentInCurrentPhase_15_30 >, <0>
+
+Rule8: <,longestTimeWaitedToProceedStraight_210_240 >, <0>
+
+Rule9: <,northSouthPhaseIsLeftTurn_Green >, <0>
+
+Rule10: <,timeSpentInCurrentPhase_0_15 ,timeSpentInCurrentPhase_120_150 >, <0>
+
+RSint:
+Rule1: <,intendedActionIs_NS_L_Y >, <0>
+
+Rule2: <,intendedActionIs_SN_S_G ,intendedActionIs_EW_S_Y ,timeSinceCommunication_10_15 >, <0>
+
+Rule3: <,intendedActionIs_SN_SL_G >, <0>
+
+Rule4: <,intendedActionIs_NS_S_Y ,intendedActionIs_WE_L_G >, <0>
+
+Rule5: <,intendedActionIs_V_S_G >, <0>
+
+Rule6: <,intendedActionIs_V_S_Y ,timeSinceCommunication_0_5 >, <0>
+
+Rule7: <,intendedActionIs_WE_L_Y >, <0>
+
+Rule8: <,intendedActionIs_SN_L_G ,timeSinceCommunication_15_20 >, <0>
+
+Rule9: <,intendedActionIs_V_S_G >, <0>
+
+Rule10: <,intendedActionIs_NS_L_G ,customPredicate >, <0>
+
+*******
