@@ -113,6 +113,7 @@ def run(sumoNetworkName):
         for tl in trafficLights:
             if x == tl.getName():
                 tl.addPhase(tlPhases[x])
+                print("Added phase:", tlPhases[x])
             
         # Create entries for traffic lights in the communicationPartners dict based on edgePartners data
     for junction in edgePartners:

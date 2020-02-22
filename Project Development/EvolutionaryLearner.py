@@ -122,7 +122,7 @@ def createRandomRule(agentPool, ruleType):
 
         # Get index of possible action. SUMO changes phases on indexes
     action = randrange(0, len(agentPool.getActionSet()))     # Set rule action to a random action from ActionSet pertaining to Agent Pool being serviced
-    # print("The action is:", action)
+    print("The action set is:", agentPool.getActionSet())
     rule = Rule(ruleType, conditions, action, agentPool)
 
     return rule   
@@ -130,6 +130,7 @@ def createRandomRule(agentPool, ruleType):
     # CREATE A CHILD RULE BY BREEDING TWO PARENT RULES
 def crossover(indiv1, indiv2):
     identifier = str(indiv1.getID()) + "." + str(indiv2.getID())
+    identifier = identifier[-4:] # Memory saving line
     agentPool = indiv1.getAgentPool()
 
     superRS = indiv1.getRS() + indiv2.getRS()    

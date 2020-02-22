@@ -11,7 +11,7 @@ def run(agentPools):
 
     # Create new output file and add generation runtime information 
     f = open("simOutputData", "w")
-    f.write("Final Generation Stats\n\nGeneration runtime:" + str(finalGenRuntime) + "\nAverage Generation runtime:" + str(avgGenRuntime) + "\n---------------------------\n\nBest Individuals per Agent Pool\n")
+    f.write("Final Generation Stats\n\nGeneration runtime:" + str(finalGenRuntime) + "\nAverage Generation runtime:" + str(avgGenRuntime) + "\n---------------------------\n\n Best Individuals per Agent Pool\n")
 
     for ap in agentPools:
         actionSet = "" 
@@ -31,7 +31,7 @@ def run(agentPools):
             for c in rule.getConditions():
                 cond += "," + c + " "
             
-            f.write("Rule" + str(ruleCount) + ": <" + cond + ">, <" + str(rule.getAction()) + ">\n\n")
+            f.write("Rule" + str(ruleCount) + ": <" + cond + ">, <" + str(rule.getAction()) + "> and rule has a weight of" + rule.getWeight() + "\n\n")
             ruleCount += 1
 
         f.write("RSint:\n")
@@ -41,7 +41,7 @@ def run(agentPools):
             for c in rule.getConditions():
                 cond += "," + c + " "
 
-            f.write("Rule" + str(ruleCount) + ": <" + cond + ">, <" + str(rule.getAction()) + ">\n\n")
+            f.write("Rule" + str(ruleCount) + ": <" + cond + ">, <" + str(rule.getAction()) + "> and rule has a weight of" + rule.getWeight() + "\n\n")
             ruleCount += 1
 
         f.write("*******\n")
