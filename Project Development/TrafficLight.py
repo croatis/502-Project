@@ -83,6 +83,7 @@ class TrafficLight:
         # ASSIGNS A RULE SET INDIVIDUAL CURRENTLY BEING USED BY THE TRAFFIC LIGHT FOR A SIM RUN
     def assignIndividual(self):
         self.assignedIndividual = self.agentPool.selectIndividual()
+        print("Individual selected is", self.assignedIndividual)
         self.assignedIndividual.selected() # Let Individual know it's been selected
 
         # RETURNS THE TOTAL NUMBER OF CARS WAITING AT THE TRAFFIC LIGHT'S INTERSECTION

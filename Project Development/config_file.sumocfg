@@ -1,7 +1,7 @@
 <configuration> 
     <input> 
         <net-file value="simpleNetwork.net.xml"/> 
-        <route-files value="od_route_file.odtrips.rou.xml"/> 
+        <route-files value="routes300.rou.xml"/> 
     </input> 
     
     <time> 

@@ -25,7 +25,7 @@ if __name__ == "__main__":
 
     # --- TRAINING OPTIONS ---
     gui = False
-    totalGenerations = 50
+    totalGenerations = 10
     gamma = 0.75
     batch_size = 100
     memory_size = 50000
@@ -88,10 +88,13 @@ if __name__ == "__main__":
                 for ap in resultingAgentPools:
                     for i in ap.getIndividualsSet():
                         continue # print(i, "has a selected count of:", i.getSelectedCount())
+            #allIndividualsTested = True # Uncomment for quick testing
 
+            # Prepare individuals for the next run through
         for ap in setUpTuple[2]:
             for i in ap.getIndividualsSet():
                 i.resetSelectedCount()
+                i.resetFitness()
                 # print("Generation includes Individual:", i.getID(), ";\n")
         
         if generations + 1 < totalGenerations:
@@ -110,7 +113,8 @@ if __name__ == "__main__":
         #     for i in bestIndividuals:
         #         f.write("The best individual in Agent Pool", i.getAgentPool().getID(), "is", i.getID(), "comprised of conditions:", i.getConditions(), "and action:", i.getAction(), "\n\n")
         
-        generations += 1        
+        generations += 1 
+               
 
     print("----- End time:", datetime.datetime.now())
     print("PATH:", path)

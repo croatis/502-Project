@@ -6,7 +6,7 @@ class Individual:
     global epsilon          # paramater between 0 and 1 used to determine importance of doing exploration (higher epsilon = more exploration)
     epsilon = 0.5      
     global fitness
-    
+
         # INTIALIZE OBJECT VARIABLES
     def __init__(self, identifier, agentPool, RS, RSint):
         self.id = identifier                    
@@ -48,10 +48,13 @@ class Individual:
         
         # UPDATE INDIVIDUAL'S FITNESS SCORE
     def updateFitness(self, fitness):
-        self.fitness = fitness
+        self.fitness += fitness
+        
+        # RESET INDIVIDUAL'S FITNESS SCORE FOR EACH NEW GENERATION
+    def resetFitness(self):
+        self.fitness = 0
 
         # RETURN THE LENGTH OF THE LAST RUN THE INDIVIDUAL PARTICIPATED IN
-    # ** note that one bad individual can affect the run time of all the others**
     def getLastRunTime(self):
         return self.lastRunTime
 
@@ -75,20 +78,22 @@ class Individual:
             return -1
         
         ruleSets = self.subDivideValidRules(validRules)
+        rules = []
+        probabilities = []  
+        
+        print("Valid rule sets contain:", ruleSets)
 
-        if len(ruleSets[0]) > 0:  
-            rules = []
-            probabilities = []  
+        if len(ruleSets[0]) > 0 or len(ruleSets[1]) > 0:  
                 # Add a number of max weight rules to selection set relative to their probabilities
             for rule in ruleSets[0]:
-                probability = int(self.getRuleProbabilityMax(rule, ruleSets[0], ruleSets[1])) 
-                # print("Rule with conditions:", rule.getConditions(), "is in the MAX GROUP with probability", probability, "\n\n")
+                probability = self.getRuleProbabilityMax(rule, ruleSets[0], ruleSets[1])
+                print("Rule with conditions:", rule.getConditions(), "is in the MAX GROUP with probability", probability, "\n\n")
                 rules.append(rule)
                 probabilities.append(probability)
             
             for rule in ruleSets[1]:
-                probability = int(self.getRuleProbabilityRest(rule, probabilities, ruleSets[1])) 
-                # print("Rule with conditions:", rule.getConditions(), "is in the REST GROUP with probability", probability, "\n\n")
+                probability = self.getRuleProbabilityRest(rule, probabilities, ruleSets[1])
+                print("Rule with conditions:", rule.getConditions(), "is in the REST GROUP with probability", probability, "\n\n")
                 rules.append(rule)
                 probabilities.append(probability)
         
@@ -97,6 +102,8 @@ class Individual:
             for i in range(len(probabilities)):
                 probabilities[i] = 1/len(probabilities)
             # print("Probabilities have been edited and have a sum of:", sum(probabilities))
+        print("Prob set contains", probabilities)
+        print("Rule set contains", rules)
         rule = choice(rules, 1, p = probabilities)  # Returns a list (of size 1) of rules based on their probabilities
         
         return rule[0]  # Choice function returns an array, so we take the only element in it

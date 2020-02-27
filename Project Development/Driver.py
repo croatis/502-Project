@@ -106,10 +106,12 @@ class Driver:
                                     
                                     # If nextRule conditions are satisfied, apply its action.
                                 if rule.getType() == 0:
-                                    traci.trafficlight.setPhase(tl.getName(), nextRule.getAction())                
+                                    traci.trafficlight.setPhase(tl.getName(), nextRule.getAction())
+                                    print("Applying TL action from RS! Action is", nextRule.getAction(), "\n\n")                
 
                                 elif rule.getType() == 1:
                                     traci.trafficlight.setPhase(tl.getName(), nextRule.getAction())                
+                                    print("Applying TL action from RSint! Action is", nextRule.getAction(), "\n\n")                
 
                     else:
                         self.applyUserDefinedRuleAction(tl, traci.trafficlight.getPhaseName(tl.getName()), nextRule)
@@ -128,11 +130,10 @@ class Driver:
         for tl in trafficLights:
             # # print(tl.getName(), "has these communicated intentions:", tl.getCommunicatedIntentions())
             i = tl.getAssignedIndividual()
-            i.updateLastRunTime = simRunTime
+            i.updateLastRunTime(simRunTime)
             i.updateFitness(EvolutionaryLearner.rFit(simRunTime, i.getSumRuleWeights()))
-            # # print(i, "has a fitness value of:", i.getFitness())
             # for rule in i.getRS():
-            #     # print("Rule with conditions", rule.getConditions(), "has an end weight of:", rule.getWeight(), "\n\n")
+            #     print("Rule with conditions", rule.getConditions(), "has an end weight of:", rule.getWeight(), "\n\n")
 
         traci.close()       # End simulation
         

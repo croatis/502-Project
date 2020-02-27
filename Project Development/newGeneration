@@ -1,0 +1,271 @@
+New Generation includes these individuals and their rules.
+
+
+Individual1has a fitness of 1.0010526315776422 and a last runtime of 2.2250738585072014e-308 and contains the following rules:
+
+Rules in RS:
+
+Rule1: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule2: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule3: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule4: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule5: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule6: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule7: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule8: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule9: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule10: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+Rules in RSint:
+
+Rule1: <,intendedActionIs_SN_SL_G ,timeSinceCommunication_20_25 >, <5> and rule has a weight of0
+
+
+Rule2: <,intendedActionIs_NS_S_Y ,intendedActionIs_EW_S_Y ,intendedActionIs_NS_SL_G ,intendedActionIs_WE_S_Y >, <2> and rule has a weight of0
+
+
+Rule3: <,timeSinceCommunication_0_5 ,intendedActionIs_NS_S_Y ,intendedActionIs_H_L_Y ,intendedActionIs_WE_L_G >, <2> and rule has a weight of0
+
+
+Rule4: <,intendedActionIs_SN_SL_G >, <2> and rule has a weight of0
+
+
+Rule5: <,timeSinceCommunication_20_25 ,intendedActionIs_NS_S_Y ,intendedActionIs_NS_S_G >, <1> and rule has a weight of0
+
+
+Rule6: <,intendedActionIs_EW_L_Y ,timeSinceCommunication_20_25 >, <3> and rule has a weight of0
+
+
+Rule7: <,timeSinceCommunication_15_20 ,intendedActionIs_WE_SL_G ,timeSinceCommunication_20_25 ,intendedActionIs_SN_SL_G ,intendedActionIs_H_S_G >, <0> and rule has a weight of0
+
+
+Rule8: <,intendedActionIs_EW_S_G ,intendedActionIs_WE_S_Y ,intendedActionIs_NS_SL_G ,intendedActionIs_WE_L_Y ,intendedActionIs_EW_SL_G >, <0> and rule has a weight of0
+
+
+Rule9: <,intendedActionIs_SN_S_G ,intendedActionIs_WE_S_Y ,timeSinceCommunication_0_5 ,timeSinceCommunication_15_20 ,intendedActionIs_V_S_Y >, <2> and rule has a weight of0
+
+
+Rule10: <,customPredicate >, <3> and rule has a weight of0
+
+-------------------
+
+Individual2has a fitness of 1.0010526315776422 and a last runtime of 2.2250738585072014e-308 and contains the following rules:
+
+Rules in RS:
+
+Rule1: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule2: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule3: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule4: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule5: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule6: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule7: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule8: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule9: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule10: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+Rules in RSint:
+
+Rule1: <,intendedActionIs_SN_SL_G ,timeSinceCommunication_20_25 >, <5> and rule has a weight of0
+
+
+Rule2: <,intendedActionIs_NS_S_Y ,intendedActionIs_EW_S_Y ,intendedActionIs_NS_SL_G ,intendedActionIs_WE_S_Y >, <2> and rule has a weight of0
+
+
+Rule3: <,timeSinceCommunication_0_5 ,intendedActionIs_NS_S_Y ,intendedActionIs_H_L_Y ,intendedActionIs_WE_L_G >, <2> and rule has a weight of0
+
+
+Rule4: <,intendedActionIs_SN_SL_G >, <2> and rule has a weight of0
+
+
+Rule5: <,timeSinceCommunication_20_25 ,intendedActionIs_NS_S_Y ,intendedActionIs_NS_S_G >, <1> and rule has a weight of0
+
+
+Rule6: <,intendedActionIs_EW_L_Y ,timeSinceCommunication_20_25 >, <3> and rule has a weight of0
+
+
+Rule7: <,timeSinceCommunication_15_20 ,intendedActionIs_WE_SL_G ,timeSinceCommunication_20_25 ,intendedActionIs_SN_SL_G ,intendedActionIs_H_S_G >, <0> and rule has a weight of0
+
+
+Rule8: <,intendedActionIs_EW_S_G ,intendedActionIs_WE_S_Y ,intendedActionIs_NS_SL_G ,intendedActionIs_WE_L_Y ,intendedActionIs_EW_SL_G >, <0> and rule has a weight of0
+
+
+Rule9: <,intendedActionIs_SN_S_G ,intendedActionIs_WE_S_Y ,timeSinceCommunication_0_5 ,timeSinceCommunication_15_20 ,intendedActionIs_V_S_Y >, <2> and rule has a weight of0
+
+
+Rule10: <,customPredicate >, <3> and rule has a weight of0
+
+-------------------
+
+Individual3has a fitness of 1.0010526315776422 and a last runtime of 2.2250738585072014e-308 and contains the following rules:
+
+Rules in RS:
+
+Rule1: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule2: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule3: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule4: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule5: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule6: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule7: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule8: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule9: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule10: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+Rules in RSint:
+
+Rule1: <,intendedActionIs_SN_SL_G ,timeSinceCommunication_20_25 >, <5> and rule has a weight of0
+
+
+Rule2: <,intendedActionIs_NS_S_Y ,intendedActionIs_EW_S_Y ,intendedActionIs_NS_SL_G ,intendedActionIs_WE_S_Y >, <2> and rule has a weight of0
+
+
+Rule3: <,timeSinceCommunication_0_5 ,intendedActionIs_NS_S_Y ,intendedActionIs_H_L_Y ,intendedActionIs_WE_L_G >, <2> and rule has a weight of0
+
+
+Rule4: <,intendedActionIs_SN_SL_G >, <2> and rule has a weight of0
+
+
+Rule5: <,timeSinceCommunication_20_25 ,intendedActionIs_NS_S_Y ,intendedActionIs_NS_S_G >, <1> and rule has a weight of0
+
+
+Rule6: <,intendedActionIs_EW_L_Y ,timeSinceCommunication_20_25 >, <3> and rule has a weight of0
+
+
+Rule7: <,timeSinceCommunication_15_20 ,intendedActionIs_WE_SL_G ,timeSinceCommunication_20_25 ,intendedActionIs_SN_SL_G ,intendedActionIs_H_S_G >, <0> and rule has a weight of0
+
+
+Rule8: <,intendedActionIs_EW_S_G ,intendedActionIs_WE_S_Y ,intendedActionIs_NS_SL_G ,intendedActionIs_WE_L_Y ,intendedActionIs_EW_SL_G >, <0> and rule has a weight of0
+
+
+Rule9: <,intendedActionIs_SN_S_G ,intendedActionIs_WE_S_Y ,timeSinceCommunication_0_5 ,timeSinceCommunication_15_20 ,intendedActionIs_V_S_Y >, <2> and rule has a weight of0
+
+
+Rule10: <,customPredicate >, <3> and rule has a weight of0
+
+-------------------
+
+Individual4has a fitness of 0 and a last runtime of 950.0 and contains the following rules:
+
+Rules in RS:
+
+Rule1: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule2: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule3: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule4: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule5: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule6: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule7: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule8: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule9: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+
+Rule10: <,longestTimeWaitedToProceedStraight_120_150 ,numCarsWaitingToTurnLeft_12_15 ,numCarsWaitingToProceedStraight_10_15 ,northSouthPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of76620541446.16585
+
+Rules in RSint:
+
+Rule1: <,intendedActionIs_SN_SL_G ,timeSinceCommunication_20_25 >, <5> and rule has a weight of0
+
+
+Rule2: <,intendedActionIs_NS_S_Y ,intendedActionIs_EW_S_Y ,intendedActionIs_NS_SL_G ,intendedActionIs_WE_S_Y >, <2> and rule has a weight of0
+
+
+Rule3: <,timeSinceCommunication_0_5 ,intendedActionIs_NS_S_Y ,intendedActionIs_H_L_Y ,intendedActionIs_WE_L_G >, <2> and rule has a weight of0
+
+
+Rule4: <,intendedActionIs_SN_SL_G >, <2> and rule has a weight of0
+
+
+Rule5: <,timeSinceCommunication_20_25 ,intendedActionIs_NS_S_Y ,intendedActionIs_NS_S_G >, <1> and rule has a weight of0
+
+
+Rule6: <,intendedActionIs_EW_L_Y ,timeSinceCommunication_20_25 >, <3> and rule has a weight of0
+
+
+Rule7: <,timeSinceCommunication_15_20 ,intendedActionIs_WE_SL_G ,timeSinceCommunication_20_25 ,intendedActionIs_SN_SL_G ,intendedActionIs_H_S_G >, <0> and rule has a weight of0
+
+
+Rule8: <,intendedActionIs_EW_S_G ,intendedActionIs_WE_S_Y ,intendedActionIs_NS_SL_G ,intendedActionIs_WE_L_Y ,intendedActionIs_EW_SL_G >, <0> and rule has a weight of0
+
+
+Rule9: <,intendedActionIs_SN_S_G ,intendedActionIs_WE_S_Y ,timeSinceCommunication_0_5 ,timeSinceCommunication_15_20 ,intendedActionIs_V_S_Y >, <2> and rule has a weight of0
+
+
+Rule10: <,customPredicate >, <3> and rule has a weight of0
+
+-------------------
+
+
+*************END GENERATION*************
+
+

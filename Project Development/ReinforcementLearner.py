@@ -7,14 +7,14 @@ global discountRate             # Determines the emphasis on the importance of f
 global throughputFactor         # Determines the emphasis throughput has on the size of the reward
 global waitTimeReducedFactor    # Determines the emphasis reduced waiting time has on the size of the reward
 
-learningFactor = 0.1
-discountRate = 0.1
+learningFactor = 0.5
+discountRate = 0.5
 throughputFactor = 1
 waitTimeReducedFactor = 1
 
 def updatedWeight(rule, nextRule, throughput, waitTimeReduced):
        # Returns the updated weight based on the Sarsa learning method
-    updatedWeight = rule.getWeight() + learningFactor*(determineReward(throughput, waitTimeReduced) + (discountRate*nextRule.getWeight() - rule.getWeight()))
+    updatedWeight = rule.getWeight() + (learningFactor*(determineReward(throughput, waitTimeReduced) + (discountRate*nextRule.getWeight() - rule.getWeight())))
         # Ensure no rules have negative weights
     if updatedWeight < 0:
         return 0

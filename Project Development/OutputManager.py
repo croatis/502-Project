@@ -15,15 +15,14 @@ def run(agentPools):
 
     for ap in agentPools:
         actionSet = "" 
-        for aSet in ap.getActionSet():
-            for a in aSet:
-                actionSet += "," + a + " "        
+        for a in ap.getActionSet():
+            actionSet += "," + a + " "        
         
         f.write("Agent Pool" + ap.getID() + "\n" + "This agent pool has an action set of:" + str(actionSet))
     
         individuals = ap.getIndividualsSet()
         topIndividual = max(individuals, key=attrgetter('fitness'))
-        f.write("The top individual's RS and RSint sets contain the following rules (formatted as \"<conditions>, <action>\"):\n\n RS:\n")
+        f.write("The top individual has a fitness of" + str(topIndividual.getFitness()) + "and its RS and RSint sets contain the following rules (formatted as \"<conditions>, <action>\"):\n\n RS:\n")
         
         ruleCount = 1
         for rule in topIndividual.getRS():
@@ -31,7 +30,7 @@ def run(agentPools):
             for c in rule.getConditions():
                 cond += "," + c + " "
             
-            f.write("Rule" + str(ruleCount) + ": <" + cond + ">, <" + str(rule.getAction()) + "> and rule has a weight of" + rule.getWeight() + "\n\n")
+            f.write("Rule" + str(ruleCount) + ": <" + cond + ">, <" + str(rule.getAction()) + "> and rule has a weight of" + str(rule.getWeight()) + "\n\n")
             ruleCount += 1
 
         f.write("RSint:\n")
@@ -41,7 +40,7 @@ def run(agentPools):
             for c in rule.getConditions():
                 cond += "," + c + " "
 
-            f.write("Rule" + str(ruleCount) + ": <" + cond + ">, <" + str(rule.getAction()) + "> and rule has a weight of" + rule.getWeight() + "\n\n")
+            f.write("Rule" + str(ruleCount) + ": <" + cond + ">, <" + str(rule.getAction()) + "> and rule has a weight of" + str(rule.getWeight()) + "\n\n")
             ruleCount += 1
 
         f.write("*******\n")

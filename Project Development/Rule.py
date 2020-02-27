@@ -45,7 +45,7 @@ class Rule:
         
         # UPDATE WEIGHT OF RULE AFTER SIMULATION RUN
     def updateWeight(self, weight):
-        self.weight = weight
+        self.weight += weight
         
         # UPDATE NUMBER OF TIMES A RULE HAS BEEN APPLIED 
     def selected(self):
