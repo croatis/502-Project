@@ -42,10 +42,19 @@ class Rule:
         # GET RULE WEIGHT
     def getWeight(self):
         return self.weight
+
+    def setWeight(self, weight):
+        self.weight = weight
         
         # UPDATE WEIGHT OF RULE AFTER SIMULATION RUN
     def updateWeight(self, weight):
         self.weight += weight
+        print("The new weight is", self.weight)
+            # Ensure rule weights are never zero
+        if self.weight < 0:
+            self.weight = 0
+            print("Weight was negative. Rule weight updated to", self.weight)
+
         
         # UPDATE NUMBER OF TIMES A RULE HAS BEEN APPLIED 
     def selected(self):

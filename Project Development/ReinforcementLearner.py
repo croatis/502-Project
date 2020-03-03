@@ -1,5 +1,6 @@
 import os
 import sys
+import math
 from Rule import Rule
 
 global learningFactor           # Influences rate with which the weight value converges against the correct weight value
@@ -15,11 +16,8 @@ waitTimeReducedFactor = 1
 def updatedWeight(rule, nextRule, throughput, waitTimeReduced):
        # Returns the updated weight based on the Sarsa learning method
     updatedWeight = rule.getWeight() + (learningFactor*(determineReward(throughput, waitTimeReduced) + (discountRate*nextRule.getWeight() - rule.getWeight())))
-        # Ensure no rules have negative weights
-    if updatedWeight < 0:
-        return 0
-    else:
-        return updatedWeight
+
+    return updatedWeight * 0.0001 # Numbers are reduced by 90% to keep them managable
 
     # Function to determine the reward 
 #*** Add in something for basing reward as performance relative to average rates in simulation maybe***

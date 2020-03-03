@@ -25,7 +25,7 @@ if __name__ == "__main__":
 
     # --- TRAINING OPTIONS ---
     gui = False
-    totalGenerations = 10
+    totalGenerations = 50
     gamma = 0.75
     batch_size = 100
     memory_size = 50000

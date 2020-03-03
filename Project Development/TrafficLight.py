@@ -147,7 +147,6 @@ class TrafficLight:
         if intendedRule == -1:
             return -1
 
-        # print('The intended rule is:', intendedRule)
         self.setIntention(Intention(self, intendedRule.getAction(), time))
             
             # If intended rule isn't user-defined, select a rule from RSint and then decide between the two

@@ -83,32 +83,48 @@ class Individual:
         
         print("Valid rule sets contain:", ruleSets)
 
-        if len(ruleSets[0]) > 0 or len(ruleSets[1]) > 0:  
-                # Add a number of max weight rules to selection set relative to their probabilities
-            for rule in ruleSets[0]:
-                probability = self.getRuleProbabilityMax(rule, ruleSets[0], ruleSets[1])
-                print("Rule with conditions:", rule.getConditions(), "is in the MAX GROUP with probability", probability, "\n\n")
-                rules.append(rule)
-                probabilities.append(probability)
+            # Add a number of max weight rules to selection set relative to their probabilities
+        for rule in ruleSets[0]:
+            probability = self.getRuleProbabilityMax(rule, ruleSets[0], ruleSets[1])
+            rules.append(rule)
+            probabilities.append(probability)
+
+            #If rsRest contains elements too, calculate their probabilities
+        if len(ruleSets[1]) > 0:  
+                # Acquire sum of weights in rsRest
+            sumOfWeights = self.getSumOfWeights(ruleSets[1])
             
-            for rule in ruleSets[1]:
-                probability = self.getRuleProbabilityRest(rule, probabilities, ruleSets[1])
-                print("Rule with conditions:", rule.getConditions(), "is in the REST GROUP with probability", probability, "\n\n")
-                rules.append(rule)
-                probabilities.append(probability)
-        
+            # If sum of weights is 0, assign a weight based on the available probability left
+            if sumOfWeights == 0:
+                print("Sum of weights is 0")
+                probability = (1-sum(probabilities))/len(ruleSets[1])
+                    
+                    # If sum of weights is 0, assign equal part of the remaining probability to each rule
+                for rule in ruleSets[1]:
+                    rules.append(rule)
+                    probabilities.append(probability)
+            else:
+                    # If sum of weights is NOT 0, individually calculate probabilities 
+                for rule in ruleSets[1]:
+                    probability = self.getRuleProbabilityRest(rule, probabilities, sumOfWeights, ruleSets[1])
+                    rules.append(rule)
+                    probabilities.append(probability)
+
         # print("Probabilities have a sum of:", sum(probabilities))
         if sum(probabilities) == 0:
             for i in range(len(probabilities)):
                 probabilities[i] = 1/len(probabilities)
             # print("Probabilities have been edited and have a sum of:", sum(probabilities))
+        for rule in rules:
+            print(rule, "has a weight of", rule.getWeight())
         print("Prob set contains", probabilities)
         print("Rule set contains", rules)
         rule = choice(rules, 1, p = probabilities)  # Returns a list (of size 1) of rules based on their probabilities
         
+        print("Rule chosen is", rule[0])
         return rule[0]  # Choice function returns an array, so we take the only element in it
             
-            # RETURN A RULE FROM RSint BASED ON THEIR PROBABILITIES 
+        # RETURN A RULE FROM RSint BASED ON THEIR PROBABILITIES 
     def selectCoopRule(self, validRules):
         if len(validRules) == 0:
             return -1
@@ -125,11 +141,26 @@ class Individual:
                 rules.append(rule)
                 probabilities.append(probability)
             
-            for rule in ruleSets[1]:
-                probability = int(self.getRuleProbabilityRest(rule, probabilities, ruleSets[1])) 
-                # print("Rule with conditions:", rule.getConditions(), "is in the REST GROUP with probability", probability, "\n\n")
-                rules.append(rule)
-                probabilities.append(probability)
+            #If rsRest contains elements too, calculate their probabilities
+        if len(ruleSets[1]) > 0:  
+                # Acquire sum of weights in rsRest
+            sumOfWeights = self.getSumOfWeights(ruleSets[1])
+            
+            # If sum of weights is 0, assign a weight based on the available probability left
+            if sumOfWeights == 0:
+                print("Sum of weights is 0")
+                probability = (1-sum(probabilities))/len(ruleSets[1])
+                    
+                    # If sum of weights is 0, assign equal part of the remaining probability to each rule
+                for rule in ruleSets[1]:
+                    rules.append(rule)
+                    probabilities.append(probability)
+            else:
+                    # If sum of weights is NOT 0, individually calculate probabilities 
+                for rule in ruleSets[1]:
+                    probability = self.getRuleProbabilityRest(rule, probabilities, sumOfWeights, ruleSets[1])
+                    rules.append(rule)
+                    probabilities.append(probability)
         
         # print("Probabilities have a sum of:", sum(probabilities))
         if sum(probabilities) == 0:
@@ -162,14 +193,10 @@ class Individual:
         return ((1-epsilon)*(weight/(weight*len(rsMax))))
     
         # RETURN PROBABILITY OF SELECTION FOR A RULE IN rsRest
-    def getRuleProbabilityRest(self, rule, probabilities, rsRest):
+    def getRuleProbabilityRest(self, rule, probabilities, sumOfWeights, rsRest):
         weight = rule.getWeight()
-        sumOfWeights = self.getSumOfWeights(rsRest)
         
-        # If sum of weights is 0, assign a weight based on the available probability left
-        if sumOfWeights == 0:
-            return (1-sum(probabilities))/len(rsRest)
-        
+        print("Rule with weight", rule.getWeight(), "has a probability of", epsilon*(weight/sumOfWeights))
         return epsilon*(weight/sumOfWeights)
 
         # RETURN SUM OF ALL WEIGHTS IN A RULE SET

@@ -210,6 +210,9 @@ class Driver:
 
         # EVALUATE RULE VALIDITY (fEval)
     def evaluateRule(self, trafficLight, rule):
+        if rule.getType() == 1:
+            return evaluateCoopRule(trafficLight, rule)
+
             # For each condition, its parameters are acquired and the condition predicate is evaluated
         for cond in rule.getConditions():
             predicateSplit = cond.split("_")
@@ -224,6 +227,9 @@ class Driver:
 
         # EVALUATE RULE VALIDITY (fEval)
     def evaluateCoopRule(self, trafficLight, rule):
+        if rule.getType() == 0:
+            return evaluateRule(trafficLight, rule)
+            
         intentions = trafficLight.getCommunicatedIntentions()   
 
         for x in intentions:
@@ -238,7 +244,7 @@ class Driver:
                     if isinstance(parameters, int) or isinstance(parameters, float) or isinstance(parameters, str):
                         predCall = getattr(CoopPredicateSet, cond)(parameters) # Construct predicate fuction call
                     else:
-                        predCall = getattr(CoopPredicateSet, cond)(parameters[0], parameters[1]) # Construct predicate fuction call
+                        predCall = getattr(CoopPredicateSet, "customPredicate")(parameters[0], parameters[1]) # Construct predicate fuction call for custom predicates (they are of form TLname_action but are handled by the same predicate in CoopPredicateSet)
                         # Determine validity of predicate
                     if predCall == False:
                         return False
@@ -379,6 +385,7 @@ class Driver:
             return intention.getAction()
         
         else:       # equivalent to: elif "customPredicate" == predicate:
+            # print("The current traffic light is", trafficLight.getName(), "with predicate", predicate, "and an intention from", intention.getTrafficLight(), "to do action", intention.getAction())
             return (str(intention.getTrafficLight().getName()) + "_" + str(intention.getAction()), intention)
 
 # main entry point
