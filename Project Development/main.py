@@ -26,6 +26,7 @@ if __name__ == "__main__":
     # --- TRAINING OPTIONS ---
     gui = False
     totalGenerations = 50
+    individualRunsPerGen = 3  # Min number of training runs an individual gets per generation
     gamma = 0.75
     batch_size = 100
     memory_size = 50000
@@ -49,7 +50,7 @@ if __name__ == "__main__":
     sumoCmd = [sumoBinary, "-c", "config_file.sumocfg"]
         
     print("----- Start time:", datetime.datetime.now())
-    setUpTuple = InitSetUp.run(sumoNetworkName)
+    setUpTuple = InitSetUp.run(sumoNetworkName, individualRunsPerGen)
     simRunner = Driver(sumoCmd, setUpTuple, maxGreenPhaseTime, maxYellowPhaseTime)
     episode = 0
     generations = 0
@@ -75,15 +76,15 @@ if __name__ == "__main__":
             print('Time: ', round(stop - start, 1))
             episode += 1
 
-            untested = []
+            needsTesting = []
             for ap in resultingAgentPools:
                 for i in ap.getIndividualsSet():
-                    if i.getSelectedCount() == 0:
-                        untested.append(True)
+                    if i.getSelectedCount() < individualRunsPerGen:
+                        needsTesting.append(True)
                     else:
-                        untested.append(False)
+                        needsTesting.append(False)
             
-            if True not in untested:
+            if True not in needsTesting:
                 allIndividualsTested = True
                 for ap in resultingAgentPools:
                     for i in ap.getIndividualsSet():
@@ -94,7 +95,6 @@ if __name__ == "__main__":
         for ap in setUpTuple[2]:
             for i in ap.getIndividualsSet():
                 i.resetSelectedCount()
-                i.resetFitness()
                 # print("Generation includes Individual:", i.getID(), ";\n")
         
         if generations + 1 < totalGenerations:

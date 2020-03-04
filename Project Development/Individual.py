@@ -12,9 +12,11 @@ class Individual:
         self.id = identifier                    
         self.RS = RS                  # Set of rules without observations of communicated intentions
         self.RSint = RSint                    # Set of rules with observations of communicated intentions
-        self.selectedCount = 0                  # Number of times individual has been chosen during a training period                  
+        self.selectedCount = 0                  # Number of times individual has been chosen during a generation                  
+        self.totalSelectedCount = 0             # Total number of times individual has been chosen during a training period                  
         self.agentPool = agentPool              # AgentPool name
         self.fitness = 0
+        self.runFitnessResults = []
         self.lastRunTime = 2.2250738585072014e-308
         self.ruleWeightSum = 0
 
@@ -33,6 +35,7 @@ class Individual:
         # INCREMENT selectedCount BY ONE FOR EVOLUTIONARY LEARNING PURPOSES
     def selected(self):
         self.selectedCount += 1
+        self.totalSelectedCount += 1
 
         # RESET selectedCount TO ZERO
     def resetSelectedCount(self):
@@ -48,11 +51,9 @@ class Individual:
         
         # UPDATE INDIVIDUAL'S FITNESS SCORE
     def updateFitness(self, fitness):
-        self.fitness += fitness
+        self.runFitnessResults.append(fitness)
         
-        # RESET INDIVIDUAL'S FITNESS SCORE FOR EACH NEW GENERATION
-    def resetFitness(self):
-        self.fitness = 0
+        self.fitness = sum(self.runFitnessResults)/self.totalSelectedCount
 
         # RETURN THE LENGTH OF THE LAST RUN THE INDIVIDUAL PARTICIPATED IN
     def getLastRunTime(self):

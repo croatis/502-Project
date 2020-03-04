@@ -9,7 +9,7 @@ from TrafficLight import TrafficLight
 from AgentPool import AgentPool
 from Rule import Rule
 
-def run(sumoNetworkName):
+def run(sumoNetworkName, minIndividualRunsPerGen):
     tlAgentPoolList = []
     trafficLightDict = {}
     userDefinedRules = []
@@ -136,7 +136,7 @@ def run(sumoNetworkName):
         
         if apAssigned == False:
             apID = "AP" + str(len(agentPools) + 1)                      # Construct new agent ID
-            agentPool = AgentPool(apID, tl.getPhases())                 # Create a new agent pool for traffic light
+            agentPool = AgentPool(apID, tl.getPhases(), minIndividualRunsPerGen)                 # Create a new agent pool for traffic light
             agentPool.addNewTrafficLight(tl)                            # Assign traffic light to agent pool 
             
             agentPools.append(agentPool)                                # Add new pool to agent pools list

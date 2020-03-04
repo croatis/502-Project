@@ -267,7 +267,7 @@ def mutateRule(rule):
     #print('Mutating...')
         # Remove a random number of conditions and add a random number of random conditions
     for x in range(randint(1, maxNumOfMutations)):
-        # print("INSIDE THE MUTATE LOOP")
+        print("INSIDE THE MUTATE LOOP")
         
         if len(ruleCond) == 1:
             numCondToRemove = 1
@@ -296,6 +296,7 @@ def mutateRule(rule):
 
             # If rule is from RSint
         elif rule.getType() == 1:
+            print("RSint rule type being modified")
             for i in range(numCondToAdd):
                 newPredicate = CoopPredicateSet.getRandomPredicate(rule.getAgentPool())  
 

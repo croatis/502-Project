@@ -14,7 +14,7 @@ from operator import attrgetter
 class AgentPool:
                 
         # INTIALIZE AGENT POOL VARIABLES
-    def __init__(self, identifier, actionSet):
+    def __init__(self, identifier, actionSet, minIndividualRunsPerGen):
         self.id = identifier                                            # AgentPool name
         self.actionSet = actionSet                                      # A list of action names that can be applied by assigned TL's of the pool
         self.trafficLightsAssigned = []                                 # List of traffic lights using Agent Pool 
@@ -22,6 +22,7 @@ class AgentPool:
         self.userDefinedRuleSet = [Rule(-1, ["emergencyVehicleApproachingVertical"], -1, self), Rule(-1, ["emergencyVehicleApproachingHorizontal"], -1, self), Rule(-1, ["maxGreenPhaseTimeReached"], -1, self), Rule(-1, ["maxYellowPhaseTimeReached"], -1, self)]
         self.coopPredicates = self.initCoopPredicates()                 # Store Observations of communicated intentions here since they are agent specific
         self.initIndividuals()                                          # Populate Agent Pool's own rule set with random rules
+        self.minIndividualRunsPerGen = minIndividualRunsPerGen
 
     def getID(self):
         return self.id
@@ -50,7 +51,18 @@ class AgentPool:
 
         # SELECTS AN INDIVIDUAL TO PASS TO A TRAFFIC LIGHT WHEN REQUESTED
     def selectIndividual(self):
-        return self.getIndividualsSet()[randrange(0, len(self.getIndividualsSet()))] # Currently returning a random rule
+        self.individualsNeedingRuns = []
+        for i in self.individuals:
+            if i.getSelectedCount() < self.minIndividualRunsPerGen:
+                self.individualsNeedingRuns.append(i)
+        
+        if len(self.individualsNeedingRuns) == 0:
+            return self.getIndividualsSet()[randrange(0, len(self.getIndividualsSet()))] # Currently returning a random rule
+        
+        elif len(self.individualsNeedingRuns) == 1:
+            return individualsNeedingRuns[0]
+        else:
+            return self.individualsNeedingRuns[randrange(0, len(self.individualsNeedingRuns))]
 
         # RETURN RANDOM PREDICATE FROM coopPredicate LIST FOR A RULE IN RSint
     def getRandomRSintPredicate(self):
