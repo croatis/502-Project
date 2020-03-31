@@ -115,7 +115,6 @@ class Individual:
         rules = []
         probabilities = []  
         
-        print("Valid rule sets contain:", ruleSets)
 
             # Add a number of max weight rules to selection set relative to their probabilities
         for rule in ruleSets[0]:
@@ -130,7 +129,6 @@ class Individual:
             
             # If sum of weights is 0, assign a weight based on the available probability left
             if sumOfWeights == 0:
-                print("Sum of weights is 0")
                 probability = (1-sum(probabilities))/len(ruleSets[1])
                     
                     # If sum of weights is 0, assign equal part of the remaining probability to each rule
@@ -155,13 +153,8 @@ class Individual:
             for i in range(len(probabilities)):
                 probabilities[i] = 1/len(probabilities)
             # print("Probabilities have been edited and have a sum of:", sum(probabilities))
-        for rule in rules:
-            print(rule, "has a weight of", rule.getWeight())
-        print("Prob set contains", probabilities)
-        print("Rule set contains", rules)
         rule = choice(rules, 1, p = probabilities)  # Returns a list (of size 1) of rules based on their probabilities
         
-        print("Rule chosen is", rule[0])
         return rule[0]  # Choice function returns an array, so we take the only element in it
             
         # RETURN A RULE FROM RSint BASED ON THEIR PROBABILITIES 
@@ -188,7 +181,6 @@ class Individual:
             
             # If sum of weights is 0, assign a weight based on the available probability left
             if sumOfWeights == 0:
-                print("Sum of weights is 0")
                 probability = (1-sum(probabilities))/len(ruleSets[1])
                     
                     # If sum of weights is 0, assign equal part of the remaining probability to each rule

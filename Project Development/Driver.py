@@ -99,12 +99,12 @@ class Driver:
                             if oldRule not in userDefinedRules:
                                 if oldRule != -1:
                                     ruleWeightBefore = oldRule.getWeight()   # Used to calculate fitness penalty to individual
-                                    oldRule.updateWeight(ReinforcementLearner.updatedWeight(oldRule, nextRule, self.getThroughput(tl, carsWaitingBefore, carsWaitingAfter), self.getThroughputWaitingTime(tl, carsWaitingBefore, carsWaitingAfter), len(carsWaitingAfter) - len(carsWaitingBefore)))
+                                    oldRule.updateWeight(ReinforcementLearner.updatedWeight(oldRule, nextRule, self.getThroughputRatio(self.getThroughput(tl, carsWaitingBefore, carsWaitingAfter), len(carsWaitingBefore)), self.getWaitTimeReducedRatio(self.getThroughputWaitingTime(tl, carsWaitingBefore, carsWaitingAfter), self.getTotalWaitingTime(carsWaitingBefore)), len(carsWaitingAfter) - len(carsWaitingBefore)))
                                     tl.getAssignedIndividual().updateFitnessPenalty(True, oldRule.getWeight() > ruleWeightBefore)
-                                    print("Old weight was", ruleWeightBefore, "and new weight is", oldRule.getWeight())
+                                    # print("Old weight was", ruleWeightBefore, "and new weight is", oldRule.getWeight())
                                     # Apply the next rule; if action is -1 then action is do nothing
                                 if not nextRule.hasDoNothingAction():
-                                    print('Next rule action is', nextRule.getAction())
+                                    # print('Next rule action is', nextRule.getAction())
                                     traci.trafficlight.setPhase(tl.getName(), nextRule.getAction())
                                 
                                 if nextRule.getType() == 0:
@@ -192,6 +192,13 @@ class Driver:
             carsWaiting += len(state[lanes])
         
         return carsWaiting
+        
+        # RETURNS NORMALIZED THROUGHPUT BY DIVIDING THE THROUGHPUT BY THE TOTAL VEHICLES AT AN INTERSECTION 
+    def getThroughputRatio(self, throughput, totalCarsWaiting):
+        if totalCarsWaiting == 0:
+            return throughput
+        else:
+            return throughput/totalCarsWaiting
     
         # RETURNS THROUGHPUT OF AN INTERSECTION BASED ON VEHICLES WAITING BEFORE AND AFTER A GIVEN TIME
     def getThroughput(self, trafficLight, carsWaitingBefore, carsWaitingAfter):
@@ -219,6 +226,17 @@ class Driver:
             waitTime += traci.edge.getWaitingTime(edge)
         
         return waitTime
+
+        # RETURNS TOTAL WAITING TIME OF A DICTIONARY OF VEHICLES WAITING AT AN INTERSECTION
+    def getTotalWaitingTime(self, listOfVehicles):
+        return sum(listOfVehicles.values())
+
+        # RETURNS NORMALIZED WAIT TIME REDUCED BY DIVIDING THE WAIT TIMES OF THROUGHPUT VEHICLES BY THE TOTAL WAIT TIME AT AN INTERSECTION 
+    def getWaitTimeReducedRatio(self, throughputWaitTime, totalWaitTime):
+        if totalWaitTime == 0:
+            return 1
+        else:
+            return throughputWaitTime/totalWaitTime    
     
         # RETURNS RULES THAT ARE APPLICABLE AT A GIVEN TIME AND STATE
     def getValidRules(self, trafficLight, individual):

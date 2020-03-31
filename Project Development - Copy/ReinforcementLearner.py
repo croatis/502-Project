@@ -18,7 +18,7 @@ def updatedWeight(rule, nextRule, throughput, throughputWaitTime, intersectionQu
        # Returns the updated weight based on the Sarsa learning method
     updatedWeight = rule.getWeight() + (learningFactor*(determineReward(throughput, throughputWaitTime) + (discountRate*nextRule.getWeight() - rule.getWeight()))) + determinePenalty(intersectionQueueDifference)
 
-    return updatedWeight * 0.01 # Numbers are reduced by 99% to keep them managable
+    return updatedWeight * 0.0001 # Numbers are reduced by 99% to keep them managable
 
     # Function to determine the reward 
 #*** Add in something for basing reward as performance relative to average rates in simulation maybe***

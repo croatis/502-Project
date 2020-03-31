@@ -30,7 +30,7 @@ global newGenerationPoolSize
 
 maxRulePredicates = 5
 maxRules = 10
-maxIndividuals = 30
+maxIndividuals = 20
 maxRulesInNewGenerationSet = 25
 
     # How much runtime and rule weights matter when determining fitness of a simulation run
@@ -82,17 +82,12 @@ def createNewGeneration(agentPools):
 
             # Create new generation
         while len(newGeneration) < maxIndividuals:
-            print("New generation has length", len(newGeneration), ". Creating a new individual.")
             parent1 = chooseFirstParent(newGeneration)
             parent2 = chooseSecondParent(newGeneration, parent1)
-            print("Generation includes", newGeneration)
             newGeneration.append(crossover(parent1, parent2))
-            print("Added a child. Length is now", len(newGeneration))
-            print("Generation includes", newGeneration)
 
             # Randomly mutate a random number of the children
         for i in range(randint(1, maxMutations)):
-            print("Randomly mutating children!")
             individualToMutate = newGeneration[randrange(0, len(newGeneration))]
             newGeneration.append(mutate(individualToMutate))
             newGeneration.remove(individualToMutate)
@@ -174,7 +169,6 @@ def createRandomRule(agentPool, ruleType):
     
     # CREATE A CHILD RULE BY BREEDING TWO PARENT RULES
 def crossover(indiv1, indiv2):
-    print("NEW CROSSOVER\n\n\n\n\n")
     identifier = str(indiv1.getID()) + "." + str(indiv2.getID())
     identifier = identifier[-4:] # Memory saving line
     agentPool = indiv1.getAgentPool()
@@ -183,30 +177,23 @@ def crossover(indiv1, indiv2):
     superRS = removeDuplicateRules(superRS)    # Remove duplicate rules from set
     
     while len(superRS) < maxRulesInNewGenerationSet:
-        print("Adding a new random rule to superRS. The length of superRS is", len(superRS), "and the max length is")
         superRS.append(createRandomRule(agentPool, 0))
 
-    print("About to sort superRS in crossover")
     superRS.sort(key=lambda x: x.getWeight(), reverse = True)
-    print("Sorted superRS in crossover")
     
     superRSint = indiv1.getRSint() + indiv2.getRSint()    
     superRSint = removeDuplicateRules(superRSint)
 
     while len(superRSint) < maxRulesInNewGenerationSet:
-        print("Adding a new random rule to superRS")
         superRSint.append(createRandomRule(agentPool, 1))
 
-    print("About to sort superRSint in crossover")
     superRS.sort(key=lambda x: x.getWeight(), reverse = True)
-    print("Sorted superRSint in crossover")
 
     newRS = superRS[0:maxRules] 
     newRSint = superRSint[0:maxRules]
     
     counter = 1
     for rule in newRS:
-        print("Rule", counter, "contains conditions", rule.getConditions(), "and action", rule.getAction(), "\n\n")
         counter += 1
         
         # Ensure duplicate rules (with or without different weights) haven't been added to rule set. If they have, keep the one with the higher weight and mutate the other
@@ -214,7 +201,6 @@ def crossover(indiv1, indiv2):
         for r in newRS:
             if rule is not r:
                 while set(rule.getConditions()) == set(r.getConditions()) and rule.getAction() == r.getAction():
-                    print('Two rules are equal and are being mutated.')
                     if rule.getWeight() < r.getWeight():
                         # print("rule has less weight than r")
                         newRS.append(mutateRule(rule))
@@ -229,7 +215,6 @@ def crossover(indiv1, indiv2):
         for r in newRSint:
             if rule is not r:
                 while set(rule.getConditions()) == set(r.getConditions()) and rule.getAction() == r.getAction():
-                    print('Two rules are equal and are being mutated.')
                     if rule.getWeight() < r.getWeight():
                         # print("rule has less weight than r")
                         newRS.append(mutateRule(rule))
@@ -243,20 +228,17 @@ def crossover(indiv1, indiv2):
     while ruleSetsAreDuplicate(newRS, indiv1.getRS()) or ruleSetsAreDuplicate(newRS, indiv2.getRS()):
         # print("Indiv 1 compare is", ruleSetsAreDuplicate(newRS, indiv1.getRS()))
         # print('Indiv 2 compare is', ruleSetsAreDuplicate(newRS, indiv2.getRS()))
-        print("Rule set RS is the same as parent's RS")
         newRS.sort(key=lambda x: x.getWeight(), reverse = True)
         ruleToMutate = newRS[len(newRS)-1]
-        print("Last rule in RS acquired.")
         newRS.append(mutateRule(ruleToMutate))
         newRS.remove(newRS[len(newRS)-2])
     
     while ruleSetsAreDuplicate(newRSint, indiv1.getRSint()) or ruleSetsAreDuplicate(newRSint, indiv2.getRSint()):
-        print("Indiv 1 compare is", ruleSetsAreDuplicate(newRSint, indiv1.getRSint()))
-        print('Indiv 2 compare is', ruleSetsAreDuplicate(newRSint, indiv2.getRSint()))
-        print("Rule set RSint is the same as parent's RSint")
+        # print("Indiv 1 compare is", ruleSetsAreDuplicate(newRSint, indiv1.getRSint()))
+        # print('Indiv 2 compare is', ruleSetsAreDuplicate(newRSint, indiv2.getRSint()))
+        # print("Rule set RSint is the same as parent's RSint")
         newRSint.sort(key=lambda x: x.getWeight(), reverse = True)
         ruleToMutate = newRS[len(newRSint)-1]
-        print("Last rule in RS acquired.")
         newRSint.append(mutateRule(ruleToMutate))
         newRSint.remove(newRSint[len(newRSint)-2])
     
@@ -319,18 +301,13 @@ def mutateRule(rule):
 
             # If rule is from RSint
         elif rule.getType() == 1:
-            print("RSint rule type being modified")
             for i in range(numCondToAdd):
                 newPredicate = CoopPredicateSet.getRandomPredicate(rule.getAgentPool())  
-                print("New predicate is", newPredicate)
                     # If new random predicate is valid, append it to the conditions list
                 if checkValidCond(newPredicate, ruleCond):
-                    print("Condition valid. Adding condition.")
                     ruleCond.append(newPredicate)
     
-    print("*The rule is now being updated. It previously had conditions:", rule.getConditions())                
     rule.setConditions(ruleCond) # set rule's new conditions
-    print("UPDATED RULE now has conditions:", rule.getConditions(), "\n\n")                
     rule.setAction(rule.getAgentPool().getActionSet()[randrange(0, len(rule.getAgentPool().getActionSet()))])
     rule.setWeight(0)
 
@@ -338,30 +315,22 @@ def mutateRule(rule):
 
     # RETURNS A PARENT TO BE BREED BASED ON FITNESS PROPOTIONAL SELECTION
 def chooseFirstParent(breedingPopulation):
-    print("Choosing parent from population", breedingPopulation)
     totalFitness = sum([i.getNormalizedFitness() for i in breedingPopulation]) # Adjust fitnesses to benefit the smallest
     if totalFitness != 0:
         selection_probs = [i.getNormalizedFitness()/totalFitness for i in breedingPopulation]
-        print("Max fitness is not 0. Choosing individual via roulette wheel.")
-        print("The selection probabilities are", selection_probs)
         return breedingPopulation[npr.choice(len(breedingPopulation), p=selection_probs)]
     else:
-        print("Max fitness is 0. Choosing random individual.")
         return random.choice(breedingPopulation)
 
     # RETURNS A PARENT TO BE BREED BASED ON FITNESS PROPOTIONAL SELECTION
 def chooseSecondParent(breedingPopulation, parent1):
-    print('Breeding population is', breedingPopulation)
     adjustedPopulation = breedingPopulation.copy()
     adjustedPopulation.remove(parent1)
     totalFitness = sum([i.getNormalizedFitness() for i in adjustedPopulation])
     if totalFitness != 0:
         selection_probs = [i.getNormalizedFitness()/totalFitness for i in adjustedPopulation]
-        print("Max fitness is not 0. Choosing individual via roulette wheel.")
-        print("The selection probabilities are", selection_probs)
         return adjustedPopulation[npr.choice(len(adjustedPopulation), p=selection_probs)]
     else:
-        print("Max fitness is 0. Choosing random individual.")
         return random.choice(breedingPopulation)
 
 
@@ -380,7 +349,6 @@ def removeDuplicateRules(ruleSet):
         for otherRule in ruleSet:
             if rulesAreDuplicate(rule, otherRule):    
                 ruleSet.remove(otherRule)
-                print("Removed duplicate rule!")
     return ruleSet
 
     # CHECK IF TWO RULES ARE DUPLICATES OF EACH OTHER
@@ -398,14 +366,6 @@ def rulesAreDuplicate(rule1, rule2):
     
     # CHECK IF TWO RULE SETS ARE DUPLICATES OF EACH OTHER
 def ruleSetsAreDuplicate(rs1, rs2):
-    print("Ruleset 1 is", rs1)
-    print("Ruleset 2 is", rs2)
-    print("\n\nDifference between rs1 and rs2 is", set(rs1) - set(rs2))
-    for rule in rs1:
-        for r in rs2:
-            if set(rs1) == set(rs2):
-                print("RS1 rule has conds", rule.getConditions(), "and RS2 rule is", r.getConditions(), "and the condition equality is", rule.getConditions() == r.getConditions(), "\n")
-                print("Difference between rs2 and rs1 is", set(rs1) - set(rs2))
     return set(rs1) == set(rs2)  
 
     # RETURN SUM OF ALL WEIGHTS IN A RULE SET

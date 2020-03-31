@@ -57,10 +57,13 @@ if __name__ == "__main__":
     episode = 0
     generations = 0
     allIndividualsTested = False
+    simulationStartTime = datetime.datetime.now()
 
     # Evolutionary learning loop 
     while generations < totalGenerations:
         print('----- GENERATION {} of {}'.format(generations+1, totalGenerations))
+        print("This simulation began at:", simulationStartTime)
+        genStartTime = datetime.datetime.now()
             
         # Prepare for next simulation run
         allIndividualsTested = False
@@ -134,6 +137,7 @@ if __name__ == "__main__":
         generations += 1 
                
 
-    print("----- End time:", datetime.datetime.now())
+    print("Start time:", genStartTime, "----- End time:", datetime.datetime.now())
+    print("This simulation began at:", simulationStartTime)
     print("PATH:", path)
     # Do something to save session stats here
