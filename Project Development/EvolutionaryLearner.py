@@ -15,12 +15,12 @@ from random import randint
 
     # Best runtime in seconds by the SUMO traffic light algorithm
 global bestSUMORuntime
-bestSUMORuntime = 1999
+bestSUMORuntime = 1690
     # How many of the top individuals to breed for new generation
-global maxMutations
+global numOfIndividualsToMutate
 global percentOfLastGenerationBred
-maxMutations = 7
-percentOfLastGenerationBred = .5
+numOfIndividualsToMutate = 7
+percentOfLastGenerationBred = .3
 
     # Specifications for making Individuals and Rules
 global maxRulePredicates
@@ -28,10 +28,10 @@ global maxRules
 global maxIndividuals
 global newGenerationPoolSize
 
-maxRulePredicates = 5
+maxRulePredicates = 3
 maxRules = 10
-maxIndividuals = 30
-maxRulesInNewGenerationSet = 25
+maxRulesInNewGenerationSet = 30
+maxIndividuals = 10
 
     # How much runtime and rule weights matter when determining fitness of a simulation run
 global runtimeFactor
@@ -50,7 +50,10 @@ def rFit(individual, simTime, aggregateVehicleWaitTime):
         indivAggrVehWaitTime = individual.getAggregateVehicleWaitTime()
 
             # If Individual's simulation time is more than the best time, multiply it relative to how much worse it is
-        if indivAggrVehWaitTime - bestIndivAggregateVehWaitTime < bestIndivAggregateVehWaitTime*.1:
+        if indivAggrVehWaitTime == bestIndivAggregateVehWaitTime:
+            return bestIndivAggregateVehWaitTime
+
+        elif indivAggrVehWaitTime - bestIndivAggregateVehWaitTime < bestIndivAggregateVehWaitTime*.1:
             return indivAggrVehWaitTime*10
 
         elif indivAggrVehWaitTime - bestIndivAggregateVehWaitTime < bestIndivAggregateVehWaitTime*.2:
@@ -75,31 +78,36 @@ def createNewGeneration(agentPools):
     for ap in agentPools:
         individuals = ap.getIndividualsSet()
         individuals.sort(key=lambda x: x.getNormalizedFitness(), reverse = True)
-        #individuals.len() # An error trip for the program to stop for testing
+        # individuals.len() # An error trip for the program to stop for testing
 
         lastIndex = int(len(individuals)*percentOfLastGenerationBred)
         newGeneration = individuals[0:lastIndex]
+        numOfSurvivingIndividuals = len(newGeneration)
 
-            # Create new generation
-        while len(newGeneration) < maxIndividuals:
+            # Create however many children possible to also leave room for max number of mutations
+        for x in range((maxIndividuals-numOfSurvivingIndividuals)-numOfIndividualsToMutate):
             parent1 = chooseFirstParent(newGeneration)
             parent2 = chooseSecondParent(newGeneration, parent1)
             newGeneration.append(crossover(parent1, parent2))
 
             # Randomly mutate a random number of the children
-        for i in range(randint(1, maxMutations)):
+        for i in range(numOfIndividualsToMutate):
             individualToMutate = newGeneration[randrange(0, len(newGeneration))]
-            newGeneration.append(mutate(individualToMutate))
-            newGeneration.remove(individualToMutate)
+            # Simulate deepcopy() without using deepcopy() because it is slooooow and mutate copied Individual
+            newGeneration.append(mutate(Individual(individualToMutate.getID(), individualToMutate.getAgentPool(), individualToMutate.getRS(), individualToMutate.getRSint())))
+        
+        individuals.len() # An error trip for the program to stop for testing
 
+        # Add first 
             # Lines 100 - 130 are file writing lines just for mid-simulation validation
-        f = open("newGeneration", "w")
+        fileName = str(ap.getID()) + "_" + str(time.time())
+        f = open(fileName, "w")
         f.write("New Generation includes these individuals and their rules.\n\n\n")
 
         individualCount = 1
         for i in newGeneration:
             ruleCount = 1
-            f.write("Individual" + str(individualCount) + "has a fitness of " + str(i.getFitness()) + " and a last runtime of " + str(i.getLastRunTime()) + " and contains the following rules:\n\n")
+            f.write("Individual" + str(individualCount) + "has a fitness of " + str(i.getFitness()) + " and a last runtime of " + str(i.getLastRunTime()) + ". It has been selected", str(i.getTotalSelectedCount()) ,"and a run fitness total of", str(sum(i.getTotalSelectedCount())),"and contains the following rules:\n\n")
             f.write("Rules in RS:\n")
             for rule in i.getRS():
                 cond = ""
@@ -257,8 +265,12 @@ def mutate(individual):
     chosenRule = individual.getRS()[randrange(0,len(individual.getRS()))]
     newRule = mutateRule(chosenRule)
 
-    individual.getRS().append(newRule)
-    individual.getRS().remove(chosenRule)
+    if newRule.getType() == 0:
+        individual.getRS().append(newRule)
+        individual.getRS().remove(chosenRule)
+    else:
+        individual.getRSint().append(newRule)
+        individual.getRSint().remove(chosenRule)
 
     return individual
 

@@ -91,8 +91,9 @@ if __name__ == "__main__":
             print('Changes made. The generation is', generations, "and the maxSimTime is", maxSimulationTime)
             simRunner = Driver(sumoCmd, setUpTuple, maxGreenPhaseTime, maxYellowPhaseTime, maxSimulationTime)
 
-            print('----- Episode {}'.format(episode+1), "of GENERATION {} of {}".format(generations+1, totalGenerations))
+            print('----- Episode {}'.format(episode+1), "of GENERATION {} of {}".format(generations, totalGenerations))
             print("Generation start time:", genStart)
+            print("The average generation runtime is", sum(generationRuntimes)/generations)
             start = timeit.default_timer()
             resultingAgentPools = simRunner.run()  # run the simulation
             stop = timeit.default_timer()

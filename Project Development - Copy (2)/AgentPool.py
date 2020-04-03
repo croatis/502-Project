@@ -98,7 +98,7 @@ class AgentPool:
                 # Calculate normalized fitness value for each individual in the agent pool
             for i in self.individuals:
                 i.setNormalizedFitness((i.getNegatedFitness()-self.individuals[len(self.individuals)-1].getNegatedFitness())/(self.individuals[0].getNegatedFitness()-self.individuals[len(self.individuals)-1].getNegatedFitness())) 
-                print("Normalized fitness value is", (i.getNegatedFitness() - self.individuals[len(self.individuals)-1].getNegatedFitness()) / (self.individuals[0].getNegatedFitness() - self.individuals[len(self.individuals)-1].getNegatedFitness()))
+                # print("Normalized fitness value is", (i.getNegatedFitness() - self.individuals[len(self.individuals)-1].getNegatedFitness()) / (self.individuals[0].getNegatedFitness() - self.individuals[len(self.individuals)-1].getNegatedFitness()))
 # def run():
 #     ap = AgentPool("ap1", ["H_S_G", "H_S_Y", "H_L_G", "H_L_Y"])
 #     for i in ap.getIndividualsSet():    

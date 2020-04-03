@@ -89,7 +89,9 @@ class AgentPool:
         return bestIndivAggregateVehWaitTimeList[0].getAggregateVehicleWaitTime()
 
     def normalizeIndividualsFitnesses(self):
+        print("Normalizing fitnesses.")
         self.individuals.sort(key=lambda x: x.getNegatedFitness(), reverse = True) # Sort individuals by fitness 
+        print("The top individual is", self.individuals[0], "and it has a fitness of", self.individuals[0].getFitness())
 
         if (self.individuals[0].getNegatedFitness() - self.individuals[len(self.individuals)-1].getNegatedFitness()) == 0:
             for i in self.individuals:
@@ -98,7 +100,7 @@ class AgentPool:
                 # Calculate normalized fitness value for each individual in the agent pool
             for i in self.individuals:
                 i.setNormalizedFitness((i.getNegatedFitness()-self.individuals[len(self.individuals)-1].getNegatedFitness())/(self.individuals[0].getNegatedFitness()-self.individuals[len(self.individuals)-1].getNegatedFitness())) 
-                # print("Normalized fitness value is", (i.getNegatedFitness() - self.individuals[len(self.individuals)-1].getNegatedFitness()) / (self.individuals[0].getNegatedFitness() - self.individuals[len(self.individuals)-1].getNegatedFitness()))
+                print("Normalized fitness value of", i, "is", (i.getNegatedFitness() - self.individuals[len(self.individuals)-1].getNegatedFitness()) / (self.individuals[0].getNegatedFitness() - self.individuals[len(self.individuals)-1].getNegatedFitness()))
 # def run():
 #     ap = AgentPool("ap1", ["H_S_G", "H_S_Y", "H_L_G", "H_L_Y"])
 #     for i in ap.getIndividualsSet():    

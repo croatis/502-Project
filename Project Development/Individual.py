@@ -50,6 +50,9 @@ class Individual:
     def getSelectedCount(self):
         return self.selectedCount
     
+    def getTotalSelectedCount(self):
+        return self.totalSelectedCount
+    
         # RETURN INDIVIDUAL'S FITNESS SCORE
     def getFitness(self):
         return self.fitness

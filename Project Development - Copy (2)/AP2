@@ -1,0 +1,1327 @@
+New Generation includes these individuals and their rules.
+
+
+Individual1has a fitness of 6257.333333333333 and a last runtime of 1215.0 and contains the following rules:
+
+Rules in RS:
+
+Rule1: (<Rule.Rule object at 0x000001B5265D01C8>) <,longestTimeWaitedToTurnLeft_45_60 ,eastWestPhaseIsLeftTurn_Green >, <2> and rule has a weight of0
+
+
+Rule2: (<Rule.Rule object at 0x000001B5265D02C8>) <,longestTimeWaitedToTurnLeft_30_45 ,numCarsWaitingToTurnLeft_6_9 >, <4> and rule has a weight of0
+
+
+Rule3: (<Rule.Rule object at 0x000001B5265D03C8>) <,longestTimeWaitedToTurnLeft_45_60 ,longestTimeWaitedToTurnLeft_45_60 >, <7> and rule has a weight of7.69248708121387e-05
+
+
+Rule4: (<Rule.Rule object at 0x000001B5265D04C8>) <,longestTimeWaitedToProceedStraight_210_240 ,horizontalPhaseIs_Green >, <4> and rule has a weight of6.854665842379058e-05
+
+
+Rule5: (<Rule.Rule object at 0x000001B5265D05C8>) <,horizontalPhaseIs_Yellow ,numCarsWaitingToProceedStraight_0_5 >, <2> and rule has a weight of0
+
+
+Rule6: (<Rule.Rule object at 0x000001B5265D0748>) <,verticalPhaseIs_Green ,numCarsWaitingToTurnLeft_15 ,numCarsWaitingToProceedStraight_0 >, <3> and rule has a weight of0
+
+
+Rule7: (<Rule.Rule object at 0x000001B5265D0848>) <,eastWestPhaseIsLeftTurn_Yellow ,longestTimeWaitedToProceedStraight_300 ,westEastPhaseIs_Green >, <6> and rule has a weight of0
+
+
+Rule8: (<Rule.Rule object at 0x000001B5265D0948>) <,longestTimeWaitedToTurnLeft_180_210 >, <7> and rule has a weight of4.5005071371876386e-05
+
+
+Rule9: (<Rule.Rule object at 0x000001B5265D0A48>) <,southNorthPhaseIs_Yellow ,verticalPhaseIs_Green ,longestTimeWaitedToProceedStraight_0 >, <4> and rule has a weight of0
+
+
+Rule10: (<Rule.Rule object at 0x000001B5265D0AC8>) <,northSouthPhaseIs_Yellow ,numCarsWaitingToProceedStraight_10_15 ,timeSpentInCurrentPhase_210_240 >, <7> and rule has a weight of0
+
+Rules in RSint:
+
+Rule1: <,timeSinceCommunication_20_25 >, <5> and rule has a weight of0
+
+
+Rule2: <,intendedActionIs_NS_S_Y >, <5> and rule has a weight of0
+
+
+Rule3: <,intendedActionIs_EW_SL_Y ,timeSinceCommunication_10_15 ,intendedActionIs_NS_S_Y >, <4> and rule has a weight of0
+
+
+Rule4: <,intendedActionIs_EW_S_Y >, <7> and rule has a weight of0
+
+
+Rule5: <,intendedActionIs_V_S_Y ,intendedActionIs_V_L_Y >, <5> and rule has a weight of0
+
+
+Rule6: <,intendedActionIs_EW_S_G >, <2> and rule has a weight of0
+
+
+Rule7: <,intendedActionIs_WE_SL_G ,intendedActionIs_H_S_Y >, <6> and rule has a weight of0
+
+
+Rule8: <,intendedActionIs_SN_L_Y ,intendedActionIs_EW_S_G ,timeSinceCommunication_0 >, <4> and rule has a weight of0
+
+
+Rule9: <,intendedActionIs_SN_S_Y ,timeSinceCommunication_15_20 ,timeSinceCommunication_20_25 >, <6> and rule has a weight of0
+
+
+Rule10: <,intendedActionIs_H_L_Y ,intendedActionIs_H_S_G ,intendedActionIs_SN_L_Y >, <8> and rule has a weight of0
+
+-------------------
+
+Individual2has a fitness of 7720.333333333333 and a last runtime of 1838.0 and contains the following rules:
+
+Rules in RS:
+
+Rule1: (<Rule.Rule object at 0x000001B5264C94C8>) <,timeSpentInCurrentPhase_300 ,numCarsWaitingToProceedStraight_35_45 ,eastWestPhaseIsLeftTurn_Green >, <2> and rule has a weight of0
+
+
+Rule2: (<Rule.Rule object at 0x000001B5264C95C8>) <,westEastPhaseIsLeftTurn_Green >, <1> and rule has a weight of0
+
+
+Rule3: (<Rule.Rule object at 0x000001B5264C96C8>) <,northSouthPhaseIs_Yellow ,longestTimeWaitedToTurnLeft_30_45 ,longestTimeWaitedToProceedStraight_180_210 >, <6> and rule has a weight of0
+
+
+Rule4: (<Rule.Rule object at 0x000001B5264C97C8>) <,longestTimeWaitedToTurnLeft_30_45 >, <7> and rule has a weight of0
+
+
+Rule5: (<Rule.Rule object at 0x000001B5264C98C8>) <,southNorthPhaseIsLeftTurn_Green ,horizontalPhaseIs_Yellow ,timeSpentInCurrentPhase_0_15 >, <7> and rule has a weight of0
+
+
+Rule6: (<Rule.Rule object at 0x000001B5264C9A48>) <,longestTimeWaitedToTurnLeft_210_240 >, <6> and rule has a weight of2.8582144464406256e-05
+
+
+Rule7: (<Rule.Rule object at 0x000001B5264C9B48>) <,timeSpentInCurrentPhase_0 ,numCarsWaitingToTurnLeft_0_3 >, <6> and rule has a weight of0
+
+
+Rule8: (<Rule.Rule object at 0x000001B5264C9C48>) <,numCarsWaitingToTurnLeft_0 ,longestTimeWaitedToProceedStraight_150_180 >, <3> and rule has a weight of0.0
+
+
+Rule9: (<Rule.Rule object at 0x000001B5264C9D48>) <,longestTimeWaitedToProceedStraight_180_210 ,eastWestPhaseIs_Green >, <6> and rule has a weight of0
+
+
+Rule10: (<Rule.Rule object at 0x000001B5264C9DC8>) <,longestTimeWaitedToProceedStraight_240_270 ,southNorthPhaseIsLeftTurn_Yellow >, <5> and rule has a weight of0
+
+Rules in RSint:
+
+Rule1: <,intendedActionIs_EW_SL_Y ,intendedActionIs_SN_S_G >, <4> and rule has a weight of0
+
+
+Rule2: <,intendedActionIs_H_L_Y ,intendedActionIs_NS_SL_Y ,timeSinceCommunication_5_10 >, <8> and rule has a weight of-5e-06
+
+
+Rule3: <,intendedActionIs_NS_S_Y ,intendedActionIs_WE_S_Y >, <8> and rule has a weight of-2.38374011627907e-05
+
+
+Rule4: <,intendedActionIs_WE_S_Y >, <1> and rule has a weight of0
+
+
+Rule5: <,intendedActionIs_WE_L_Y >, <7> and rule has a weight of0
+
+
+Rule6: <,timeSinceCommunication_10_15 >, <5> and rule has a weight of0
+
+
+Rule7: <,intendedActionIs_NS_L_Y >, <3> and rule has a weight of0
+
+
+Rule8: <,intendedActionIs_EW_S_G >, <4> and rule has a weight of4.50025e-05
+
+
+Rule9: <,intendedActionIs_V_S_G ,intendedActionIs_EW_SL_G >, <3> and rule has a weight of0.0
+
+
+Rule10: <,intendedActionIs_NS_L_Y >, <5> and rule has a weight of0
+
+-------------------
+
+Individual3has a fitness of 8472.666666666666 and a last runtime of 1388.0 and contains the following rules:
+
+Rules in RS:
+
+Rule1: (<Rule.Rule object at 0x000001B5264C4988>) <,longestTimeWaitedToTurnLeft_30_45 ,longestTimeWaitedToTurnLeft_120_150 >, <4> and rule has a weight of0
+
+
+Rule2: (<Rule.Rule object at 0x000001B5264C4A88>) <,longestTimeWaitedToTurnLeft_240_270 >, <4> and rule has a weight of5.3614345777927076e-05
+
+
+Rule3: (<Rule.Rule object at 0x000001B5264C4B88>) <,timeSpentInCurrentPhase_30_45 >, <1> and rule has a weight of0
+
+
+Rule4: (<Rule.Rule object at 0x000001B5264C4C88>) <,longestTimeWaitedToProceedStraight_45_60 >, <7> and rule has a weight of0.0
+
+
+Rule5: (<Rule.Rule object at 0x000001B5264C4D88>) <,timeSpentInCurrentPhase_300 ,northSouthPhaseIsLeftTurn_Yellow >, <5> and rule has a weight of0
+
+
+Rule6: (<Rule.Rule object at 0x000001B5264C4F08>) <,northSouthPhaseIsLeftTurn_Yellow ,longestTimeWaitedToProceedStraight_30_45 ,northSouthPhaseIs_Green >, <2> and rule has a weight of0
+
+
+Rule7: (<Rule.Rule object at 0x000001B5264C9048>) <,numCarsWaitingToProceedStraight_25_35 ,longestTimeWaitedToTurnLeft_150_180 ,longestTimeWaitedToTurnLeft_90_120 >, <1> and rule has a weight of0
+
+
+Rule8: (<Rule.Rule object at 0x000001B5264C9148>) <,timeSpentInCurrentPhase_60_90 ,timeSpentInCurrentPhase_0_15 >, <0> and rule has a weight of0
+
+
+Rule9: (<Rule.Rule object at 0x000001B5264C9248>) <,numCarsWaitingToTurnLeft_9_12 ,longestTimeWaitedToProceedStraight_300 >, <4> and rule has a weight of0
+
+
+Rule10: (<Rule.Rule object at 0x000001B5264C92C8>) <,northSouthPhaseIs_Green ,verticalPhaseIsLeftTurn_Yellow >, <2> and rule has a weight of0
+
+Rules in RSint:
+
+Rule1: <,intendedActionIs_EW_L_Y >, <7> and rule has a weight of0
+
+
+Rule2: <,intendedActionIs_WE_L_Y >, <5> and rule has a weight of0
+
+
+Rule3: <,intendedActionIs_NS_L_Y ,timeSinceCommunication_0_5 >, <5> and rule has a weight of0
+
+
+Rule4: <,intendedActionIs_V_L_Y ,timeSinceCommunication_0_5 ,intendedActionIs_WE_S_G >, <0> and rule has a weight of0
+
+
+Rule5: <,intendedActionIs_EW_S_G >, <0> and rule has a weight of0
+
+
+Rule6: <,intendedActionIs_NS_S_G ,intendedActionIs_SN_L_Y ,timeSinceCommunication_10_15 >, <1> and rule has a weight of0
+
+
+Rule7: <,intendedActionIs_EW_SL_Y ,intendedActionIs_WE_L_Y ,intendedActionIs_WE_L_Y >, <4> and rule has a weight of0
+
+
+Rule8: <,timeSinceCommunication_5_10 >, <4> and rule has a weight of0
+
+
+Rule9: <,intendedActionIs_EW_L_Y >, <3> and rule has a weight of0
+
+
+Rule10: <,intendedActionIs_EW_S_G ,intendedActionIs_WE_S_G >, <0> and rule has a weight of0
+
+-------------------
+
+Individual4has a fitness of 9976.666666666666 and a last runtime of 1576.0 and contains the following rules:
+
+Rules in RS:
+
+Rule1: (<Rule.Rule object at 0x000001B5265D8308>) <,numCarsWaitingToTurnLeft_12_15 >, <5> and rule has a weight of-5.227777533104493e-06
+
+
+Rule2: (<Rule.Rule object at 0x000001B5265D8408>) <,timeSpentInCurrentPhase_180_210 ,longestTimeWaitedToProceedStraight_60_90 ,northSouthPhaseIs_Green >, <0> and rule has a weight of0
+
+
+Rule3: (<Rule.Rule object at 0x000001B5265D8508>) <,longestTimeWaitedToProceedStraight_180_210 ,longestTimeWaitedToTurnLeft_210_240 >, <8> and rule has a weight of0.0
+
+
+Rule4: (<Rule.Rule object at 0x000001B5265D8608>) <,numCarsWaitingToProceedStraight_0_5 ,numCarsWaitingToTurnLeft_15 >, <2> and rule has a weight of0.00029729316333975493
+
+
+Rule5: (<Rule.Rule object at 0x000001B5265D8708>) <,timeSpentInCurrentPhase_30_45 ,timeSpentInCurrentPhase_150_180 >, <3> and rule has a weight of0
+
+
+Rule6: (<Rule.Rule object at 0x000001B5265D8888>) <,northSouthPhaseIs_Green ,longestTimeWaitedToProceedStraight_210_240 >, <4> and rule has a weight of0
+
+
+Rule7: (<Rule.Rule object at 0x000001B5265D8988>) <,longestTimeWaitedToProceedStraight_90_120 ,timeSpentInCurrentPhase_240_270 ,horizontalPhaseIs_Yellow >, <3> and rule has a weight of0
+
+
+Rule8: (<Rule.Rule object at 0x000001B5265D8A88>) <,numCarsWaitingToProceedStraight_25_35 ,timeSpentInCurrentPhase_45_60 ,longestTimeWaitedToTurnLeft_60_90 >, <7> and rule has a weight of0
+
+
+Rule9: (<Rule.Rule object at 0x000001B5265D8B88>) <,numCarsWaitingToTurnLeft_0_3 >, <3> and rule has a weight of3.858493155300342e-05
+
+
+Rule10: (<Rule.Rule object at 0x000001B5265D8C08>) <,horizontalPhaseIsLeftTurn_Yellow ,numCarsWaitingToProceedStraight_35_45 ,numCarsWaitingToProceedStraight_10_15 >, <4> and rule has a weight of0
+
+Rules in RSint:
+
+Rule1: <,intendedActionIs_H_S_G ,intendedActionIs_EW_SL_G >, <8> and rule has a weight of0
+
+
+Rule2: <,intendedActionIs_NS_S_Y ,intendedActionIs_EW_SL_Y >, <5> and rule has a weight of0
+
+
+Rule3: <,intendedActionIs_SN_L_Y ,timeSinceCommunication_15_20 ,intendedActionIs_NS_L_G >, <8> and rule has a weight of0
+
+
+Rule4: <,intendedActionIs_H_L_Y ,timeSinceCommunication_0 ,intendedActionIs_V_L_G >, <3> and rule has a weight of0
+
+
+Rule5: <,intendedActionIs_H_S_Y ,intendedActionIs_EW_SL_G ,intendedActionIs_H_S_G >, <0> and rule has a weight of0
+
+
+Rule6: <,intendedActionIs_EW_L_G ,intendedActionIs_WE_S_G ,timeSinceCommunication_15_20 >, <7> and rule has a weight of0
+
+
+Rule7: <,intendedActionIs_V_L_Y ,intendedActionIs_EW_L_G >, <4> and rule has a weight of0
+
+
+Rule8: <,intendedActionIs_EW_L_G >, <8> and rule has a weight of0
+
+
+Rule9: <,intendedActionIs_V_L_Y ,intendedActionIs_EW_SL_G >, <8> and rule has a weight of0
+
+
+Rule10: <,intendedActionIs_NS_S_Y >, <7> and rule has a weight of0
+
+-------------------
+
+Individual5has a fitness of 11263.333333333334 and a last runtime of 10000.0 and contains the following rules:
+
+Rules in RS:
+
+Rule1: (<Rule.Rule object at 0x000001B5265D0CC8>) <,longestTimeWaitedToProceedStraight_150_180 ,longestTimeWaitedToTurnLeft_120_150 ,timeSpentInCurrentPhase_45_60 >, <1> and rule has a weight of0
+
+
+Rule2: (<Rule.Rule object at 0x000001B5265D0DC8>) <,westEastPhaseIs_Yellow ,longestTimeWaitedToTurnLeft_150_180 >, <1> and rule has a weight of0
+
+
+Rule3: (<Rule.Rule object at 0x000001B5265D0EC8>) <,eastWestPhaseIs_Yellow ,longestTimeWaitedToTurnLeft_0_15 ,longestTimeWaitedToProceedStraight_270_300 >, <8> and rule has a weight of0
+
+
+Rule4: (<Rule.Rule object at 0x000001B5265D0FC8>) <,longestTimeWaitedToTurnLeft_0 >, <2> and rule has a weight of0.1159693107931151
+
+
+Rule5: (<Rule.Rule object at 0x000001B5265D3108>) <,eastWestPhaseIs_Green ,longestTimeWaitedToProceedStraight_0 ,numCarsWaitingToProceedStraight_0_5 >, <1> and rule has a weight of0
+
+
+Rule6: (<Rule.Rule object at 0x000001B5265D3288>) <,timeSpentInCurrentPhase_300 ,longestTimeWaitedToProceedStraight_300 >, <4> and rule has a weight of0
+
+
+Rule7: (<Rule.Rule object at 0x000001B5265D3388>) <,southNorthPhaseIsLeftTurn_Green ,timeSpentInCurrentPhase_180_210 ,timeSpentInCurrentPhase_0_15 >, <5> and rule has a weight of0
+
+
+Rule8: (<Rule.Rule object at 0x000001B5265D3488>) <,westEastPhaseIsLeftTurn_Green ,longestTimeWaitedToProceedStraight_120_150 ,westEastPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of0
+
+
+Rule9: (<Rule.Rule object at 0x000001B5265D3588>) <,numCarsWaitingToTurnLeft_3_6 >, <0> and rule has a weight of0.00040296176833920093
+
+
+Rule10: (<Rule.Rule object at 0x000001B5265D3608>) <,northSouthPhaseIsLeftTurn_Yellow ,timeSpentInCurrentPhase_300 >, <6> and rule has a weight of0
+
+Rules in RSint:
+
+Rule1: <,intendedActionIs_NS_S_Y ,intendedActionIs_EW_SL_Y ,intendedActionIs_H_L_Y >, <6> and rule has a weight of0
+
+
+Rule2: <,intendedActionIs_H_S_Y >, <1> and rule has a weight of0
+
+
+Rule3: <,intendedActionIs_EW_SL_G >, <3> and rule has a weight of0
+
+
+Rule4: <,intendedActionIs_SN_L_G >, <0> and rule has a weight of0
+
+
+Rule5: <,timeSinceCommunication_20_25 ,intendedActionIs_H_S_Y >, <5> and rule has a weight of0
+
+
+Rule6: <,intendedActionIs_SN_S_Y >, <7> and rule has a weight of0
+
+
+Rule7: <,intendedActionIs_WE_L_Y ,intendedActionIs_NS_SL_Y >, <1> and rule has a weight of0
+
+
+Rule8: <,intendedActionIs_WE_SL_Y ,intendedActionIs_WE_SL_Y ,intendedActionIs_EW_S_G >, <2> and rule has a weight of0
+
+
+Rule9: <,intendedActionIs_NS_S_Y ,intendedActionIs_WE_S_G >, <6> and rule has a weight of0
+
+
+Rule10: <,timeSinceCommunication_0 ,timeSinceCommunication_0 ,timeSinceCommunication_10_15 >, <1> and rule has a weight of0
+
+-------------------
+
+Individual6has a fitness of 20529.333333333332 and a last runtime of 10000.0 and contains the following rules:
+
+Rules in RS:
+
+Rule1: (<Rule.Rule object at 0x000001B5264CCB08>) <,southNorthPhaseIsLeftTurn_Green ,timeSpentInCurrentPhase_210_240 >, <4> and rule has a weight of0
+
+
+Rule2: (<Rule.Rule object at 0x000001B5264CCC08>) <,northSouthPhaseIsLeftTurn_Green >, <7> and rule has a weight of0
+
+
+Rule3: (<Rule.Rule object at 0x000001B5264CCD08>) <,numCarsWaitingToProceedStraight_10_15 ,timeSpentInCurrentPhase_0_15 ,timeSpentInCurrentPhase_300 >, <1> and rule has a weight of0
+
+
+Rule4: (<Rule.Rule object at 0x000001B5264CCE08>) <,timeSpentInCurrentPhase_0 ,longestTimeWaitedToTurnLeft_0 >, <8> and rule has a weight of0
+
+
+Rule5: (<Rule.Rule object at 0x000001B5264CCF08>) <,longestTimeWaitedToTurnLeft_0 >, <6> and rule has a weight of0.004267299405542573
+
+
+Rule6: (<Rule.Rule object at 0x000001B5265D50C8>) <,numCarsWaitingToProceedStraight_5_10 ,numCarsWaitingToProceedStraight_15_25 >, <3> and rule has a weight of0
+
+
+Rule7: (<Rule.Rule object at 0x000001B5265D51C8>) <,longestTimeWaitedToTurnLeft_300 ,southNorthPhaseIsLeftTurn_Yellow >, <5> and rule has a weight of0
+
+
+Rule8: (<Rule.Rule object at 0x000001B5265D52C8>) <,longestTimeWaitedToTurnLeft_60_90 ,timeSpentInCurrentPhase_15_30 >, <7> and rule has a weight of0
+
+
+Rule9: (<Rule.Rule object at 0x000001B5265D53C8>) <,eastWestPhaseIsLeftTurn_Green ,longestTimeWaitedToProceedStraight_270_300 >, <6> and rule has a weight of0
+
+
+Rule10: (<Rule.Rule object at 0x000001B5265D5448>) <,timeSpentInCurrentPhase_15_30 ,timeSpentInCurrentPhase_60_90 >, <2> and rule has a weight of0
+
+Rules in RSint:
+
+Rule1: <,intendedActionIs_WE_S_G ,timeSinceCommunication_0_5 ,timeSinceCommunication_20_25 >, <1> and rule has a weight of0
+
+
+Rule2: <,intendedActionIs_H_S_Y ,intendedActionIs_V_S_G ,intendedActionIs_NS_SL_G >, <7> and rule has a weight of0
+
+
+Rule3: <,intendedActionIs_EW_L_Y ,intendedActionIs_SN_SL_G >, <3> and rule has a weight of0
+
+
+Rule4: <,intendedActionIs_NS_L_Y ,timeSinceCommunication_5_10 ,intendedActionIs_NS_S_G >, <8> and rule has a weight of0
+
+
+Rule5: <,intendedActionIs_SN_L_G ,intendedActionIs_SN_S_Y ,intendedActionIs_NS_S_Y >, <8> and rule has a weight of0
+
+
+Rule6: <,timeSinceCommunication_0 ,intendedActionIs_SN_S_G ,intendedActionIs_NS_S_Y >, <3> and rule has a weight of0
+
+
+Rule7: <,customPredicate ,timeSinceCommunication_20_25 ,intendedActionIs_V_L_G >, <6> and rule has a weight of0
+
+
+Rule8: <,intendedActionIs_WE_SL_Y >, <3> and rule has a weight of0
+
+
+Rule9: <,intendedActionIs_V_L_Y >, <4> and rule has a weight of0
+
+
+Rule10: <,timeSinceCommunication_15_20 ,intendedActionIs_WE_S_G >, <3> and rule has a weight of0
+
+-------------------
+
+Individual7has a fitness of 10000 and a last runtime of 2.2250738585072014e-308 and contains the following rules:
+
+Rules in RS:
+
+Rule1: (<Rule.Rule object at 0x000001B5265D04C8>) <,longestTimeWaitedToProceedStraight_210_240 ,horizontalPhaseIs_Green >, <4> and rule has a weight of6.854665842379058e-05
+
+
+Rule2: (<Rule.Rule object at 0x000001B5264C4A88>) <,longestTimeWaitedToTurnLeft_240_270 >, <4> and rule has a weight of5.3614345777927076e-05
+
+
+Rule3: (<Rule.Rule object at 0x000001B5265D0948>) <,longestTimeWaitedToTurnLeft_180_210 >, <7> and rule has a weight of4.5005071371876386e-05
+
+
+Rule4: (<Rule.Rule object at 0x000001B5265D02C8>) <,longestTimeWaitedToTurnLeft_30_45 ,numCarsWaitingToTurnLeft_6_9 >, <4> and rule has a weight of0
+
+
+Rule5: (<Rule.Rule object at 0x000001B5265D0748>) <,verticalPhaseIs_Green ,numCarsWaitingToTurnLeft_15 ,numCarsWaitingToProceedStraight_0 >, <3> and rule has a weight of0
+
+
+Rule6: (<Rule.Rule object at 0x000001B5265D0AC8>) <,northSouthPhaseIs_Yellow ,numCarsWaitingToProceedStraight_10_15 ,timeSpentInCurrentPhase_210_240 >, <7> and rule has a weight of0
+
+
+Rule7: (<Rule.Rule object at 0x000001B5264C4C88>) <,longestTimeWaitedToProceedStraight_45_60 >, <7> and rule has a weight of0.0
+
+
+Rule8: (<Rule.Rule object at 0x000001B5264C4F08>) <,northSouthPhaseIsLeftTurn_Yellow ,longestTimeWaitedToProceedStraight_30_45 ,northSouthPhaseIs_Green >, <2> and rule has a weight of0
+
+
+Rule9: (<Rule.Rule object at 0x000001B5264C9148>) <,timeSpentInCurrentPhase_60_90 ,timeSpentInCurrentPhase_0_15 >, <0> and rule has a weight of0
+
+
+Rule10: (<Rule.Rule object at 0x000001B5264C92C8>) <,northSouthPhaseIs_Green ,verticalPhaseIsLeftTurn_Yellow >, <2> and rule has a weight of0
+
+Rules in RSint:
+
+Rule1: <,intendedActionIs_NS_S_Y >, <5> and rule has a weight of0
+
+
+Rule2: <,intendedActionIs_EW_S_Y >, <7> and rule has a weight of0
+
+
+Rule3: <,intendedActionIs_EW_S_G >, <2> and rule has a weight of0
+
+
+Rule4: <,intendedActionIs_SN_L_Y ,intendedActionIs_EW_S_G ,timeSinceCommunication_0 >, <4> and rule has a weight of0
+
+
+Rule5: <,intendedActionIs_H_L_Y ,intendedActionIs_H_S_G ,intendedActionIs_SN_L_Y >, <8> and rule has a weight of0
+
+
+Rule6: <,intendedActionIs_WE_L_Y >, <5> and rule has a weight of0
+
+
+Rule7: <,intendedActionIs_V_L_Y ,timeSinceCommunication_0_5 ,intendedActionIs_WE_S_G >, <0> and rule has a weight of0
+
+
+Rule8: <,intendedActionIs_NS_S_G ,intendedActionIs_SN_L_Y ,timeSinceCommunication_10_15 >, <1> and rule has a weight of0
+
+
+Rule9: <,timeSinceCommunication_5_10 >, <4> and rule has a weight of0
+
+
+Rule10: <,intendedActionIs_EW_S_G ,intendedActionIs_WE_S_G >, <0> and rule has a weight of0
+
+-------------------
+
+Individual8has a fitness of 10000 and a last runtime of 2.2250738585072014e-308 and contains the following rules:
+
+Rules in RS:
+
+Rule1: (<Rule.Rule object at 0x000001B5264C4A88>) <,longestTimeWaitedToTurnLeft_240_270 >, <4> and rule has a weight of5.3614345777927076e-05
+
+
+Rule2: (<Rule.Rule object at 0x000001B5264C4A88>) <,longestTimeWaitedToTurnLeft_240_270 >, <4> and rule has a weight of5.3614345777927076e-05
+
+
+Rule3: (<Rule.Rule object at 0x000001B5265D02C8>) <,longestTimeWaitedToTurnLeft_30_45 ,numCarsWaitingToTurnLeft_6_9 >, <4> and rule has a weight of0
+
+
+Rule4: (<Rule.Rule object at 0x000001B5265D0AC8>) <,northSouthPhaseIs_Yellow ,numCarsWaitingToProceedStraight_10_15 ,timeSpentInCurrentPhase_210_240 >, <7> and rule has a weight of0
+
+
+Rule5: (<Rule.Rule object at 0x000001B5264C4D88>) <,timeSpentInCurrentPhase_300 ,northSouthPhaseIsLeftTurn_Yellow >, <5> and rule has a weight of0
+
+
+Rule6: (<Rule.Rule object at 0x000001B5264C9048>) <,numCarsWaitingToProceedStraight_25_35 ,longestTimeWaitedToTurnLeft_150_180 ,longestTimeWaitedToTurnLeft_90_120 >, <1> and rule has a weight of0
+
+
+Rule7: (<Rule.Rule object at 0x000001B5264C9248>) <,numCarsWaitingToTurnLeft_9_12 ,longestTimeWaitedToProceedStraight_300 >, <4> and rule has a weight of0
+
+
+Rule8: (<Rule.Rule object at 0x000001B527C0B7C8>) <,verticalPhaseIs_Yellow ,longestTimeWaitedToProceedStraight_210_240 ,timeSpentInCurrentPhase_300 >, <4> and rule has a weight of0
+
+
+Rule9: (<Rule.Rule object at 0x000001B5264C03C8>) <,numCarsWaitingToProceedStraight_10_15 >, <3> and rule has a weight of0
+
+
+Rule10: (<Rule.Rule object at 0x000001B5264C0548>) <,numCarsWaitingToProceedStraight_25_35 ,longestTimeWaitedToTurnLeft_210_240 >, <2> and rule has a weight of0
+
+Rules in RSint:
+
+Rule1: <,intendedActionIs_EW_S_Y >, <7> and rule has a weight of0
+
+
+Rule2: <,intendedActionIs_SN_L_Y ,intendedActionIs_EW_S_G ,timeSinceCommunication_0 >, <4> and rule has a weight of0
+
+
+Rule3: <,intendedActionIs_WE_L_Y >, <5> and rule has a weight of0
+
+
+Rule4: <,intendedActionIs_WE_L_Y >, <5> and rule has a weight of0
+
+
+Rule5: <,intendedActionIs_EW_S_G >, <0> and rule has a weight of0
+
+
+Rule6: <,intendedActionIs_EW_SL_Y ,intendedActionIs_WE_L_Y ,intendedActionIs_WE_L_Y >, <4> and rule has a weight of0
+
+
+Rule7: <,intendedActionIs_EW_L_Y >, <3> and rule has a weight of0
+
+
+Rule8: <,intendedActionIs_H_S_G ,intendedActionIs_NS_SL_Y >, <1> and rule has a weight of0
+
+
+Rule9: <,intendedActionIs_SN_SL_G ,intendedActionIs_WE_L_Y ,timeSinceCommunication_20_25 >, <5> and rule has a weight of0
+
+
+Rule10: <,intendedActionIs_WE_L_G ,intendedActionIs_H_L_G ,intendedActionIs_H_S_G >, <5> and rule has a weight of0
+
+-------------------
+
+Individual9has a fitness of 10000 and a last runtime of 2.2250738585072014e-308 and contains the following rules:
+
+Rules in RS:
+
+Rule1: (<Rule.Rule object at 0x000001B5264C4A88>) <,longestTimeWaitedToTurnLeft_240_270 >, <4> and rule has a weight of5.3614345777927076e-05
+
+
+Rule2: (<Rule.Rule object at 0x000001B5264C4F08>) <,northSouthPhaseIsLeftTurn_Yellow ,longestTimeWaitedToProceedStraight_30_45 ,northSouthPhaseIs_Green >, <2> and rule has a weight of0
+
+
+Rule3: (<Rule.Rule object at 0x000001B5264C92C8>) <,northSouthPhaseIs_Green ,verticalPhaseIsLeftTurn_Yellow >, <2> and rule has a weight of0
+
+
+Rule4: (<Rule.Rule object at 0x000001B5265D02C8>) <,longestTimeWaitedToTurnLeft_30_45 ,numCarsWaitingToTurnLeft_6_9 >, <4> and rule has a weight of0
+
+
+Rule5: (<Rule.Rule object at 0x000001B5264C4D88>) <,timeSpentInCurrentPhase_300 ,northSouthPhaseIsLeftTurn_Yellow >, <5> and rule has a weight of0
+
+
+Rule6: (<Rule.Rule object at 0x000001B5264C9048>) <,numCarsWaitingToProceedStraight_25_35 ,longestTimeWaitedToTurnLeft_150_180 ,longestTimeWaitedToTurnLeft_90_120 >, <1> and rule has a weight of0
+
+
+Rule7: (<Rule.Rule object at 0x000001B527C0B7C8>) <,verticalPhaseIs_Yellow ,longestTimeWaitedToProceedStraight_210_240 ,timeSpentInCurrentPhase_300 >, <4> and rule has a weight of0
+
+
+Rule8: (<Rule.Rule object at 0x000001B5264C0548>) <,numCarsWaitingToProceedStraight_25_35 ,longestTimeWaitedToTurnLeft_210_240 >, <2> and rule has a weight of0
+
+
+Rule9: (<Rule.Rule object at 0x000001B5264C0708>) <,eastWestPhaseIs_Green ,longestTimeWaitedToTurnLeft_60_90 ,southNorthPhaseIs_Yellow >, <2> and rule has a weight of0
+
+
+Rule10: (<Rule.Rule object at 0x000001B5265D02C8>) <,longestTimeWaitedToTurnLeft_30_45 ,numCarsWaitingToTurnLeft_6_9 >, <4> and rule has a weight of0
+
+Rules in RSint:
+
+Rule1: <,intendedActionIs_SN_L_Y ,intendedActionIs_EW_S_G ,timeSinceCommunication_0 >, <4> and rule has a weight of0
+
+
+Rule2: <,intendedActionIs_NS_S_G ,intendedActionIs_SN_L_Y ,timeSinceCommunication_10_15 >, <1> and rule has a weight of0
+
+
+Rule3: <,intendedActionIs_EW_S_G ,intendedActionIs_WE_S_G >, <0> and rule has a weight of0
+
+
+Rule4: <,intendedActionIs_SN_L_Y ,intendedActionIs_EW_S_G ,timeSinceCommunication_0 >, <4> and rule has a weight of0
+
+
+Rule5: <,intendedActionIs_WE_L_Y >, <5> and rule has a weight of0
+
+
+Rule6: <,intendedActionIs_EW_S_G >, <0> and rule has a weight of0
+
+
+Rule7: <,intendedActionIs_EW_SL_Y ,intendedActionIs_WE_L_Y ,intendedActionIs_WE_L_Y >, <4> and rule has a weight of0
+
+
+Rule8: <,intendedActionIs_H_S_G ,intendedActionIs_NS_SL_Y >, <1> and rule has a weight of0
+
+
+Rule9: <,intendedActionIs_WE_L_G ,intendedActionIs_H_L_G ,intendedActionIs_H_S_G >, <5> and rule has a weight of0
+
+
+Rule10: <,timeSinceCommunication_10_15 >, <7> and rule has a weight of0
+
+-------------------
+
+Individual10has a fitness of 10000 and a last runtime of 2.2250738585072014e-308 and contains the following rules:
+
+Rules in RS:
+
+Rule1: (<Rule.Rule object at 0x000001B5264C4A88>) <,longestTimeWaitedToTurnLeft_240_270 >, <4> and rule has a weight of5.3614345777927076e-05
+
+
+Rule2: (<Rule.Rule object at 0x000001B5264C92C8>) <,northSouthPhaseIs_Green ,verticalPhaseIsLeftTurn_Yellow >, <2> and rule has a weight of0
+
+
+Rule3: (<Rule.Rule object at 0x000001B5264C4D88>) <,timeSpentInCurrentPhase_300 ,northSouthPhaseIsLeftTurn_Yellow >, <5> and rule has a weight of0
+
+
+Rule4: (<Rule.Rule object at 0x000001B5264C4D88>) <,timeSpentInCurrentPhase_300 ,northSouthPhaseIsLeftTurn_Yellow >, <5> and rule has a weight of0
+
+
+Rule5: (<Rule.Rule object at 0x000001B5264C9248>) <,numCarsWaitingToTurnLeft_9_12 ,longestTimeWaitedToProceedStraight_300 >, <4> and rule has a weight of0
+
+
+Rule6: (<Rule.Rule object at 0x000001B5264C03C8>) <,numCarsWaitingToProceedStraight_10_15 >, <3> and rule has a weight of0
+
+
+Rule7: (<Rule.Rule object at 0x000001B5264C02C8>) <,timeSpentInCurrentPhase_0_15 ,horizontalPhaseIs_Green >, <3> and rule has a weight of0
+
+
+Rule8: (<Rule.Rule object at 0x000001B5264C0848>) <,longestTimeWaitedToProceedStraight_0 >, <3> and rule has a weight of0
+
+
+Rule9: (<Rule.Rule object at 0x000001B5264C09C8>) <,eastWestPhaseIsLeftTurn_Yellow ,timeSpentInCurrentPhase_270_300 ,timeSpentInCurrentPhase_30_45 >, <2> and rule has a weight of0
+
+
+Rule10: (<Rule.Rule object at 0x000001B5264C0908>) <,timeSpentInCurrentPhase_0 >, <6> and rule has a weight of0
+
+Rules in RSint:
+
+Rule1: <,intendedActionIs_NS_S_G ,intendedActionIs_SN_L_Y ,timeSinceCommunication_10_15 >, <1> and rule has a weight of0
+
+
+Rule2: <,intendedActionIs_EW_SL_Y ,intendedActionIs_WE_L_Y ,intendedActionIs_WE_L_Y >, <4> and rule has a weight of0
+
+
+Rule3: <,intendedActionIs_EW_S_Y >, <7> and rule has a weight of0
+
+
+Rule4: <,intendedActionIs_WE_L_Y >, <5> and rule has a weight of0
+
+
+Rule5: <,intendedActionIs_EW_SL_Y ,intendedActionIs_WE_L_Y ,intendedActionIs_WE_L_Y >, <4> and rule has a weight of0
+
+
+Rule6: <,intendedActionIs_SN_SL_G ,intendedActionIs_WE_L_Y ,timeSinceCommunication_20_25 >, <5> and rule has a weight of0
+
+
+Rule7: <,intendedActionIs_NS_SL_Y ,intendedActionIs_SN_S_Y ,intendedActionIs_H_L_Y >, <3> and rule has a weight of0
+
+
+Rule8: <,intendedActionIs_V_L_Y ,intendedActionIs_NS_S_Y >, <0> and rule has a weight of0
+
+
+Rule9: <,intendedActionIs_V_L_Y ,timeSinceCommunication_0 >, <0> and rule has a weight of0
+
+
+Rule10: <,intendedActionIs_EW_SL_G >, <0> and rule has a weight of0
+
+-------------------
+
+Individual11has a fitness of 10000 and a last runtime of 2.2250738585072014e-308 and contains the following rules:
+
+Rules in RS:
+
+Rule1: (<Rule.Rule object at 0x000001B5264C92C8>) <,northSouthPhaseIs_Green ,verticalPhaseIsLeftTurn_Yellow >, <2> and rule has a weight of0
+
+
+Rule2: (<Rule.Rule object at 0x000001B5264C9248>) <,numCarsWaitingToTurnLeft_9_12 ,longestTimeWaitedToProceedStraight_300 >, <4> and rule has a weight of0
+
+
+Rule3: (<Rule.Rule object at 0x000001B5264C02C8>) <,timeSpentInCurrentPhase_0_15 ,horizontalPhaseIs_Green >, <3> and rule has a weight of0
+
+
+Rule4: (<Rule.Rule object at 0x000001B5264C09C8>) <,eastWestPhaseIsLeftTurn_Yellow ,timeSpentInCurrentPhase_270_300 ,timeSpentInCurrentPhase_30_45 >, <2> and rule has a weight of0
+
+
+Rule5: (<Rule.Rule object at 0x000001B5264C92C8>) <,northSouthPhaseIs_Green ,verticalPhaseIsLeftTurn_Yellow >, <2> and rule has a weight of0
+
+
+Rule6: (<Rule.Rule object at 0x000001B5264C4D88>) <,timeSpentInCurrentPhase_300 ,northSouthPhaseIsLeftTurn_Yellow >, <5> and rule has a weight of0
+
+
+Rule7: (<Rule.Rule object at 0x000001B5264C9048>) <,numCarsWaitingToProceedStraight_25_35 ,longestTimeWaitedToTurnLeft_150_180 ,longestTimeWaitedToTurnLeft_90_120 >, <1> and rule has a weight of0
+
+
+Rule8: (<Rule.Rule object at 0x000001B5264C0548>) <,numCarsWaitingToProceedStraight_25_35 ,longestTimeWaitedToTurnLeft_210_240 >, <2> and rule has a weight of0
+
+
+Rule9: (<Rule.Rule object at 0x000001B5264C0688>) <,longestTimeWaitedToTurnLeft_0 ,verticalPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of0
+
+
+Rule10: (<Rule.Rule object at 0x000001B5264C08C8>) <,numCarsWaitingToTurnLeft_3_6 ,verticalPhaseIsLeftTurn_Green ,verticalPhaseIs_Yellow >, <8> and rule has a weight of0
+
+Rules in RSint:
+
+Rule1: <,intendedActionIs_SN_SL_G ,intendedActionIs_WE_L_Y ,timeSinceCommunication_20_25 >, <5> and rule has a weight of0
+
+
+Rule2: <,intendedActionIs_NS_SL_Y ,intendedActionIs_SN_S_Y ,intendedActionIs_H_L_Y >, <3> and rule has a weight of0
+
+
+Rule3: <,intendedActionIs_V_L_Y ,timeSinceCommunication_0 >, <0> and rule has a weight of0
+
+
+Rule4: <,intendedActionIs_SN_L_Y ,intendedActionIs_EW_S_G ,timeSinceCommunication_0 >, <4> and rule has a weight of0
+
+
+Rule5: <,intendedActionIs_SN_L_Y ,intendedActionIs_EW_S_G ,timeSinceCommunication_0 >, <4> and rule has a weight of0
+
+
+Rule6: <,intendedActionIs_EW_S_G >, <0> and rule has a weight of0
+
+
+Rule7: <,intendedActionIs_H_S_G ,intendedActionIs_NS_SL_Y >, <1> and rule has a weight of0
+
+
+Rule8: <,timeSinceCommunication_10_15 >, <7> and rule has a weight of0
+
+
+Rule9: <,intendedActionIs_EW_SL_Y ,intendedActionIs_V_S_G >, <3> and rule has a weight of0
+
+
+Rule10: <,intendedActionIs_EW_SL_G >, <0> and rule has a weight of0
+
+-------------------
+
+Individual12has a fitness of 10000 and a last runtime of 2.2250738585072014e-308 and contains the following rules:
+
+Rules in RS:
+
+Rule1: (<Rule.Rule object at 0x000001B5265D04C8>) <,longestTimeWaitedToProceedStraight_210_240 ,horizontalPhaseIs_Green >, <4> and rule has a weight of6.854665842379058e-05
+
+
+Rule2: (<Rule.Rule object at 0x000001B5264C92C8>) <,northSouthPhaseIs_Green ,verticalPhaseIsLeftTurn_Yellow >, <2> and rule has a weight of0
+
+
+Rule3: (<Rule.Rule object at 0x000001B5264C4D88>) <,timeSpentInCurrentPhase_300 ,northSouthPhaseIsLeftTurn_Yellow >, <5> and rule has a weight of0
+
+
+Rule4: (<Rule.Rule object at 0x000001B5264C9048>) <,numCarsWaitingToProceedStraight_25_35 ,longestTimeWaitedToTurnLeft_150_180 ,longestTimeWaitedToTurnLeft_90_120 >, <1> and rule has a weight of0
+
+
+Rule5: (<Rule.Rule object at 0x000001B5264C0548>) <,numCarsWaitingToProceedStraight_25_35 ,longestTimeWaitedToTurnLeft_210_240 >, <2> and rule has a weight of0
+
+
+Rule6: (<Rule.Rule object at 0x000001B5265D0748>) <,verticalPhaseIs_Green ,numCarsWaitingToTurnLeft_15 ,numCarsWaitingToProceedStraight_0 >, <3> and rule has a weight of0
+
+
+Rule7: (<Rule.Rule object at 0x000001B5264C4C88>) <,longestTimeWaitedToProceedStraight_45_60 >, <7> and rule has a weight of0.0
+
+
+Rule8: (<Rule.Rule object at 0x000001B5264C92C8>) <,northSouthPhaseIs_Green ,verticalPhaseIsLeftTurn_Yellow >, <2> and rule has a weight of0
+
+
+Rule9: (<Rule.Rule object at 0x000001B5264C0348>) <,horizontalPhaseIsLeftTurn_Yellow >, <1> and rule has a weight of0
+
+
+Rule10: (<Rule.Rule object at 0x000001B5264C0948>) <,longestTimeWaitedToTurnLeft_45_60 ,longestTimeWaitedToProceedStraight_0 ,longestTimeWaitedToProceedStraight_180_210 >, <1> and rule has a weight of0
+
+Rules in RSint:
+
+Rule1: <,intendedActionIs_NS_S_G ,intendedActionIs_SN_L_Y ,timeSinceCommunication_10_15 >, <1> and rule has a weight of0
+
+
+Rule2: <,intendedActionIs_WE_L_Y >, <5> and rule has a weight of0
+
+
+Rule3: <,intendedActionIs_EW_SL_Y ,intendedActionIs_WE_L_Y ,intendedActionIs_WE_L_Y >, <4> and rule has a weight of0
+
+
+Rule4: <,intendedActionIs_WE_L_G ,intendedActionIs_H_L_G ,intendedActionIs_H_S_G >, <5> and rule has a weight of0
+
+
+Rule5: <,intendedActionIs_NS_S_Y >, <5> and rule has a weight of0
+
+
+Rule6: <,intendedActionIs_EW_S_G >, <2> and rule has a weight of0
+
+
+Rule7: <,intendedActionIs_WE_L_Y >, <5> and rule has a weight of0
+
+
+Rule8: <,intendedActionIs_NS_S_G ,intendedActionIs_SN_L_Y ,timeSinceCommunication_10_15 >, <1> and rule has a weight of0
+
+
+Rule9: <,intendedActionIs_WE_SL_Y ,intendedActionIs_EW_SL_Y >, <1> and rule has a weight of0
+
+
+Rule10: <,intendedActionIs_WE_SL_Y >, <7> and rule has a weight of0
+
+-------------------
+
+Individual13has a fitness of 10000 and a last runtime of 2.2250738585072014e-308 and contains the following rules:
+
+Rules in RS:
+
+Rule1: (<Rule.Rule object at 0x000001B5264C02C8>) <,timeSpentInCurrentPhase_0_15 ,horizontalPhaseIs_Green >, <3> and rule has a weight of0
+
+
+Rule2: (<Rule.Rule object at 0x000001B5264C09C8>) <,eastWestPhaseIsLeftTurn_Yellow ,timeSpentInCurrentPhase_270_300 ,timeSpentInCurrentPhase_30_45 >, <2> and rule has a weight of0
+
+
+Rule3: (<Rule.Rule object at 0x000001B5264C92C8>) <,northSouthPhaseIs_Green ,verticalPhaseIsLeftTurn_Yellow >, <2> and rule has a weight of0
+
+
+Rule4: (<Rule.Rule object at 0x000001B5264C9048>) <,numCarsWaitingToProceedStraight_25_35 ,longestTimeWaitedToTurnLeft_150_180 ,longestTimeWaitedToTurnLeft_90_120 >, <1> and rule has a weight of0
+
+
+Rule5: (<Rule.Rule object at 0x000001B5264C0548>) <,numCarsWaitingToProceedStraight_25_35 ,longestTimeWaitedToTurnLeft_210_240 >, <2> and rule has a weight of0
+
+
+Rule6: (<Rule.Rule object at 0x000001B5264C0888>) <,longestTimeWaitedToTurnLeft_180_210 ,westEastPhaseIs_Green ,longestTimeWaitedToProceedStraight_90_120 >, <2> and rule has a weight of0
+
+
+Rule7: (<Rule.Rule object at 0x000001B5264C0188>) <,timeSpentInCurrentPhase_45_60 >, <8> and rule has a weight of0
+
+
+Rule8: (<Rule.Rule object at 0x000001B5264C9248>) <,numCarsWaitingToTurnLeft_9_12 ,longestTimeWaitedToProceedStraight_300 >, <4> and rule has a weight of0
+
+
+Rule9: (<Rule.Rule object at 0x000001B5264C92C8>) <,northSouthPhaseIs_Green ,verticalPhaseIsLeftTurn_Yellow >, <2> and rule has a weight of0
+
+
+Rule10: (<Rule.Rule object at 0x000001B5264C4D88>) <,timeSpentInCurrentPhase_300 ,northSouthPhaseIsLeftTurn_Yellow >, <5> and rule has a weight of0
+
+Rules in RSint:
+
+Rule1: <,intendedActionIs_SN_SL_G ,intendedActionIs_WE_L_Y ,timeSinceCommunication_20_25 >, <5> and rule has a weight of0
+
+
+Rule2: <,intendedActionIs_NS_SL_Y ,intendedActionIs_SN_S_Y ,intendedActionIs_H_L_Y >, <3> and rule has a weight of0
+
+
+Rule3: <,intendedActionIs_V_L_Y ,timeSinceCommunication_0 >, <0> and rule has a weight of0
+
+
+Rule4: <,intendedActionIs_SN_L_Y ,intendedActionIs_EW_S_G ,timeSinceCommunication_0 >, <4> and rule has a weight of0
+
+
+Rule5: <,intendedActionIs_SN_L_Y ,intendedActionIs_EW_S_G ,timeSinceCommunication_0 >, <4> and rule has a weight of0
+
+
+Rule6: <,intendedActionIs_EW_S_G >, <0> and rule has a weight of0
+
+
+Rule7: <,intendedActionIs_H_S_G ,intendedActionIs_NS_SL_Y >, <1> and rule has a weight of0
+
+
+Rule8: <,timeSinceCommunication_10_15 >, <7> and rule has a weight of0
+
+
+Rule9: <,intendedActionIs_NS_SL_Y >, <2> and rule has a weight of0
+
+
+Rule10: <,intendedActionIs_V_L_G >, <8> and rule has a weight of0
+
+-------------------
+
+Individual14has a fitness of 10000 and a last runtime of 2.2250738585072014e-308 and contains the following rules:
+
+Rules in RS:
+
+Rule1: (<Rule.Rule object at 0x000001B5264C4A88>) <,longestTimeWaitedToTurnLeft_240_270 >, <4> and rule has a weight of5.3614345777927076e-05
+
+
+Rule2: (<Rule.Rule object at 0x000001B5265D02C8>) <,longestTimeWaitedToTurnLeft_30_45 ,numCarsWaitingToTurnLeft_6_9 >, <4> and rule has a weight of0
+
+
+Rule3: (<Rule.Rule object at 0x000001B5265D0AC8>) <,northSouthPhaseIs_Yellow ,numCarsWaitingToProceedStraight_10_15 ,timeSpentInCurrentPhase_210_240 >, <7> and rule has a weight of0
+
+
+Rule4: (<Rule.Rule object at 0x000001B5264C4F08>) <,northSouthPhaseIsLeftTurn_Yellow ,longestTimeWaitedToProceedStraight_30_45 ,northSouthPhaseIs_Green >, <2> and rule has a weight of0
+
+
+Rule5: (<Rule.Rule object at 0x000001B5264C4D88>) <,timeSpentInCurrentPhase_300 ,northSouthPhaseIsLeftTurn_Yellow >, <5> and rule has a weight of0
+
+
+Rule6: (<Rule.Rule object at 0x000001B5264C9048>) <,numCarsWaitingToProceedStraight_25_35 ,longestTimeWaitedToTurnLeft_150_180 ,longestTimeWaitedToTurnLeft_90_120 >, <1> and rule has a weight of0
+
+
+Rule7: (<Rule.Rule object at 0x000001B5264C92C8>) <,northSouthPhaseIs_Green ,verticalPhaseIsLeftTurn_Yellow >, <2> and rule has a weight of0
+
+
+Rule8: (<Rule.Rule object at 0x000001B5264C0948>) <,longestTimeWaitedToTurnLeft_45_60 ,longestTimeWaitedToProceedStraight_0 ,longestTimeWaitedToProceedStraight_180_210 >, <1> and rule has a weight of0
+
+
+Rule9: (<Rule.Rule object at 0x000001B5264C0408>) <,longestTimeWaitedToProceedStraight_270_300 ,eastWestPhaseIsLeftTurn_Yellow ,numCarsWaitingToProceedStraight_10_15 >, <0> and rule has a weight of0
+
+
+Rule10: (<Rule.Rule object at 0x000001B5264C0588>) <,numCarsWaitingToTurnLeft_12_15 ,verticalPhaseIs_Yellow ,numCarsWaitingToProceedStraight_35_45 >, <7> and rule has a weight of0
+
+Rules in RSint:
+
+Rule1: <,intendedActionIs_EW_S_Y >, <7> and rule has a weight of0
+
+
+Rule2: <,intendedActionIs_SN_L_Y ,intendedActionIs_EW_S_G ,timeSinceCommunication_0 >, <4> and rule has a weight of0
+
+
+Rule3: <,intendedActionIs_WE_L_Y >, <5> and rule has a weight of0
+
+
+Rule4: <,intendedActionIs_EW_S_G ,intendedActionIs_WE_S_G >, <0> and rule has a weight of0
+
+
+Rule5: <,intendedActionIs_WE_L_Y >, <5> and rule has a weight of0
+
+
+Rule6: <,intendedActionIs_EW_SL_Y ,intendedActionIs_WE_L_Y ,intendedActionIs_WE_L_Y >, <4> and rule has a weight of0
+
+
+Rule7: <,intendedActionIs_WE_L_Y >, <5> and rule has a weight of0
+
+
+Rule8: <,intendedActionIs_WE_SL_Y >, <7> and rule has a weight of0
+
+
+Rule9: <,intendedActionIs_WE_L_G ,customPredicate ,timeSinceCommunication_0_5 >, <5> and rule has a weight of0
+
+
+Rule10: <,intendedActionIs_SN_L_Y >, <8> and rule has a weight of0
+
+-------------------
+
+Individual15has a fitness of 10000 and a last runtime of 2.2250738585072014e-308 and contains the following rules:
+
+Rules in RS:
+
+Rule1: (<Rule.Rule object at 0x000001B5265D02C8>) <,longestTimeWaitedToTurnLeft_30_45 ,numCarsWaitingToTurnLeft_6_9 >, <4> and rule has a weight of0
+
+
+Rule2: (<Rule.Rule object at 0x000001B5265D0AC8>) <,northSouthPhaseIs_Yellow ,numCarsWaitingToProceedStraight_10_15 ,timeSpentInCurrentPhase_210_240 >, <7> and rule has a weight of0
+
+
+Rule3: (<Rule.Rule object at 0x000001B5264C4F08>) <,northSouthPhaseIsLeftTurn_Yellow ,longestTimeWaitedToProceedStraight_30_45 ,northSouthPhaseIs_Green >, <2> and rule has a weight of0
+
+
+Rule4: (<Rule.Rule object at 0x000001B5265D02C8>) <,longestTimeWaitedToTurnLeft_30_45 ,numCarsWaitingToTurnLeft_6_9 >, <4> and rule has a weight of0
+
+
+Rule5: (<Rule.Rule object at 0x000001B5264C4F08>) <,northSouthPhaseIsLeftTurn_Yellow ,longestTimeWaitedToProceedStraight_30_45 ,northSouthPhaseIs_Green >, <2> and rule has a weight of0
+
+
+Rule6: (<Rule.Rule object at 0x000001B5265D02C8>) <,longestTimeWaitedToTurnLeft_30_45 ,numCarsWaitingToTurnLeft_6_9 >, <4> and rule has a weight of0
+
+
+Rule7: (<Rule.Rule object at 0x000001B527C0B7C8>) <,verticalPhaseIs_Yellow ,longestTimeWaitedToProceedStraight_210_240 ,timeSpentInCurrentPhase_300 >, <4> and rule has a weight of0
+
+
+Rule8: (<Rule.Rule object at 0x000001B5264C0708>) <,eastWestPhaseIs_Green ,longestTimeWaitedToTurnLeft_60_90 ,southNorthPhaseIs_Yellow >, <2> and rule has a weight of0
+
+
+Rule9: (<Rule.Rule object at 0x000001B5264C04C8>) <,numCarsWaitingToProceedStraight_25_35 ,longestTimeWaitedToProceedStraight_180_210 ,numCarsWaitingToProceedStraight_35_45 >, <1> and rule has a weight of0
+
+
+Rule10: (<Rule.Rule object at 0x000001B5264C4D88>) <,timeSpentInCurrentPhase_300 ,northSouthPhaseIsLeftTurn_Yellow >, <5> and rule has a weight of0
+
+Rules in RSint:
+
+Rule1: <,intendedActionIs_EW_S_Y >, <7> and rule has a weight of0
+
+
+Rule2: <,intendedActionIs_NS_S_G ,intendedActionIs_SN_L_Y ,timeSinceCommunication_10_15 >, <1> and rule has a weight of0
+
+
+Rule3: <,intendedActionIs_EW_S_G ,intendedActionIs_WE_S_G >, <0> and rule has a weight of0
+
+
+Rule4: <,intendedActionIs_NS_S_G ,intendedActionIs_SN_L_Y ,timeSinceCommunication_10_15 >, <1> and rule has a weight of0
+
+
+Rule5: <,intendedActionIs_EW_S_G ,intendedActionIs_WE_S_G >, <0> and rule has a weight of0
+
+
+Rule6: <,intendedActionIs_EW_S_G >, <0> and rule has a weight of0
+
+
+Rule7: <,intendedActionIs_EW_SL_Y ,intendedActionIs_WE_L_Y ,intendedActionIs_WE_L_Y >, <4> and rule has a weight of0
+
+
+Rule8: <,intendedActionIs_WE_L_G ,intendedActionIs_H_L_G ,intendedActionIs_H_S_G >, <5> and rule has a weight of0
+
+
+Rule9: <,intendedActionIs_SN_SL_G ,intendedActionIs_SN_L_G ,intendedActionIs_WE_L_Y >, <6> and rule has a weight of0
+
+
+Rule10: <,intendedActionIs_NS_S_G ,timeSinceCommunication_0_5 >, <8> and rule has a weight of0
+
+-------------------
+
+Individual16has a fitness of 10000 and a last runtime of 2.2250738585072014e-308 and contains the following rules:
+
+Rules in RS:
+
+Rule1: (<Rule.Rule object at 0x000001B5264C02C8>) <,timeSpentInCurrentPhase_0_15 ,horizontalPhaseIs_Green >, <3> and rule has a weight of0
+
+
+Rule2: (<Rule.Rule object at 0x000001B5264C09C8>) <,eastWestPhaseIsLeftTurn_Yellow ,timeSpentInCurrentPhase_270_300 ,timeSpentInCurrentPhase_30_45 >, <2> and rule has a weight of0
+
+
+Rule3: (<Rule.Rule object at 0x000001B5264C92C8>) <,northSouthPhaseIs_Green ,verticalPhaseIsLeftTurn_Yellow >, <2> and rule has a weight of0
+
+
+Rule4: (<Rule.Rule object at 0x000001B5264C9048>) <,numCarsWaitingToProceedStraight_25_35 ,longestTimeWaitedToTurnLeft_150_180 ,longestTimeWaitedToTurnLeft_90_120 >, <1> and rule has a weight of0
+
+
+Rule5: (<Rule.Rule object at 0x000001B5264C0548>) <,numCarsWaitingToProceedStraight_25_35 ,longestTimeWaitedToTurnLeft_210_240 >, <2> and rule has a weight of0
+
+
+Rule6: (<Rule.Rule object at 0x000001B5264C0888>) <,longestTimeWaitedToTurnLeft_180_210 ,westEastPhaseIs_Green ,longestTimeWaitedToProceedStraight_90_120 >, <2> and rule has a weight of0
+
+
+Rule7: (<Rule.Rule object at 0x000001B5264C0188>) <,timeSpentInCurrentPhase_45_60 >, <8> and rule has a weight of0
+
+
+Rule8: (<Rule.Rule object at 0x000001B5264C9248>) <,numCarsWaitingToTurnLeft_9_12 ,longestTimeWaitedToProceedStraight_300 >, <4> and rule has a weight of0
+
+
+Rule9: (<Rule.Rule object at 0x000001B5264C92C8>) <,northSouthPhaseIs_Green ,verticalPhaseIsLeftTurn_Yellow >, <2> and rule has a weight of0
+
+
+Rule10: (<Rule.Rule object at 0x000001B5264C4D88>) <,timeSpentInCurrentPhase_300 ,northSouthPhaseIsLeftTurn_Yellow >, <5> and rule has a weight of0
+
+Rules in RSint:
+
+Rule1: <,intendedActionIs_SN_SL_G ,intendedActionIs_WE_L_Y ,timeSinceCommunication_20_25 >, <5> and rule has a weight of0
+
+
+Rule2: <,intendedActionIs_NS_SL_Y ,intendedActionIs_SN_S_Y ,intendedActionIs_H_L_Y >, <3> and rule has a weight of0
+
+
+Rule3: <,intendedActionIs_V_L_Y ,timeSinceCommunication_0 >, <0> and rule has a weight of0
+
+
+Rule4: <,intendedActionIs_SN_L_Y ,intendedActionIs_EW_S_G ,timeSinceCommunication_0 >, <4> and rule has a weight of0
+
+
+Rule5: <,intendedActionIs_SN_L_Y ,intendedActionIs_EW_S_G ,timeSinceCommunication_0 >, <4> and rule has a weight of0
+
+
+Rule6: <,intendedActionIs_EW_S_G >, <0> and rule has a weight of0
+
+
+Rule7: <,intendedActionIs_H_S_G ,intendedActionIs_NS_SL_Y >, <1> and rule has a weight of0
+
+
+Rule8: <,timeSinceCommunication_10_15 >, <7> and rule has a weight of0
+
+
+Rule9: <,intendedActionIs_NS_SL_Y >, <2> and rule has a weight of0
+
+
+Rule10: <,intendedActionIs_V_L_G >, <8> and rule has a weight of0
+
+-------------------
+
+Individual17has a fitness of 10000 and a last runtime of 2.2250738585072014e-308 and contains the following rules:
+
+Rules in RS:
+
+Rule1: (<Rule.Rule object at 0x000001B5264C4A88>) <,longestTimeWaitedToTurnLeft_240_270 >, <4> and rule has a weight of5.3614345777927076e-05
+
+
+Rule2: (<Rule.Rule object at 0x000001B5264C4F08>) <,northSouthPhaseIsLeftTurn_Yellow ,longestTimeWaitedToProceedStraight_30_45 ,northSouthPhaseIs_Green >, <2> and rule has a weight of0
+
+
+Rule3: (<Rule.Rule object at 0x000001B5264C92C8>) <,northSouthPhaseIs_Green ,verticalPhaseIsLeftTurn_Yellow >, <2> and rule has a weight of0
+
+
+Rule4: (<Rule.Rule object at 0x000001B5265D02C8>) <,longestTimeWaitedToTurnLeft_30_45 ,numCarsWaitingToTurnLeft_6_9 >, <4> and rule has a weight of0
+
+
+Rule5: (<Rule.Rule object at 0x000001B5264C4D88>) <,timeSpentInCurrentPhase_300 ,northSouthPhaseIsLeftTurn_Yellow >, <5> and rule has a weight of0
+
+
+Rule6: (<Rule.Rule object at 0x000001B5264C9048>) <,numCarsWaitingToProceedStraight_25_35 ,longestTimeWaitedToTurnLeft_150_180 ,longestTimeWaitedToTurnLeft_90_120 >, <1> and rule has a weight of0
+
+
+Rule7: (<Rule.Rule object at 0x000001B527C0B7C8>) <,verticalPhaseIs_Yellow ,longestTimeWaitedToProceedStraight_210_240 ,timeSpentInCurrentPhase_300 >, <4> and rule has a weight of0
+
+
+Rule8: (<Rule.Rule object at 0x000001B5264C0548>) <,numCarsWaitingToProceedStraight_25_35 ,longestTimeWaitedToTurnLeft_210_240 >, <2> and rule has a weight of0
+
+
+Rule9: (<Rule.Rule object at 0x000001B5264C0708>) <,eastWestPhaseIs_Green ,longestTimeWaitedToTurnLeft_60_90 ,southNorthPhaseIs_Yellow >, <2> and rule has a weight of0
+
+
+Rule10: (<Rule.Rule object at 0x000001B5265D02C8>) <,longestTimeWaitedToTurnLeft_30_45 ,numCarsWaitingToTurnLeft_6_9 >, <4> and rule has a weight of0
+
+Rules in RSint:
+
+Rule1: <,intendedActionIs_SN_L_Y ,intendedActionIs_EW_S_G ,timeSinceCommunication_0 >, <4> and rule has a weight of0
+
+
+Rule2: <,intendedActionIs_NS_S_G ,intendedActionIs_SN_L_Y ,timeSinceCommunication_10_15 >, <1> and rule has a weight of0
+
+
+Rule3: <,intendedActionIs_EW_S_G ,intendedActionIs_WE_S_G >, <0> and rule has a weight of0
+
+
+Rule4: <,intendedActionIs_SN_L_Y ,intendedActionIs_EW_S_G ,timeSinceCommunication_0 >, <4> and rule has a weight of0
+
+
+Rule5: <,intendedActionIs_WE_L_Y >, <5> and rule has a weight of0
+
+
+Rule6: <,intendedActionIs_EW_S_G >, <0> and rule has a weight of0
+
+
+Rule7: <,intendedActionIs_EW_SL_Y ,intendedActionIs_WE_L_Y ,intendedActionIs_WE_L_Y >, <4> and rule has a weight of0
+
+
+Rule8: <,intendedActionIs_H_S_G ,intendedActionIs_NS_SL_Y >, <1> and rule has a weight of0
+
+
+Rule9: <,intendedActionIs_WE_L_G ,intendedActionIs_H_L_G ,intendedActionIs_H_S_G >, <5> and rule has a weight of0
+
+
+Rule10: <,timeSinceCommunication_10_15 >, <7> and rule has a weight of0
+
+-------------------
+
+Individual18has a fitness of 10000 and a last runtime of 2.2250738585072014e-308 and contains the following rules:
+
+Rules in RS:
+
+Rule1: (<Rule.Rule object at 0x000001B5264C02C8>) <,timeSpentInCurrentPhase_0_15 ,horizontalPhaseIs_Green >, <3> and rule has a weight of0
+
+
+Rule2: (<Rule.Rule object at 0x000001B5264C09C8>) <,eastWestPhaseIsLeftTurn_Yellow ,timeSpentInCurrentPhase_270_300 ,timeSpentInCurrentPhase_30_45 >, <2> and rule has a weight of0
+
+
+Rule3: (<Rule.Rule object at 0x000001B5264C92C8>) <,northSouthPhaseIs_Green ,verticalPhaseIsLeftTurn_Yellow >, <2> and rule has a weight of0
+
+
+Rule4: (<Rule.Rule object at 0x000001B5264C9048>) <,numCarsWaitingToProceedStraight_25_35 ,longestTimeWaitedToTurnLeft_150_180 ,longestTimeWaitedToTurnLeft_90_120 >, <1> and rule has a weight of0
+
+
+Rule5: (<Rule.Rule object at 0x000001B5264C0548>) <,numCarsWaitingToProceedStraight_25_35 ,longestTimeWaitedToTurnLeft_210_240 >, <2> and rule has a weight of0
+
+
+Rule6: (<Rule.Rule object at 0x000001B5264C0888>) <,longestTimeWaitedToTurnLeft_180_210 ,westEastPhaseIs_Green ,longestTimeWaitedToProceedStraight_90_120 >, <2> and rule has a weight of0
+
+
+Rule7: (<Rule.Rule object at 0x000001B5264C0188>) <,timeSpentInCurrentPhase_45_60 >, <8> and rule has a weight of0
+
+
+Rule8: (<Rule.Rule object at 0x000001B5264C9248>) <,numCarsWaitingToTurnLeft_9_12 ,longestTimeWaitedToProceedStraight_300 >, <4> and rule has a weight of0
+
+
+Rule9: (<Rule.Rule object at 0x000001B5264C92C8>) <,northSouthPhaseIs_Green ,verticalPhaseIsLeftTurn_Yellow >, <2> and rule has a weight of0
+
+
+Rule10: (<Rule.Rule object at 0x000001B5264C4D88>) <,timeSpentInCurrentPhase_300 ,northSouthPhaseIsLeftTurn_Yellow >, <5> and rule has a weight of0
+
+Rules in RSint:
+
+Rule1: <,intendedActionIs_SN_SL_G ,intendedActionIs_WE_L_Y ,timeSinceCommunication_20_25 >, <5> and rule has a weight of0
+
+
+Rule2: <,intendedActionIs_NS_SL_Y ,intendedActionIs_SN_S_Y ,intendedActionIs_H_L_Y >, <3> and rule has a weight of0
+
+
+Rule3: <,intendedActionIs_V_L_Y ,timeSinceCommunication_0 >, <0> and rule has a weight of0
+
+
+Rule4: <,intendedActionIs_SN_L_Y ,intendedActionIs_EW_S_G ,timeSinceCommunication_0 >, <4> and rule has a weight of0
+
+
+Rule5: <,intendedActionIs_SN_L_Y ,intendedActionIs_EW_S_G ,timeSinceCommunication_0 >, <4> and rule has a weight of0
+
+
+Rule6: <,intendedActionIs_EW_S_G >, <0> and rule has a weight of0
+
+
+Rule7: <,intendedActionIs_H_S_G ,intendedActionIs_NS_SL_Y >, <1> and rule has a weight of0
+
+
+Rule8: <,timeSinceCommunication_10_15 >, <7> and rule has a weight of0
+
+
+Rule9: <,intendedActionIs_NS_SL_Y >, <2> and rule has a weight of0
+
+
+Rule10: <,intendedActionIs_V_L_G >, <8> and rule has a weight of0
+
+-------------------
+
+Individual19has a fitness of 10000 and a last runtime of 2.2250738585072014e-308 and contains the following rules:
+
+Rules in RS:
+
+Rule1: (<Rule.Rule object at 0x000001B5264C02C8>) <,timeSpentInCurrentPhase_0_15 ,horizontalPhaseIs_Green >, <3> and rule has a weight of0
+
+
+Rule2: (<Rule.Rule object at 0x000001B5264C09C8>) <,eastWestPhaseIsLeftTurn_Yellow ,timeSpentInCurrentPhase_270_300 ,timeSpentInCurrentPhase_30_45 >, <2> and rule has a weight of0
+
+
+Rule3: (<Rule.Rule object at 0x000001B5264C92C8>) <,northSouthPhaseIs_Green ,verticalPhaseIsLeftTurn_Yellow >, <2> and rule has a weight of0
+
+
+Rule4: (<Rule.Rule object at 0x000001B5264C9048>) <,numCarsWaitingToProceedStraight_25_35 ,longestTimeWaitedToTurnLeft_150_180 ,longestTimeWaitedToTurnLeft_90_120 >, <1> and rule has a weight of0
+
+
+Rule5: (<Rule.Rule object at 0x000001B5264C0548>) <,numCarsWaitingToProceedStraight_25_35 ,longestTimeWaitedToTurnLeft_210_240 >, <2> and rule has a weight of0
+
+
+Rule6: (<Rule.Rule object at 0x000001B5264C0888>) <,longestTimeWaitedToTurnLeft_180_210 ,westEastPhaseIs_Green ,longestTimeWaitedToProceedStraight_90_120 >, <2> and rule has a weight of0
+
+
+Rule7: (<Rule.Rule object at 0x000001B5264C0188>) <,timeSpentInCurrentPhase_45_60 >, <8> and rule has a weight of0
+
+
+Rule8: (<Rule.Rule object at 0x000001B5264C9248>) <,numCarsWaitingToTurnLeft_9_12 ,longestTimeWaitedToProceedStraight_300 >, <4> and rule has a weight of0
+
+
+Rule9: (<Rule.Rule object at 0x000001B5264C92C8>) <,northSouthPhaseIs_Green ,verticalPhaseIsLeftTurn_Yellow >, <2> and rule has a weight of0
+
+
+Rule10: (<Rule.Rule object at 0x000001B5264C4D88>) <,timeSpentInCurrentPhase_300 ,northSouthPhaseIsLeftTurn_Yellow >, <5> and rule has a weight of0
+
+Rules in RSint:
+
+Rule1: <,intendedActionIs_SN_SL_G ,intendedActionIs_WE_L_Y ,timeSinceCommunication_20_25 >, <5> and rule has a weight of0
+
+
+Rule2: <,intendedActionIs_NS_SL_Y ,intendedActionIs_SN_S_Y ,intendedActionIs_H_L_Y >, <3> and rule has a weight of0
+
+
+Rule3: <,intendedActionIs_V_L_Y ,timeSinceCommunication_0 >, <0> and rule has a weight of0
+
+
+Rule4: <,intendedActionIs_SN_L_Y ,intendedActionIs_EW_S_G ,timeSinceCommunication_0 >, <4> and rule has a weight of0
+
+
+Rule5: <,intendedActionIs_SN_L_Y ,intendedActionIs_EW_S_G ,timeSinceCommunication_0 >, <4> and rule has a weight of0
+
+
+Rule6: <,intendedActionIs_EW_S_G >, <0> and rule has a weight of0
+
+
+Rule7: <,intendedActionIs_H_S_G ,intendedActionIs_NS_SL_Y >, <1> and rule has a weight of0
+
+
+Rule8: <,timeSinceCommunication_10_15 >, <7> and rule has a weight of0
+
+
+Rule9: <,intendedActionIs_NS_SL_Y >, <2> and rule has a weight of0
+
+
+Rule10: <,intendedActionIs_V_L_G >, <8> and rule has a weight of0
+
+-------------------
+
+Individual20has a fitness of 10000 and a last runtime of 2.2250738585072014e-308 and contains the following rules:
+
+Rules in RS:
+
+Rule1: (<Rule.Rule object at 0x000001B5265D02C8>) <,longestTimeWaitedToTurnLeft_30_45 ,numCarsWaitingToTurnLeft_6_9 >, <4> and rule has a weight of0
+
+
+Rule2: (<Rule.Rule object at 0x000001B5265D0AC8>) <,northSouthPhaseIs_Yellow ,numCarsWaitingToProceedStraight_10_15 ,timeSpentInCurrentPhase_210_240 >, <7> and rule has a weight of0
+
+
+Rule3: (<Rule.Rule object at 0x000001B5264C4F08>) <,northSouthPhaseIsLeftTurn_Yellow ,longestTimeWaitedToProceedStraight_30_45 ,northSouthPhaseIs_Green >, <2> and rule has a weight of0
+
+
+Rule4: (<Rule.Rule object at 0x000001B5265D02C8>) <,longestTimeWaitedToTurnLeft_30_45 ,numCarsWaitingToTurnLeft_6_9 >, <4> and rule has a weight of0
+
+
+Rule5: (<Rule.Rule object at 0x000001B5264C4F08>) <,northSouthPhaseIsLeftTurn_Yellow ,longestTimeWaitedToProceedStraight_30_45 ,northSouthPhaseIs_Green >, <2> and rule has a weight of0
+
+
+Rule6: (<Rule.Rule object at 0x000001B5265D02C8>) <,longestTimeWaitedToTurnLeft_30_45 ,numCarsWaitingToTurnLeft_6_9 >, <4> and rule has a weight of0
+
+
+Rule7: (<Rule.Rule object at 0x000001B527C0B7C8>) <,verticalPhaseIs_Yellow ,longestTimeWaitedToProceedStraight_210_240 ,timeSpentInCurrentPhase_300 >, <4> and rule has a weight of0
+
+
+Rule8: (<Rule.Rule object at 0x000001B5264C0708>) <,eastWestPhaseIs_Green ,longestTimeWaitedToTurnLeft_60_90 ,southNorthPhaseIs_Yellow >, <2> and rule has a weight of0
+
+
+Rule9: (<Rule.Rule object at 0x000001B5264C04C8>) <,numCarsWaitingToProceedStraight_25_35 ,longestTimeWaitedToProceedStraight_180_210 ,numCarsWaitingToProceedStraight_35_45 >, <1> and rule has a weight of0
+
+
+Rule10: (<Rule.Rule object at 0x000001B5264C4D88>) <,timeSpentInCurrentPhase_300 ,northSouthPhaseIsLeftTurn_Yellow >, <5> and rule has a weight of0
+
+Rules in RSint:
+
+Rule1: <,intendedActionIs_EW_S_Y >, <7> and rule has a weight of0
+
+
+Rule2: <,intendedActionIs_NS_S_G ,intendedActionIs_SN_L_Y ,timeSinceCommunication_10_15 >, <1> and rule has a weight of0
+
+
+Rule3: <,intendedActionIs_EW_S_G ,intendedActionIs_WE_S_G >, <0> and rule has a weight of0
+
+
+Rule4: <,intendedActionIs_NS_S_G ,intendedActionIs_SN_L_Y ,timeSinceCommunication_10_15 >, <1> and rule has a weight of0
+
+
+Rule5: <,intendedActionIs_EW_S_G ,intendedActionIs_WE_S_G >, <0> and rule has a weight of0
+
+
+Rule6: <,intendedActionIs_EW_S_G >, <0> and rule has a weight of0
+
+
+Rule7: <,intendedActionIs_EW_SL_Y ,intendedActionIs_WE_L_Y ,intendedActionIs_WE_L_Y >, <4> and rule has a weight of0
+
+
+Rule8: <,intendedActionIs_WE_L_G ,intendedActionIs_H_L_G ,intendedActionIs_H_S_G >, <5> and rule has a weight of0
+
+
+Rule9: <,intendedActionIs_SN_SL_G ,intendedActionIs_SN_L_G ,intendedActionIs_WE_L_Y >, <6> and rule has a weight of0
+
+
+Rule10: <,intendedActionIs_NS_S_G ,timeSinceCommunication_0_5 >, <8> and rule has a weight of0
+
+-------------------
+
+
+*************END GENERATION*************
+
+

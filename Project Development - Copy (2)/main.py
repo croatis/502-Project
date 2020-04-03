@@ -5,6 +5,7 @@ import OutputManager
 
 import datetime
 import timeit
+import time
 
 from Driver import Driver
 import EvolutionaryLearner
@@ -55,16 +56,19 @@ if __name__ == "__main__":
     setUpTuple = InitSetUp.run(sumoNetworkName, individualRunsPerGen)
     simRunner = Driver(sumoCmd, setUpTuple, maxGreenPhaseTime, maxYellowPhaseTime, maxSimulationTime)
     episode = 0
-    generations = 0
+    generations = 1
     allIndividualsTested = False
     simulationStartTime = datetime.datetime.now()
+    generationRuntimes = []
 
     # Evolutionary learning loop 
-    while generations < totalGenerations:
-        print('----- GENERATION {} of {}'.format(generations+1, totalGenerations))
+    while generations <= totalGenerations:
+        print('----- GENERATION {} of {}'.format(generations, totalGenerations))
         print("This simulation began at:", simulationStartTime)
-        genStartTime = datetime.datetime.now()
-            
+        print("The average generation runtime is", sum(generationRuntimes)/generations)
+        genStart = datetime.datetime.now()
+        startTime = time.time()
+
         # Prepare for next simulation run
         allIndividualsTested = False
         for ap in setUpTuple[2]:
@@ -87,7 +91,9 @@ if __name__ == "__main__":
             print('Changes made. The generation is', generations, "and the maxSimTime is", maxSimulationTime)
             simRunner = Driver(sumoCmd, setUpTuple, maxGreenPhaseTime, maxYellowPhaseTime, maxSimulationTime)
 
-            print('----- Episode {}'.format(episode+1), "of GENERATION {} of {}".format(generations+1, totalGenerations))
+            print('----- Episode {}'.format(episode+1), "of GENERATION {} of {}".format(generations, totalGenerations))
+            print("Generation start time:", genStart)
+            print("The average generation runtime is", sum(generationRuntimes)/generations)
             start = timeit.default_timer()
             resultingAgentPools = simRunner.run()  # run the simulation
             stop = timeit.default_timer()
@@ -134,10 +140,12 @@ if __name__ == "__main__":
         #     for i in bestIndividuals:
         #         f.write("The best individual in Agent Pool", i.getAgentPool().getID(), "is", i.getID(), "comprised of conditions:", i.getConditions(), "and action:", i.getAction(), "\n\n")
         
+        print("Generation start time:", genStart, "----- End time:", datetime.datetime.now())
+        generationRuntimes.append(time.time() - startTime)
         generations += 1 
                
 
-    print("Start time:", genStartTime, "----- End time:", datetime.datetime.now())
+    print("Start time:", simulationStartTime, "----- End time:", datetime.datetime.now())
     print("This simulation began at:", simulationStartTime)
     print("PATH:", path)
     # Do something to save session stats here

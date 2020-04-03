@@ -101,7 +101,7 @@ class Driver:
                                     ruleWeightBefore = oldRule.getWeight()   # Used to calculate fitness penalty to individual
                                     oldRule.updateWeight(ReinforcementLearner.updatedWeight(oldRule, nextRule, self.getThroughputRatio(self.getThroughput(tl, carsWaitingBefore, carsWaitingAfter), len(carsWaitingBefore)), self.getWaitTimeReducedRatio(self.getThroughputWaitingTime(tl, carsWaitingBefore, carsWaitingAfter), self.getTotalWaitingTime(carsWaitingBefore)), len(carsWaitingAfter) - len(carsWaitingBefore)))
                                     tl.getAssignedIndividual().updateFitnessPenalty(True, oldRule.getWeight() > ruleWeightBefore)
-                                    # print("Old weight was", ruleWeightBefore, "and new weight is", oldRule.getWeight())
+                                    print("Old weight was", ruleWeightBefore, "and new weight is", oldRule.getWeight())
                                     # Apply the next rule; if action is -1 then action is do nothing
                                 if not nextRule.hasDoNothingAction():
                                     # print('Next rule action is', nextRule.getAction())
