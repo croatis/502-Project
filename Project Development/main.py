@@ -128,7 +128,7 @@ if __name__ == "__main__":
                     # print("Generation includes Individual:", i.getID(), ";\n")
             sys.stdout.flush()
         else:
-            OutputManager.run(setUpTuple[2])
+            OutputManager.run(setUpTuple[2], sum(generationRuntimes)/50, (sum(generationRuntimes)/50)*50)
             print("Output file created.")
         
         #     bestIndividuals = []

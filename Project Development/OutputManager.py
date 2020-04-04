@@ -6,9 +6,9 @@ import traci
 
 from operator import attrgetter
 
-def run(agentPools):
-    avgGenRuntime = 0
-    finalGenRuntime = 0
+def run(agentPools, avgGenTime, totalGenTime):
+    avgGenRuntime = avgGenRuntime
+    finalGenRuntime = totalGenTime
 
     # Create new output file and add generation runtime information 
     f = open("simOutputData", "w")

@@ -19,8 +19,12 @@ bestSUMORuntime = 1690
     # How many of the top individuals to breed for new generation
 global numOfIndividualsToMutate
 global percentOfLastGenerationBred
-numOfIndividualsToMutate = 7
+global maxNumOfMutations 
+
+numOfIndividualsToMutate = 5
 percentOfLastGenerationBred = .3
+maxNumOfMutations = 1                   # maximum number of mutations to a rule
+
 
     # Specifications for making Individuals and Rules
 global maxRulePredicates
@@ -30,8 +34,8 @@ global newGenerationPoolSize
 
 maxRulePredicates = 3
 maxRules = 10
-maxRulesInNewGenerationSet = 30
-maxIndividuals = 10
+maxRulesInNewGenerationSet = 20
+maxIndividuals = 30
 
     # How much runtime and rule weights matter when determining fitness of a simulation run
 global runtimeFactor
@@ -77,8 +81,8 @@ def createNewGeneration(agentPools):
     print("Creating a new Generation.")
     for ap in agentPools:
         individuals = ap.getIndividualsSet()
-        individuals.sort(key=lambda x: x.getNormalizedFitness(), reverse = True)
-        # individuals.len() # An error trip for the program to stop for testing
+        individuals.sort(key=lambda x: x.getFitness(), reverse = False)
+        #individuals.len() # An error trip for the program to stop for testing
 
         lastIndex = int(len(individuals)*percentOfLastGenerationBred)
         newGeneration = individuals[0:lastIndex]
@@ -96,18 +100,16 @@ def createNewGeneration(agentPools):
             # Simulate deepcopy() without using deepcopy() because it is slooooow and mutate copied Individual
             newGeneration.append(mutate(Individual(individualToMutate.getID(), individualToMutate.getAgentPool(), individualToMutate.getRS(), individualToMutate.getRSint())))
         
-        individuals.len() # An error trip for the program to stop for testing
-
         # Add first 
             # Lines 100 - 130 are file writing lines just for mid-simulation validation
-        fileName = str(ap.getID()) + "_" + str(time.time())
+        fileName = str(ap.getID())
         f = open(fileName, "w")
         f.write("New Generation includes these individuals and their rules.\n\n\n")
 
         individualCount = 1
         for i in newGeneration:
             ruleCount = 1
-            f.write("Individual" + str(individualCount) + "has a fitness of " + str(i.getFitness()) + " and a last runtime of " + str(i.getLastRunTime()) + ". It has been selected", str(i.getTotalSelectedCount()) ,"and a run fitness total of", str(sum(i.getTotalSelectedCount())),"and contains the following rules:\n\n")
+            f.write("Individual" + str(individualCount) + "has a fitness of " + str(i.getFitness()) + " and a last runtime of " + str(i.getLastRunTime()) + " and contains the following rules:\n\n")
             f.write("Rules in RS:\n")
             for rule in i.getRS():
                 cond = ""
@@ -276,7 +278,6 @@ def mutate(individual):
 
     # MUTATES A RULE A RANDOM NUMBER OF TIMES (MAX MUTATIONS IS USER-DEFINED)
 def mutateRule(rule):
-    maxNumOfMutations = 1 # user defined maximum number of mutations
     ruleCond = rule.getConditions()
     #print("*Rule to be mutated has conditions:", rule.getConditions())
     #print('Mutating...')
