@@ -1,5 +1,5 @@
-# 502-Project
-CPSC 502 Project
+# 502-Project AKA SATLO
+Shout-Ahead Traffic Light Optimizer
 
 Naming conventions 
 ************************************************************************************
