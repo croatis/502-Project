@@ -130,7 +130,7 @@ class Driver:
             i.updateLastRunTime(simRunTime)
             print("Individual", i, "has a last runtime of", i.getLastRunTime())
             i.updateFitness(EvolutionaryLearner.rFit(i, simRunTime, i.getAggregateVehicleWaitTime()))
-
+            print(tl.getName(), "'s coop rules were invalid", tl.getCoopRuleValidRate(), "percent of the time.")
         traci.close()       # End simulation
         
         return self.setUpTuple[2] # Returns all the agent pools to the main module
@@ -289,9 +289,12 @@ class Driver:
                     parameters = self.getCoopPredicateParameters(trafficLight, predicate, i)
                     # # print("Parameters are:", parameters)
                     if isinstance(parameters, int) or isinstance(parameters, float) or isinstance(parameters, str):
+                        #print("Checking regular co-op rule with conditions", rule.getConditions())
                         predCall = getattr(CoopPredicateSet, cond)(parameters) # Construct predicate fuction call
                     else:
                         predCall = getattr(CoopPredicateSet, "customPredicate")(parameters[0], parameters[1]) # Construct predicate fuction call for custom predicates (they are of form TLname_action but are handled by the same predicate in CoopPredicateSet)
+                        #print("Checking customPredicate co-op rule with conditions", rule.getConditions())
+
                         # Determine validity of predicate
                     if predCall == False:
                         return False

@@ -14,15 +14,14 @@ from operator import attrgetter
 class AgentPool:
                 
         # INTIALIZE AGENT POOL VARIABLES
-    def __init__(self, identifier, actionSet, minIndividualRunsPerGen):
+    def __init__(self, identifier, actionSet, minIndividualRunsPerGen, trafficLightsAssigned):
         self.id = identifier                                            # AgentPool name
         self.actionSet = actionSet                                      # A list of action names that can be applied by assigned TL's of the pool
         self.addDoNothingAction()                                       # Add "do nothing" action to action set 
         self.trafficLightsAssigned = []                                 # List of traffic lights using Agent Pool 
+        self.setTrafficLightsAssigned(trafficLightsAssigned)
         self.individuals = []                   
         self.userDefinedRuleSet = [Rule(-1, ["emergencyVehicleApproachingVertical"], -1, self), Rule(-1, ["emergencyVehicleApproachingHorizontal"], -1, self), Rule(-1, ["maxGreenPhaseTimeReached"], -1, self), Rule(-1, ["maxYellowPhaseTimeReached"], -1, self)]
-        self.coopPredicates = self.initCoopPredicates()                 # Store Observations of communicated intentions here since they are agent specific
-        self.initIndividuals()                                          # Populate Agent Pool's own rule set with random rules
         self.minIndividualRunsPerGen = minIndividualRunsPerGen
 
     def getID(self):
@@ -45,13 +44,29 @@ class AgentPool:
 
     def getAssignedTrafficLights(self):
         return self.trafficLightsAssigned
-        
+    
+    def setTrafficLightsAssigned(self, trafficLightsAssigned):
+        if isinstance(trafficLightsAssigned, list):
+            for tl in trafficLightsAssigned:
+                self.trafficLightsAssigned.append(tl)
+                tl.assignToAgentPool(self)
+                print(tl.getName(), "is assigned to agent pool", tl.getAgentPool().getID())
+        else:
+            trafficLightsAssigned.assignToAgentPool(self)
+
     def addNewTrafficLight(self, trafficLight):
+        print("Adding", trafficLight.getName(), "to", self.getID())
         self.trafficLightsAssigned.append(trafficLight)
         trafficLight.assignToAgentPool(self)
     
     def addDoNothingAction(self):
         self.actionSet.append("DoNothing")
+
+        # COMPLETES THE INITIALIZATION OF AGENT POOL COMPONENTS THAT REQUIRE ALL AGENT POOLS TO BE INITIALIZED FIRST
+    def finishSetUp(self):
+        self.coopPredicates = self.initCoopPredicates()                 # Store Observations of communicated intentions here since they are agent specific
+        self.initIndividuals()                                          # Populate Agent Pool's own rule set with random rules
+
 
         # SELECTS AN INDIVIDUAL TO PASS TO A TRAFFIC LIGHT WHEN REQUESTED
     def selectIndividual(self):

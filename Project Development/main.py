@@ -28,10 +28,6 @@ if __name__ == "__main__":
     gui = False
     totalGenerations = 50
     individualRunsPerGen = 3  # Min number of training runs an individual gets per generation
-    gamma = 0.75
-    batch_size = 100
-    memory_size = 50000
-    path = "./model/model_1_5x400_100e_075g/"  # nn = 5x400, episodes = 300, gamma = 0.75
     # ----------------------
 
     # Attributes of the simulation

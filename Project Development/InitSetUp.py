@@ -115,40 +115,57 @@ def run(sumoNetworkName, minIndividualRunsPerGen):
                 tl.setPhases(tlPhases[x])
             
         # Create entries for traffic lights in the communicationPartners dict based on edgePartners data
-    for junction in edgePartners:
-        for t in trafficLights:
-            if junction == t.getName():
-                communicationPartners[t] = []
+    # for junction in edgePartners:
+    #     print("Junction is", junction, "and edgePartners are", edgePartners)
+    #     for t in trafficLights:
+    #         if junction == t.getName():
+    #             communicationPartners[t] = []
     
         # Create and assign agent pools; populate communicationPartners dictionary 
     agentPools = []
     for tl in trafficLights:
+        for edge in tl.getEdges():
+            edgeSplit = edge.split("2")
+            endPoint = edgeSplit[1].split("_")
+            if endPoint[0] == tl.getName():
+                for otherTL in trafficLights:
+                    if edgeSplit[0] == otherTL.getName() and otherTL not in tl.getCommunicationPartners():
+                        tl.addCommunicationPartner(otherTL)
+        print("Current light:", tl.getName(),"\nEdge goes to:", endPoint[0], "\nEdge comes from:", edgeSplit[0],"\n\n")
+
         apAssigned = False
             # If agent pool(s) already exist, check to see its ability to host the traffic light
         if len(agentPools) > 0:    
             for ap in agentPools:
                     # An agent pool can realistically host more than one traffic light iff at minimum all TL's using the pool share the same number of phases
                 if tl.getPhases() == ap.getActionSet(): 
-                    tl.assignToAgentPool(ap)
                     ap.addNewTrafficLight(tl)
+                    #tl.assignToAgentPool(ap)
                     apAssigned = True
                     break
         
         if apAssigned == False:
             apID = "AP" + str(len(agentPools) + 1)                      # Construct new agent ID
-            agentPool = AgentPool(apID, tl.getPhases(), minIndividualRunsPerGen)                 # Create a new agent pool for traffic light
-            agentPool.addNewTrafficLight(tl)                            # Assign traffic light to agent pool 
-            
+            agentPool = AgentPool(apID, tl.getPhases(), minIndividualRunsPerGen, [tl])                 # Create a new agent pool for traffic light
+            #tl.assignToAgentPool(agentPool)
+            apAssigned = True
+
             agentPools.append(agentPool)                                # Add new pool to agent pools list
 
-            # Determine a traffic light's communication partners
-        for p in edgePartners[tl.getName()]:
-            for t in trafficLights:
-                if p == t.getName():
-                    communicationPartners[tl].append(t)                # If edge partner is a traffic light, add it to tl's entry in communicationPartner 
+        #     # Determine a traffic light's communication partners
+        # for p in edgePartners[tl.getName()]:
+        #     for t in trafficLights:
+        #         if p == t.getName():
+        #             communicationPartners[tl].append(t)                # If edge partner is a traffic light, add it to tl's entry in communicationPartner 
         
-        tl.setCommunicationPartners(communicationPartners[tl])         # Set each TL's communication partners list
+        #tl.setCommunicationPartners(communicationPartners[tl])         # Set each TL's communication partners list
+        
+        #Finish the initialization of the agent pools
+    for ap in agentPools:
+        ap.finishSetUp()
 
+    for tl in trafficLights:
+        print(tl.getName(), "communicates with:", tl.getCommunicationPartners())
     return (userDefinedRules, trafficLights, agentPools)
     
 # main entry point

@@ -23,6 +23,8 @@ class TrafficLight:
         self.communicationPartners = []
         self.communicatedIntentions = {}
         self.recievedIntentions = {}
+        self.numOfTimesNoCoopRuleWasValid = 0
+        self.numOfRulesSelected = 0
 
         # RETURNS THE TRAFFIC LIGHT'S NAME
     def getName(self):
@@ -127,6 +129,10 @@ class TrafficLight:
     def setCommunicationPartners(self, commPartners):
         self.communicationPartners = commPartners
 
+        # ADD A COMMUNICATION PARTNER
+    def addCommunicationPartner(self, commPartner):
+        self.communicationPartners.append(commPartner)
+
         # SET TL'S NEXT INTENDED ACTION
     def setIntention(self, intention):
         self.communicateIntention(intention)
@@ -150,24 +156,52 @@ class TrafficLight:
 
         # DECIDE WHICH RULE TO APPLY AT CURRENT ACTION STEP
     def getNextRule(self, validRulesRS, validRulesRSint, time): 
+        #for x in self.communicatedIntentions:
+            #print("TL is", self.getName(),". The intention is", self.communicatedIntentions[x].getAction())
+        
+        self.numOfRulesSelected += 1
             # First, select a rule from RS and communicate it
         intendedRule = self.getAssignedIndividual().selectRule(validRulesRS)    # Get intended rule to apply
-
+            
         if intendedRule == -1:
-            return -1
-
-        self.setIntention(Intention(self, intendedRule.getAction(), time))
+            if self.currentRule is None:
+                #print('In if statement. Current rule is', self.currentRule)
+                return -1
+            elif self.currentRule == -1:
+                self.setIntention(Intention(self, -1, time))
+            else:
+                #print("Using current rule instead. It is", self.currentRule)
+                self.setIntention(Intention(self, self.currentRule.getAction(), time))
+        else:
+            if self.currentRule is None:
+                #print('Current rule is None.')
+                return -1
+            self.setIntention(Intention(self, intendedRule.getAction(), time))
             
             # If intended rule isn't user-defined, select a rule from RSint and then decide between the two
         coopRule = self.getAssignedIndividual().selectCoopRule(validRulesRSint)
-
-            # If no valid rules apply from RSint, return the intented rule from RS
         if coopRule == -1:
+            self.numOfTimesNoCoopRuleWasValid += 1
+            #print("No valid rule from RSint.")
+       
+        if intendedRule == -1 and coopRule == -1:
+            #print("Neither intended nor coopRule valid.")
+            return -1
+            # If no valid rules apply from RSint, return the intented rule from RS
+        elif coopRule == -1 and intendedRule != -1:
+            #print("CoopRule invalid. Applying intended rule.")
             return intendedRule
+        
+        elif coopRule != -1 and intendedRule == -1:
+            #print("Intended rule invalid. Applying coop rule.")
+            return coopRule
 
-        if coopRule.getWeight() >= intendedRule.getWeight():
+        elif coopRule.getWeight() >= intendedRule.getWeight():
+            #print("CoopRule has higher weight than intended rule. Applying it.")
             return coopRule
         else:
             rule = choice([coopRule, intendedRule], 1, p = [pCoop, (1-pCoop)])  # Select one of the two rules based on pCoop value
             return rule[0]                                                      # Choice returns an array, so we take the only element of it
 
+    def getCoopRuleValidRate(self):
+        return (self.numOfTimesNoCoopRuleWasValid/self.numOfRulesSelected)*100

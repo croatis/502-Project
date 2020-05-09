@@ -169,6 +169,7 @@ def createRandomRule(agentPool, ruleType):
             newCond = agentPool.getRandomRSintPredicate()
             if checkValidCond(newCond, conditions):
                 conditions.append(newCond)
+                #print("Conditions set now contains", conditions, "\n\n")
 
         # Get index of possible action. SUMO changes phases on indexes
     action = randrange(0, len(agentPool.getActionSet()))     # Set rule action to a random action from ActionSet pertaining to Agent Pool being serviced
@@ -347,11 +348,19 @@ def chooseSecondParent(breedingPopulation, parent1):
     # ENSURE UNIQUE PREDICATE TYPES IN CONDITIONS
 def checkValidCond(cond, conditions):
     predicateType = cond.split("_")
+    condPredicateTypes = []
 
+    for x in conditions:
+        predSplit = x.split("_")
+        condPredicateTypes.append(predSplit[0])
+
+    #print('New conditions is', predicateType[0], "and the conditions set is", condPredicateTypes)
         #If predicate type already exists in conditions, return false
-    if predicateType[0] in conditions:
+    if predicateType[0] in condPredicateTypes:
+       # print("Predicate type already exists in conditions set.")
         return False
     else:
+        #print("Predicate type DOES NOT exist in conditions set.")
         return True
 
 def removeDuplicateRules(ruleSet):
