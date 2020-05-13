@@ -213,18 +213,21 @@ def timeSinceCommunication_0_5(timeSinceCommunication):
 
 def timeSinceCommunication_5_10(timeSinceCommunication):
     if 5 < timeSinceCommunication < 10:
+        print("timeSinceCommunication was between 5 and 10 seconds\n\n")
         return True
     else:
         return False
 
 def timeSinceCommunication_10_15(timeSinceCommunication):
     if 10 < timeSinceCommunication < 15:
+        print("timeSinceCommunication was between 10 and 15 seconds\n\n")
         return True
     else:
         return False
 
 def timeSinceCommunication_15_20(timeSinceCommunication):
     if 15 < timeSinceCommunication < 20:
+        print("timeSinceCommunication was between 15 and 20 seconds\n\n")
         return True
     else:
         return False
@@ -238,11 +241,11 @@ def timeSinceCommunication_20_25(timeSinceCommunication):
 
     # EVALUATES VALIDITY OF A CUSTOM PREDICATE RELATIVE TO A COMMUNICATED INTENTION
 def customPredicate(predicate, intention):
-    predicate = predicate.split("_")
+    predicate = predicate.split("_", 1)
 
     if predicate[0] == intention.getTrafficLight().getName() and predicate[1] == intention.getAction():
-        print("Custom predicate evaluated to true!")
-        print(x)
+        # print("predicate[0] is", predicate[0], "and the traffic light that sent the intention is", intention.getTrafficLight().getName())
+        # print("predicate[1] is", predicate[1], "and the intended action is", intention.getAction())
         return True
     else:
         return False
@@ -299,7 +302,7 @@ def getAgentSpecificPredicates(agentPool):
             for action in partner.getAgentPool().getActionSet():
                 pred = partner.getName() + "_" + action
                 customPredicates.append(pred)
-    #print("Custom predicates are", customPredicates)
+    print("Custom predicates are", customPredicates)
     return customPredicates
 
 # def run():

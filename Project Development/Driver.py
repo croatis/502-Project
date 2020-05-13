@@ -35,9 +35,9 @@ class Driver:
             # Run set-up script and acquire list of user defined rules and traffic light agents in simulation
         userDefinedRules = self.setUpTuple[0]
         trafficLights = self.setUpTuple[1]
-        rule = None 
-        nextRule = None
-
+        rule = -1 
+        nextRule = -1
+        
             # Assign each traffic light an individual from their agent pool for this simulation run, and a starting rule
         for tl in trafficLights:
             tl.assignIndividual()
@@ -45,10 +45,10 @@ class Driver:
             rule = self.applicableUserDefinedRule(tl, userDefinedRules) # Check user-defined rules
                 
                 # If no user-defined rules can be applied, get a rule from Agent Pool
-            if rule == False:    
+            if rule == False or rule is None:    
                 validRules = self.getValidRules(tl, tl.getAssignedIndividual())
                 rule = tl.getNextRule(validRules[0], validRules[1], traci.simulation.getTime()) # Get a rule from assigned Individual
-                    
+                print("The rule is", rule)
                     # if no valid rule applicable, apply the Do Nothing rule.
                 if rule == -1:
                     # print("No valid rule. Do Nothing action applied.") 
@@ -70,6 +70,7 @@ class Driver:
         carsWaitingBefore = {}
         carsWaitingAfter = {}
         while traci.simulation.getMinExpectedNumber() > 0 and traci.simulation.getTime() < self.maxSimulationTime:
+            tl.removeOldIntentions(traci.simulation.getTime())
             traci.simulationStep() # Advance SUMO simulation one step (1 second)
 
                 # Traffic Light agents reevaluate their state every 5 seconds
@@ -84,8 +85,12 @@ class Driver:
                         # If no user-defined rules can be applied, get a rule from Agent Pool
                     if nextRule == False:    
                         validRules = self.getValidRules(tl, tl.getAssignedIndividual())
-                        nextRule = tl.getNextRule(validRules[0], validRules[1], traci.simulation.getTime()) # Get a rule from assigned Individual
-
+                        if len(validRules[0]) == 0 and len(validRules[1]) == 0:
+                            nextRule = -1
+                        else:
+                            nextRule = tl.getNextRule(validRules[0], validRules[1], traci.simulation.getTime()) # Get a rule from assigned Individual
+                        print("Valid rules for RS are", validRules[0], "and valid rules for RSint are", validRules[1])
+                        print("The nextRule is", nextRule)
                             # if no valid rule applicable, apply the Do Nothing rule.
                         if nextRule == -1:
                             tl.doNothing()  # Update traffic light's Do Nothing counter
@@ -125,7 +130,7 @@ class Driver:
         simRunTime = traci.simulation.getTime()
         print("***SIMULATION TIME:", simRunTime, "\n\n")
         for tl in trafficLights:
-            # # print(tl.getName(), "has these communicated intentions:", tl.getCommunicatedIntentions())
+            tl.resetRecievedIntentions()
             i = tl.getAssignedIndividual()
             i.updateLastRunTime(simRunTime)
             print("Individual", i, "has a last runtime of", i.getLastRunTime())
@@ -283,20 +288,26 @@ class Driver:
             for i in intentions[x]:
                     # For each condition, its parameters are acquired and the condition predicate is evaluated
                 for cond in rule.getConditions():
+                    # print("\n\n\nChecking cond", cond, "out of", rule.getConditions())
                     predicateSplit = cond.split("_")
                     predicate = predicateSplit[0]
                     
-                    parameters = self.getCoopPredicateParameters(trafficLight, predicate, i)
+                    if any(x.getName() == predicate for x in self.setUpTuple[1]):
+                        parameters = [cond, i]
+                        # print("Predicate is a traffic light. Paramters is", parameters)
+                    else:    
+                        parameters = self.getCoopPredicateParameters(trafficLight, predicate, i)
                     # # print("Parameters are:", parameters)
                     if isinstance(parameters, int) or isinstance(parameters, float) or isinstance(parameters, str):
-                        #print("Checking regular co-op rule with conditions", rule.getConditions())
+                        # print("Checking regular co-op rule with conditions", rule.getConditions(), "and the paramters are", parameters)
                         predCall = getattr(CoopPredicateSet, cond)(parameters) # Construct predicate fuction call
                     else:
                         predCall = getattr(CoopPredicateSet, "customPredicate")(parameters[0], parameters[1]) # Construct predicate fuction call for custom predicates (they are of form TLname_action but are handled by the same predicate in CoopPredicateSet)
-                        #print("Checking customPredicate co-op rule with conditions", rule.getConditions())
+                        # print("Checking customPredicate co-op rule with conditions", rule.getConditions(), "and the paramters are", parameters)
 
                         # Determine validity of predicate
                     if predCall == False:
+                        # print("Predicate is false.\n\n\n")
                         return False
 
         return True # if all predicates return true, evaluate rule as True
@@ -426,16 +437,20 @@ class Driver:
         
         # PROVIDE SIMULATION RELEVANT PARAMETERS
     def getCoopPredicateParameters(self, trafficLight, predicate, intention):        
+        # print("Getting coop predicate parameters. The predicate is", predicate, "the traffic light is", trafficLight.getName(), "and the intention is from", intention.getTrafficLight().getName)
         if "timeSinceCommunication" == predicate:
+            print("Predicate is timeSinceCommunication. Time now is", traci.simulation.getTime(), "and intention was sent at", intention.getTime())
             timeSent = intention.getTime()            
             return traci.simulation.getTime() - timeSent
         
         elif "intendedActionIs" == predicate:
+            # print("The predicate is intendedActionIs and the parameter is", intention.getAction())
             return intention.getAction()
         
         else:       # equivalent to: elif "customPredicate" == predicate:
-            # print("The current traffic light is", trafficLight.getName(), "with predicate", predicate, "and an intention from", intention.getTrafficLight(), "to do action", intention.getAction())
-            return (str(intention.getTrafficLight().getName()) + "_" + str(intention.getAction()), intention)
+            # print("The current traffic light is", trafficLight.getName(), "with predicate", predicate, "and an intention from", intention.getTrafficLight().getName(), "to do action", intention.getAction())
+            # print("Returning parameter:", (str(intention.getTrafficLight().getName()) + "_" + intention.getAction(), intention))
+            return (str(intention.getTrafficLight().getName()) + "_" + intention.getAction(), intention)
 
         
 # main entry point
