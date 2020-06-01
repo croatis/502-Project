@@ -1,0 +1,101 @@
+The top individual is <Individual.Individual object at 0x000002005BE830C8> and it has a fitness of -477.6666666666667
+Normalized fitness value of <Individual.Individual object at 0x000002005BE830C8> is 1.0
+Normalized fitness value of <Individual.Individual object at 0x0000020063F8DCC8> is 0.9986020569733106
+Normalized fitness value of <Individual.Individual object at 0x000002005ECFD888> is 0.9962035453954488
+Normalized fitness value of <Individual.Individual object at 0x0000020060608708> is 0.9953411408926864
+Normalized fitness value of <Individual.Individual object at 0x000002005F7B8C08> is 0.995275998649606
+Normalized fitness value of <Individual.Individual object at 0x00000200613D65C8> is 0.9950537066887294
+Normalized fitness value of <Individual.Individual object at 0x00000200613D4708> is 0.9940052494187124
+Normalized fitness value of <Individual.Individual object at 0x00000200620FC3C8> is 0.9934287167929093
+Normalized fitness value of <Individual.Individual object at 0x00000200613CF788> is 0.9929175641555996
+Normalized fitness value of <Individual.Individual object at 0x0000020063F8DF08> is 0.9924396958760681
+Normalized fitness value of <Individual.Individual object at 0x00000200620F0648> is 0.9912747433538269
+Normalized fitness value of <Individual.Individual object at 0x0000020063F8AE88> is 0.9673480450194714
+Normalized fitness value of <Individual.Individual object at 0x0000020063F82E08> is 0.9570774431907336
+Normalized fitness value of <Individual.Individual object at 0x0000020063F8D5C8> is 0.9513144943868308
+Normalized fitness value of <Individual.Individual object at 0x0000020063F8F1C8> is 0.9513144943868308
+Normalized fitness value of <Individual.Individual object at 0x0000020063F8F508> is 0.9513144943868308
+Normalized fitness value of <Individual.Individual object at 0x0000020063F8DD48> is 0.5256265780351768
+Normalized fitness value of <Individual.Individual object at 0x0000020063F8D288> is 0.5190220104703079
+Normalized fitness value of <Individual.Individual object at 0x0000020063F82588> is 0.49789595309758494
+Normalized fitness value of <Individual.Individual object at 0x0000020063F8AAC8> is 0.48785358686504143
+Normalized fitness value of <Individual.Individual object at 0x0000020063F8D988> is 0.3048086387173159
+Normalized fitness value of <Individual.Individual object at 0x0000020063F8D788> is 0.27884683965022894
+Normalized fitness value of <Individual.Individual object at 0x0000020063F8A148> is 0.2628132890175883
+Normalized fitness value of <Individual.Individual object at 0x0000020063F8DDC8> is 0.2628132890175883
+Normalized fitness value of <Individual.Individual object at 0x0000020063F8A348> is 0.25620872145271956
+Normalized fitness value of <Individual.Individual object at 0x0000020063F8A788> is 0.2537551887936323
+Normalized fitness value of <Individual.Individual object at 0x0000020063F8DE88> is 0.24976106586023417
+Normalized fitness value of <Individual.Individual object at 0x0000020063F82D08> is 0.2379356090324237
+Normalized fitness value of <Individual.Individual object at 0x0000020063F82388> is 0.20043364763276897
+Normalized fitness value of <Individual.Individual object at 0x0000020063F8A488> is 0.0
+Normalizing fitnesses.
+The top individual is <Individual.Individual object at 0x00000200606121C8> and it has a fitness of 666.6666666666666
+Normalized fitness value of <Individual.Individual object at 0x00000200606121C8> is 1.0
+Normalized fitness value of <Individual.Individual object at 0x0000020062CA8848> is 0.9547511312217195
+Normalized fitness value of <Individual.Individual object at 0x000002005897AFC8> is 0.9398315736551031
+Normalized fitness value of <Individual.Individual object at 0x0000020063F54988> is 0.8981900452488689
+Normalized fitness value of <Individual.Individual object at 0x0000020063F54388> is 0.8910256410256411
+Normalized fitness value of <Individual.Individual object at 0x00000200620F0908> is 0.8717006033182505
+Normalized fitness value of <Individual.Individual object at 0x000002005ECF4048> is 0.8634678230266467
+Normalized fitness value of <Individual.Individual object at 0x00000200620FEAC8> is 0.8626822523881348
+Normalized fitness value of <Individual.Individual object at 0x000002005F7C1948> is 0.8556121166415285
+Normalized fitness value of <Individual.Individual object at 0x000002005D50FBC8> is 0.8465309200603319
+Normalized fitness value of <Individual.Individual object at 0x00000200620FE3C8> is 0.8332076420311716
+Normalized fitness value of <Individual.Individual object at 0x0000020063F22188> is 0.8240761689291102
+Normalized fitness value of <Individual.Individual object at 0x0000020062D9A708> is 0.8038273001508296
+Normalized fitness value of <Individual.Individual object at 0x0000020062D9AC08> is 0.7851055806938161
+Normalized fitness value of <Individual.Individual object at 0x0000020063F54B48> is 0.7710972850678733
+Normalized fitness value of <Individual.Individual object at 0x0000020063F54648> is 0.7678544494720966
+Normalized fitness value of <Individual.Individual object at 0x0000020063F8F148> is 0.7484539969834089
+Normalized fitness value of <Individual.Individual object at 0x000002005C8DD808> is 0.7356711915535445
+Normalized fitness value of <Individual.Individual object at 0x0000020062D97308> is 0.6664404223227753
+Normalized fitness value of <Individual.Individual object at 0x0000020063F540C8> is 0.6351809954751131
+Normalized fitness value of <Individual.Individual object at 0x0000020062D9A408> is 0.5991704374057316
+Normalized fitness value of <Individual.Individual object at 0x0000020062CE7248> is 0.5522247360482655
+Normalized fitness value of <Individual.Individual object at 0x0000020062D9A308> is 0.43774509803921574
+Normalized fitness value of <Individual.Individual object at 0x0000020062D97F88> is 0.4204939668174963
+Normalized fitness value of <Individual.Individual object at 0x0000020062D9AD08> is 0.4064856711915536
+Normalized fitness value of <Individual.Individual object at 0x0000020062D9A648> is 0.36274509803921573
+Normalized fitness value of <Individual.Individual object at 0x0000020062D97F08> is 0.3412895927601811
+Normalized fitness value of <Individual.Individual object at 0x0000020063F54F08> is 0.2641402714932128
+Normalized fitness value of <Individual.Individual object at 0x0000020062D97988> is 0.09038461538461538
+Normalized fitness value of <Individual.Individual object at 0x0000020062D9A788> is 0.0
+Normalizing fitnesses.
+The top individual is <Individual.Individual object at 0x0000020063F22088> and it has a fitness of 1156.6666666666667
+Normalized fitness value of <Individual.Individual object at 0x0000020063F22088> is 1.0
+Normalized fitness value of <Individual.Individual object at 0x000002005F7BFEC8> is 0.9639187116564418
+Normalized fitness value of <Individual.Individual object at 0x0000020060608108> is 0.9633435582822087
+Normalized fitness value of <Individual.Individual object at 0x000002005AAA8908> is 0.9567331288343559
+Normalized fitness value of <Individual.Individual object at 0x000002005AB03148> is 0.9566564417177914
+Normalized fitness value of <Individual.Individual object at 0x000002005672F5C8> is 0.9027635248187397
+Normalized fitness value of <Individual.Individual object at 0x000002005BE7C848> is 0.8938650306748467
+Normalized fitness value of <Individual.Individual object at 0x000002005F7B8A88> is 0.7771319018404909
+Normalized fitness value of <Individual.Individual object at 0x00000200620FE888> is 0.7595092024539878
+Normalized fitness value of <Individual.Individual object at 0x000002005C8DD248> is 0.7489263803680982
+Normalized fitness value of <Individual.Individual object at 0x000002005BE7CE08> is 0.7306100886162236
+Normalized fitness value of <Individual.Individual object at 0x000002005C8DFD88> is 0.7249474145486415
+Normalized fitness value of <Individual.Individual object at 0x0000020063F8D108> is 0.5949079754601228
+Normalized fitness value of <Individual.Individual object at 0x00000200620F0AC8> is 0.582638036809816
+Normalized fitness value of <Individual.Individual object at 0x000002005F7C1B08> is 0.5651533742331288
+Normalized fitness value of <Individual.Individual object at 0x00000200620FC548> is 0.5440184049079755
+Normalized fitness value of <Individual.Individual object at 0x0000020058152E48> is 0.5374846625766871
+Normalized fitness value of <Individual.Individual object at 0x0000020061E44208> is 0.5261963190184049
+Normalized fitness value of <Individual.Individual object at 0x000002005F83B288> is 0.36230828220858896
+Normalized fitness value of <Individual.Individual object at 0x000002005BA709C8> is 0.29912576687116565
+Normalized fitness value of <Individual.Individual object at 0x0000020062D9B208> is 0.2889570552147239
+Normalized fitness value of <Individual.Individual object at 0x00000200306F0948> is 0.28257668711656436
+Normalized fitness value of <Individual.Individual object at 0x00000200620F9988> is 0.28257668711656436
+Normalized fitness value of <Individual.Individual object at 0x0000020063F1F7C8> is 0.28257668711656436
+Normalized fitness value of <Individual.Individual object at 0x0000020062D9B148> is 0.28257668711656436
+Normalized fitness value of <Individual.Individual object at 0x00000200620FCC08> is 0.24361963190184055
+Normalized fitness value of <Individual.Individual object at 0x00000200598DBD08> is 0.0
+Normalized fitness value of <Individual.Individual object at 0x000002005F7BF208> is 0.0
+Normalized fitness value of <Individual.Individual object at 0x0000020063F547C8> is 0.0
+Normalized fitness value of <Individual.Individual object at 0x00000200620F9EC8> is 0.0
+Traceback (most recent call last):
+  File "main.py", line 131, in <module>
+    OutputManager.run(setUpTuple[2], sum(generationRuntimes)/50, (sum(generationRuntimes)/50)*50)
+  File "C:\Users\chris\OneDrive\Desktop\502 Project\Project Development - 75\OutputManager.py", line 10, in run
+    avgGenRuntime = avgGenRuntime
+UnboundLocalError: local variable 'avgGenRuntime' referenced before assignment

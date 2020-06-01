@@ -479,7 +479,6 @@ def horizontalPhaseIsLeftTurn_Green(tlPhaseArray):
         return False
 
 def horizontalPhaseIsLeftTurn_Yellow(tlPhaseArray):  
-    print(tlPhaseArray)
     if "H" == tlPhaseArray[0] and "Y" == tlPhaseArray[2] and ("L" == tlPhaseArray[1] or "SL" == tlPhaseArray[1]):
         return True 
     else:
