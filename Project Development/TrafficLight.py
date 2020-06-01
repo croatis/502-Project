@@ -26,7 +26,11 @@ class TrafficLight:
         self.recievedIntentions = {}
         self.numOfTimesNoCoopRuleWasValid = 0
         self.numOfRulesSelected = 0
-
+        self.timeInCurrentPhase = 0
+        self.currentPhase = None
+        self.maxRedPhaseTime = 0
+        self.phaseTimeSpentInRed = []
+        
         # RETURNS THE TRAFFIC LIGHT'S NAME
     def getName(self):
         return self.name
@@ -71,6 +75,21 @@ class TrafficLight:
     def addPhase(self, phase):
         self.phases.append(phase)
         # print("Adding a new phase to TL. Phases now include:", self.phases)
+    
+    def getCurrentPhase(self):
+        return self.currentPhase
+    
+    def updateCurrentPhase(self, phase):
+        self.currentPhase = phase
+    
+    def getTimeInCurrentPhase(self):
+        return self.timeInCurrentPhase
+    
+    def updateTimeInCurrentPhase(self, time):
+        self.timeInCurrentPhase += time
+    
+    def resetTimeInCurrentPhase(self):
+        self.timeInCurrentPhase = 0
     
         # RETURN THE CURRENTLY SELECTED RULE
     def getCurrentRule(self):
@@ -155,6 +174,7 @@ class TrafficLight:
     def getCommunicatedIntentions(self):
         return self.recievedIntentions
 
+
         # REMOVES ALL INTENTIONS SENT TOO LONG AGO
     def removeOldIntentions(self, currentTime):
         intentionsToRemove = []
@@ -166,6 +186,37 @@ class TrafficLight:
 
     def resetRecievedIntentions(self):
         self.recievedIntentions = {}
+
+        # SETS MAXIMUM TIME A TL EDGE CAN SPEND IN A RED PHASE (MaxGreenPhaseTime*NumOfGreenPhases + MaxYellowPhaseTime*NumOfGreenPhases)
+    def setMaxRedPhaseTime(self, maxGreenPhaseTime, maxYellowPhaseTime):
+        numberOfPhases = len(self.phases)/2
+        self.maxRedPhaseTime = (numberOfPhases/2)*maxGreenPhaseTime + (numberOfPhases/2)*maxYellowPhaseTime
+
+    def getMaxRedPhaseTime(self):
+        return self.maxRedPhaseTime
+    
+    def initPhaseTimeSpentInRedArray(self):
+        for i in range(len(self.agentPool.getActionSet())-1):
+            self.phaseTimeSpentInRed.append(0)
+        print('Array initialized!', self.phaseTimeSpentInRed)
+    
+    def updateTimePhaseSpentInRed(self, currentPhase, time):
+        print("The phaseTimeSpentInRed array is", self.phaseTimeSpentInRed, "and the max red phase time is", self.maxRedPhaseTime)
+        print("The current phase is", currentPhase)
+        for x in range(len(self.phaseTimeSpentInRed)):
+            print('x is', x)
+            if x != currentPhase:
+                self.phaseTimeSpentInRed[x] += time
+        self.phaseTimeSpentInRed[currentPhase] = 0
+
+    def maxRedPhaseTimeReached(self):
+        index = 0
+        for x in self.phaseTimeSpentInRed:
+            if x >= self.maxRedPhaseTime:
+                print("Max time reached. Returning index:", index)
+                return index
+            index += 1
+        return False
 
         # DECIDE WHICH RULE TO APPLY AT CURRENT ACTION STEP
     def getNextRule(self, validRulesRS, validRulesRSint, time): 

@@ -1,6 +1,7 @@
 import os
 import sys
 
+
 class Rule:
 
     def __init__(self, ruleType, conditions, action, agentPool):
@@ -13,7 +14,7 @@ class Rule:
         self.normalizedWeight = 0
         self.doNothingAction = False    # Flag to keep track of an action being "do nothing"
         self.setDoNothingFlag()         # Used by Driver to determine if action is "Do nothing", which cannot be applied in the simulator
-        
+    
         # GET RULE TYPE
     def getType(self):
         return self.type
@@ -32,7 +33,12 @@ class Rule:
         
         # UPDATE RULE ACTION
     def setAction(self, action):
-        self._action = action
+        if action == -1:
+            print("Setting action to -1")
+            print(x)
+            self.action = 1
+        else:
+            self._action = action
         
         # GET CORRESPONDING AGENT POOL
     def getAgentPool(self):

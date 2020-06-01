@@ -28,10 +28,12 @@ if __name__ == "__main__":
     gui = False
     totalGenerations = 50
     individualRunsPerGen = 3  # Min number of training runs an individual gets per generation
-    gamma = 0.75
-    batch_size = 100
-    memory_size = 50000
-    path = "./model/model_1_5x400_100e_075g/"  # nn = 5x400, episodes = 300, gamma = 0.75
+    # ----------------------
+    
+    # --- USER-DEFINED RULES TOGGLE ---
+    maxGreenAndYellowPhaseTime_UDRule = False
+    maxRedPhaseTime_UDRule = False
+    assignGreenPhaseToSingleWaitingPhase_UDRule = True
     # ----------------------
 
     # Attributes of the simulation
@@ -54,7 +56,7 @@ if __name__ == "__main__":
         
     print("----- Start time:", datetime.datetime.now())
     setUpTuple = InitSetUp.run(sumoNetworkName, individualRunsPerGen)
-    simRunner = Driver(sumoCmd, setUpTuple, maxGreenPhaseTime, maxYellowPhaseTime, maxSimulationTime)
+    simRunner = Driver(sumoCmd, setUpTuple, maxGreenPhaseTime, maxYellowPhaseTime, maxSimulationTime, maxGreenAndYellowPhaseTime_UDRule, maxRedPhaseTime_UDRule, assignGreenPhaseToSingleWaitingPhase_UDRule)
     episode = 0
     generations = 1
     allIndividualsTested = False
@@ -89,7 +91,7 @@ if __name__ == "__main__":
                 print("Changed maxSimTime to", maxSimulationTime)
 
             print('Changes made. The generation is', generations, "and the maxSimTime is", maxSimulationTime)
-            simRunner = Driver(sumoCmd, setUpTuple, maxGreenPhaseTime, maxYellowPhaseTime, maxSimulationTime)
+            simRunner = Driver(sumoCmd, setUpTuple, maxGreenPhaseTime, maxYellowPhaseTime, maxSimulationTime, maxGreenAndYellowPhaseTime_UDRule, maxRedPhaseTime_UDRule, assignGreenPhaseToSingleWaitingPhase_UDRule)
 
             print('----- Episode {}'.format(episode+1), "of GENERATION {} of {}".format(generations, totalGenerations))
             print("Generation start time:", genStart)

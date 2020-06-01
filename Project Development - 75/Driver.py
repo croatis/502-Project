@@ -20,13 +20,15 @@ class Driver:
     global nextRule
     global maxSimulationTime
 
-    def __init__(self, sumoCmd, setUpTuple, maxGreenPhaseTime, maxYellowPhaseTime, maxSimulationTime):
+    def __init__(self, sumoCmd, setUpTuple, maxGreenPhaseTime, maxYellowPhaseTime, maxSimulationTime, maxGreenAndYellow_UDRule, maxRedPhaseTime_UDRule, assignGreenPhaseToSingleWaitingPhase):
         self.sumoCmd = sumoCmd
         self.setUpTuple = setUpTuple
         self.maxGreenPhaseTime = maxGreenPhaseTime
         self.maxYellowPhaseTime = maxYellowPhaseTime
         self.maxSimulationTime = maxSimulationTime
-
+        self.maxGreenAndYellow_UDRule = maxGreenAndYellow_UDRule
+        self.maxRedPhaseTime_UDRule = maxRedPhaseTime_UDRule
+        self.assignGreenPhaseToSingleWaitingPhase_UDRule = assignGreenPhaseToSingleWaitingPhase
 
     # CONTAINS MAIN TRACI SIMULATION LOOP
     def run(self):
@@ -35,20 +37,22 @@ class Driver:
             # Run set-up script and acquire list of user defined rules and traffic light agents in simulation
         userDefinedRules = self.setUpTuple[0]
         trafficLights = self.setUpTuple[1]
-        rule = None 
-        nextRule = None
-
+        rule = -1 
+        nextRule = -1
+        
             # Assign each traffic light an individual from their agent pool for this simulation run, and a starting rule
         for tl in trafficLights:
             tl.assignIndividual()
+            tl.updateCurrentPhase(traci.trafficlight.getPhaseName(tl.getName()))
 
             rule = self.applicableUserDefinedRule(tl, userDefinedRules) # Check user-defined rules
                 
                 # If no user-defined rules can be applied, get a rule from Agent Pool
-            if rule == False:    
+            if rule == False or rule is None:    
                 validRules = self.getValidRules(tl, tl.getAssignedIndividual())
                 rule = tl.getNextRule(validRules[0], validRules[1], traci.simulation.getTime()) # Get a rule from assigned Individual
-                    
+                #print("The rule is", rule)
+
                     # if no valid rule applicable, apply the Do Nothing rule.
                 if rule == -1:
                     # print("No valid rule. Do Nothing action applied.") 
@@ -59,10 +63,13 @@ class Driver:
                         # If rule conditions are satisfied, apply its action. Otherwise, do nothing.
                     if not rule.hasDoNothingAction():
                         traci.trafficlight.setPhase(tl.getName(), rule.getAction())                
+                        tl.resetTimeInCurrentPhase()             
             else:
                 self.applyUserDefinedRuleAction(tl, traci.trafficlight.getPhaseName(tl.getName()), rule)
+                tl.resetTimeInCurrentPhase()
 
             tl.setCurrentRule(rule) # Set current rule in traffic light
+            tl.updateTimePhaseSpentInRed(traci.trafficlight.getPhase(tl.getName()), 5)
 
             # Simulation loop 
         step = 0
@@ -70,12 +77,15 @@ class Driver:
         carsWaitingBefore = {}
         carsWaitingAfter = {}
         while traci.simulation.getMinExpectedNumber() > 0 and traci.simulation.getTime() < self.maxSimulationTime:
+            tl.removeOldIntentions(traci.simulation.getTime())
             traci.simulationStep() # Advance SUMO simulation one step (1 second)
 
                 # Traffic Light agents reevaluate their state every 5 seconds
             if step % 5 == 0:  
                     # For every traffic light in simulation, select and evaluate new rule from its agent pool
                 for tl in trafficLights:
+                    tl.updateTimeInCurrentPhase(5)   
+                    
                     carsWaitingBefore = tl.getCarsWaiting()
                     carsWaitingAfter = self.carsWaiting(tl) 
                     
@@ -84,8 +94,14 @@ class Driver:
                         # If no user-defined rules can be applied, get a rule from Agent Pool
                     if nextRule == False:    
                         validRules = self.getValidRules(tl, tl.getAssignedIndividual())
-                        nextRule = tl.getNextRule(validRules[0], validRules[1], traci.simulation.getTime()) # Get a rule from assigned Individual
-
+                        
+                        if len(validRules[0]) == 0 and len(validRules[1]) == 0:
+                            nextRule = -1
+                        else:
+                            nextRule = tl.getNextRule(validRules[0], validRules[1], traci.simulation.getTime()) # Get a rule from assigned Individual
+                       
+                        # print("Valid rules for RS are", validRules[0], "and valid rules for RSint are", validRules[1])
+                        # print("The nextRule is", nextRule)
                             # if no valid rule applicable, apply the Do Nothing rule.
                         if nextRule == -1:
                             tl.doNothing()  # Update traffic light's Do Nothing counter
@@ -99,17 +115,23 @@ class Driver:
                             if oldRule not in userDefinedRules:
                                 if oldRule != -1:
                                     ruleWeightBefore = oldRule.getWeight()   # Used to calculate fitness penalty to individual
-                                    if len(carsWaitingBefore) != 0 and len(carsWaitingBefore) == len(carsWaitingAfter):
-                                        oldRule.updateWeight(ReinforcementLearner.updatedWeight(oldRule, nextRule, self.getThroughputRatio(self.getThroughput(tl, carsWaitingBefore, carsWaitingAfter), len(carsWaitingBefore)), self.getWaitTimeReducedRatio(self.getThroughputWaitingTime(tl, carsWaitingBefore, carsWaitingAfter), self.getTotalWaitingTime(carsWaitingBefore)), len(carsWaitingAfter)))
-                                    else:    
-                                        oldRule.updateWeight(ReinforcementLearner.updatedWeight(oldRule, nextRule, self.getThroughputRatio(self.getThroughput(tl, carsWaitingBefore, carsWaitingAfter), len(carsWaitingBefore)), self.getWaitTimeReducedRatio(self.getThroughputWaitingTime(tl, carsWaitingBefore, carsWaitingAfter), self.getTotalWaitingTime(carsWaitingBefore)), len(carsWaitingAfter) - len(carsWaitingBefore)))
+                                    oldRule.updateWeight(ReinforcementLearner.updatedWeight(oldRule, nextRule, self.getThroughputRatio(self.getThroughput(tl, carsWaitingBefore, carsWaitingAfter), len(carsWaitingBefore)), self.getWaitTimeReducedRatio(self.getThroughputWaitingTime(tl, carsWaitingBefore, carsWaitingAfter), self.getTotalWaitingTime(carsWaitingBefore)), len(carsWaitingAfter) - len(carsWaitingBefore)))
                                     tl.getAssignedIndividual().updateFitnessPenalty(True, oldRule.getWeight() > ruleWeightBefore)
-                                    print("Old weight was", ruleWeightBefore, "and new weight is", oldRule.getWeight())
+                                    #print("Old weight was", ruleWeightBefore, "and new weight is", oldRule.getWeight())
+                                    
                                     # Apply the next rule; if action is -1 then action is do nothing
                                 if not nextRule.hasDoNothingAction():
                                     # print('Next rule action is', nextRule.getAction())
                                     traci.trafficlight.setPhase(tl.getName(), nextRule.getAction())
-                                
+                                    
+                                    if nextRule is not tl.getCurrentRule():
+                                        traci.trafficlight.setPhase(tl.getName(), nextRule.getAction())
+                                        tl.resetTimeInCurrentPhase()
+
+                                    else:
+                                        if self.maxGreenAndYellowUserDefinedRule:
+                                            self.checkMaxGreenAndYellowPhaseRule(tl, nextRule)
+
                                 if nextRule.getType() == 0:
                                     print("Applying TL action from RS! Action is", nextRule.getAction(), "\n\n")                
                                 else:
@@ -117,8 +139,16 @@ class Driver:
 
                     else:
                         self.applyUserDefinedRuleAction(tl, traci.trafficlight.getPhaseName(tl.getName()), nextRule)
+                        tl.resetTimeInCurrentPhase()
                         # # print("Applying action of", nextRule.getConditions())  
 
+                        #USER DEFINED RULE CHECK
+                    if self.assignGreenPhaseToSingleWaitingPhase_UDRule:
+                        self.checkAssignGreenPhaseToSingleWaitingPhaseRule(tl)
+
+                    if self.maxRedPhaseTime_UDRule:
+                        self.checkMaxRedPhaseTimeRule(tl)
+                        
                     tl.setCurrentRule(nextRule)                 # Update the currently applied rule in the traffic light
                     tl.updateCarsWaiting(carsWaitingAfter)      # Set the number of cars waiting count within the TL itself
 
@@ -128,12 +158,12 @@ class Driver:
         simRunTime = traci.simulation.getTime()
         print("***SIMULATION TIME:", simRunTime, "\n\n")
         for tl in trafficLights:
-            # # print(tl.getName(), "has these communicated intentions:", tl.getCommunicatedIntentions())
+            tl.resetRecievedIntentions()
             i = tl.getAssignedIndividual()
             i.updateLastRunTime(simRunTime)
             print("Individual", i, "has a last runtime of", i.getLastRunTime())
             i.updateFitness(EvolutionaryLearner.rFit(i, simRunTime, i.getAggregateVehicleWaitTime()))
-
+            print(tl.getName(), "'s coop rules were invalid", tl.getCoopRuleValidRate(), "percent of the time.")
         traci.close()       # End simulation
         
         return self.setUpTuple[2] # Returns all the agent pools to the main module
@@ -286,17 +316,26 @@ class Driver:
             for i in intentions[x]:
                     # For each condition, its parameters are acquired and the condition predicate is evaluated
                 for cond in rule.getConditions():
+                    # print("\n\n\nChecking cond", cond, "out of", rule.getConditions())
                     predicateSplit = cond.split("_")
                     predicate = predicateSplit[0]
                     
-                    parameters = self.getCoopPredicateParameters(trafficLight, predicate, i)
+                    if any(x.getName() == predicate for x in self.setUpTuple[1]):
+                        parameters = [cond, i]
+                        # print("Predicate is a traffic light. Paramters is", parameters)
+                    else:    
+                        parameters = self.getCoopPredicateParameters(trafficLight, predicate, i)
                     # # print("Parameters are:", parameters)
                     if isinstance(parameters, int) or isinstance(parameters, float) or isinstance(parameters, str):
+                        # print("Checking regular co-op rule with conditions", rule.getConditions(), "and the paramters are", parameters)
                         predCall = getattr(CoopPredicateSet, cond)(parameters) # Construct predicate fuction call
                     else:
                         predCall = getattr(CoopPredicateSet, "customPredicate")(parameters[0], parameters[1]) # Construct predicate fuction call for custom predicates (they are of form TLname_action but are handled by the same predicate in CoopPredicateSet)
+                        # print("Checking customPredicate co-op rule with conditions", rule.getConditions(), "and the paramters are", parameters)
+
                         # Determine validity of predicate
                     if predCall == False:
+                        # print("Predicate is false.\n\n\n")
                         return False
 
         return True # if all predicates return true, evaluate rule as True
@@ -426,16 +465,181 @@ class Driver:
         
         # PROVIDE SIMULATION RELEVANT PARAMETERS
     def getCoopPredicateParameters(self, trafficLight, predicate, intention):        
+        # print("Getting coop predicate parameters. The predicate is", predicate, "the traffic light is", trafficLight.getName(), "and the intention is from", intention.getTrafficLight().getName)
         if "timeSinceCommunication" == predicate:
+            print("Predicate is timeSinceCommunication. Time now is", traci.simulation.getTime(), "and intention was sent at", intention.getTime())
             timeSent = intention.getTime()            
             return traci.simulation.getTime() - timeSent
         
         elif "intendedActionIs" == predicate:
+            # print("The predicate is intendedActionIs and the parameter is", intention.getAction())
             return intention.getAction()
         
         else:       # equivalent to: elif "customPredicate" == predicate:
-            # print("The current traffic light is", trafficLight.getName(), "with predicate", predicate, "and an intention from", intention.getTrafficLight(), "to do action", intention.getAction())
-            return (str(intention.getTrafficLight().getName()) + "_" + str(intention.getAction()), intention)
+            # print("The current traffic light is", trafficLight.getName(), "with predicate", predicate, "and an intention from", intention.getTrafficLight().getName(), "to do action", intention.getAction())
+            # print("Returning parameter:", (str(intention.getTrafficLight().getName()) + "_" + intention.getAction(), intention))
+            return (str(intention.getTrafficLight().getName()) + "_" + intention.getAction(), intention)
+
+#------------------USER DEFINED RULE FUNCTIONS -------------------
+        
+        # MAX GREEN OR YELLOW PHASE REACHED UD RULE
+    def checkMaxGreenAndYellowPhaseRule(self, tl, nextRule):
+        if "G" in traci.trafficlight.getPhaseName(tl.getName()):
+            if tl.getTimeInCurrentPhase() >= self.maxGreenPhaseTime:
+                if traci.trafficlight.getPhase(tl.getName()) >= (len(tl.getPhases()) - 2):
+                    traci.trafficlight.setPhase(tl.getName(), 0)
+                else:
+                    traci.trafficlight.setPhase(tl.getName(), traci.trafficlight.getPhase(tl.getName()) + 1)
+            else:
+                traci.trafficlight.setPhase(tl.getName(), nextRule.getAction())
+                tl.updateTimeInCurrentPhase(5)
+                
+        elif "Y" in traci.trafficlight.getPhaseName(tl.getName()):
+            if tl.getTimeInCurrentPhase() >= self.maxYellowPhaseTime:
+                if traci.trafficlight.getPhase(tl.getName()) >= (len(tl.getPhases()) - 2):
+                    traci.trafficlight.setPhase(tl.getName(), 0)
+                else:
+                    traci.trafficlight.setPhase(tl.getName(), traci.trafficlight.getPhase(tl.getName()) + 1)
+            else:
+                traci.trafficlight.setPhase(tl.getName(), nextRule.getAction())
+        
+        # ONE LANE WAITING USER-DEFINED RULE
+    def checkAssignGreenPhaseToSingleWaitingPhaseRule(self, tl):
+        lanesWithWaitingVehicles = []
+        if tl.getName() == "four-arm":
+            state = self.getState(tl)
+            print(state)
+            for x in state:
+                if state[x] != [] and "2four-arm" in x:
+                    lanesWithWaitingVehicles.append(x)
+
+            possibleLanes0 = ["WB2four-arm_LTL_0", "incoming2four-arm_LTL_0"]
+            possibleLanes2 = ["WB2four-arm_LTL_1", "incoming2four-arm_LTL_1"]
+            possibleLanes4 = ["NWB2four-arm_LTL_0", "bend2four-arm_LTL_0"]
+            possibleLanes6 = ["NWB2four-arm_LTL_1", "bend2four-arm_LTL_1"]
+            posLanesWaiting = []
+            if set(lanesWithWaitingVehicles).issubset(set(possibleLanes0)):
+                for i in range(len(lanesWithWaitingVehicles)+1):
+                    if i == len(lanesWithWaitingVehicles):
+                        for i in range(len(lanesWithWaitingVehicles)):
+                            if lanesWithWaitingVehicles[i] in possibleLanes0:
+                                posLanesWaiting.append(lanesWithWaitingVehicles[i])
+                print("posLanesWaiting is", posLanesWaiting)
+                if posLanesWaiting == lanesWithWaitingVehicles:
+                    traci.trafficlight.setPhase(tl.getName(), 0)
+                    print("Enoforcing rule at", tl.getName())
+                    
+            elif set(lanesWithWaitingVehicles).issubset(set(possibleLanes2)):
+                for i in range(len(lanesWithWaitingVehicles)+1):
+                    if i == len(lanesWithWaitingVehicles):
+                        for i in range(len(lanesWithWaitingVehicles)):
+                            if lanesWithWaitingVehicles[i] in possibleLanes2:
+                                posLanesWaiting.append(lanesWithWaitingVehicles[i])
+                if posLanesWaiting == lanesWithWaitingVehicles:
+                    traci.trafficlight.setPhase(tl.getName(), 2)
+                    print("Enoforcing rule at", tl.getName())
+                    
+            elif set(lanesWithWaitingVehicles).issubset(set(possibleLanes4)):
+                for i in range(len(lanesWithWaitingVehicles)+1):
+                    if i == len(lanesWithWaitingVehicles):
+                        for i in range(len(lanesWithWaitingVehicles)):
+                            if lanesWithWaitingVehicles[i] in possibleLanes4:
+                                posLanesWaiting.append(lanesWithWaitingVehicles[i])
+                if posLanesWaiting == lanesWithWaitingVehicles:
+                    traci.trafficlight.setPhase(tl.getName(), 4)
+                    print("Enoforcing rule at", tl.getName())
+                    
+            elif set(lanesWithWaitingVehicles).issubset(set(possibleLanes6)):
+                for i in range(len(lanesWithWaitingVehicles)+1):
+                    if i == len(lanesWithWaitingVehicles):
+                        for i in range(len(lanesWithWaitingVehicles)):
+                            if lanesWithWaitingVehicles[i] in possibleLanes6:
+                                posLanesWaiting.append(lanesWithWaitingVehicles[i])
+                if posLanesWaiting == lanesWithWaitingVehicles:
+                    traci.trafficlight.setPhase(tl.getName(), 6)
+                    print("Enoforcing rule at", tl.getName())
+                    
+        elif tl.getName() == "incoming":
+            state = self.getState(tl)
+            for x in state:
+                if state[x] != [] and "2incoming" in x:
+                    lanesWithWaitingVehicles.append(x)
+            
+            possibleLanes0 = ["four-arm2incoming_0", "four-arm2incoming_1", "EB2incoming_0", "EB2incoming_1"]
+            possibleLanes2 = ["T2incoming_LTL_0", "T2incoming_LTL_1"]
+            possibleLanes4 = ["NEB2incoming_LTL_0", "NEB2incoming_LTL_1"]
+            posLanesWaiting = []
+            
+            if set(lanesWithWaitingVehicles).issubset(set(possibleLanes0)):
+                for i in range(len(lanesWithWaitingVehicles)+1):
+                    if i == len(lanesWithWaitingVehicles):
+                        for i in range(len(lanesWithWaitingVehicles)):
+                            if lanesWithWaitingVehicles[i] in possibleLanes0:
+                                posLanesWaiting.append(lanesWithWaitingVehicles[i])
+                if posLanesWaiting == lanesWithWaitingVehicles:
+                    traci.trafficlight.setPhase(tl.getName(), 0)
+                    print("Enoforcing rule at", tl.getName())
+                    
+            elif set(lanesWithWaitingVehicles).issubset(set(possibleLanes2)):
+                for i in range(len(lanesWithWaitingVehicles)+1):
+                    if i == len(lanesWithWaitingVehicles):
+                        for i in range(len(lanesWithWaitingVehicles)):
+                            if lanesWithWaitingVehicles[i] in possibleLanes2:
+                                posLanesWaiting.append(lanesWithWaitingVehicles[i])
+                if posLanesWaiting == lanesWithWaitingVehicles:
+                    traci.trafficlight.setPhase(tl.getName(), 2)
+                    print("Enoforcing rule at", tl.getName())
+                    
+            elif set(lanesWithWaitingVehicles).issubset(set(possibleLanes4)):
+                for i in range(len(lanesWithWaitingVehicles)+1):
+                    if i == len(lanesWithWaitingVehicles):
+                        for i in range(len(lanesWithWaitingVehicles)):
+                            if lanesWithWaitingVehicles[i] in possibleLanes4:
+                                posLanesWaiting.append(lanesWithWaitingVehicles[i])
+                if posLanesWaiting == lanesWithWaitingVehicles:
+                    traci.trafficlight.setPhase(tl.getName(), 4)
+                    print("Enoforcing rule at", tl.getName())
+                    
+        else:
+            state = self.getState(tl)
+            for x in state:
+                if state[x] != [] and "2T" in x:
+                    lanesWithWaitingVehicles.append(x)
+            
+            possibleLanes0 = ["SEB2T_0", "SEB2T_1", "bend2T_LTL_0"]
+            possibleLanes2 = ["bend2T_LTL_1"]
+            posLanesWaiting = []
+            
+            if set(lanesWithWaitingVehicles).issubset(set(possibleLanes0)):
+                for i in range(len(lanesWithWaitingVehicles)+1):
+                    if i == len(lanesWithWaitingVehicles):
+                        for i in range(len(lanesWithWaitingVehicles)):
+                            if lanesWithWaitingVehicles[i] in possibleLanes0:
+                                posLanesWaiting.append(lanesWithWaitingVehicles[i])
+                if posLanesWaiting == lanesWithWaitingVehicles:
+                    traci.trafficlight.setPhase(tl.getName(), 0)
+                    print("Enoforcing rule at", tl.getName())
+                    
+            elif set(lanesWithWaitingVehicles).issubset(set(possibleLanes2)):
+                for i in range(len(lanesWithWaitingVehicles)+1):
+                    if i == len(lanesWithWaitingVehicles):
+                        for i in range(len(lanesWithWaitingVehicles)):
+                            if lanesWithWaitingVehicles[i] in possibleLanes2:
+                                posLanesWaiting.append(lanesWithWaitingVehicles[i])
+                if posLanesWaiting == lanesWithWaitingVehicles:
+                    traci.trafficlight.setPhase(tl.getName(), 2)
+                    print("Enoforcing rule at", tl.getName())
+                    
+                    
+        print("Lanes with waiting vehicles:", lanesWithWaitingVehicles)
+        lanesWithWaitingVehicles = []
+
+    def checkMaxRedPhaseTimeRule(self, tl):
+        if tl.maxRedPhaseTimeReached() is not False:
+            traci.trafficlight.setPhase(tl.getName(), tl.maxRedPhaseTimeReached())
+        #     print("Overdue traffic phase set! Index was", tl.maxRedPhaseTimeReached(), "and new phase is", traci.trafficlight.getPhase(tl.getName()))
+        # else:
+        #     print("Skipped phase change.")
 
         
 # main entry point

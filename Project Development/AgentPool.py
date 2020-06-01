@@ -66,7 +66,8 @@ class AgentPool:
     def finishSetUp(self):
         self.coopPredicates = self.initCoopPredicates()                 # Store Observations of communicated intentions here since they are agent specific
         self.initIndividuals()                                          # Populate Agent Pool's own rule set with random rules
-
+        for tl in self.trafficLightsAssigned:
+            tl.initPhaseTimeSpentInRedArray()
 
         # SELECTS AN INDIVIDUAL TO PASS TO A TRAFFIC LIGHT WHEN REQUESTED
     def selectIndividual(self):
