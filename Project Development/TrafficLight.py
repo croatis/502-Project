@@ -26,6 +26,7 @@ class TrafficLight:
         self.recievedIntentions = {}
         self.numOfTimesNoCoopRuleWasValid = 0
         self.numOfRulesSelected = 0
+        self.numOfTimesNoRSRuleWasValid = 0
         self.timeInCurrentPhase = 0
         self.currentPhase = None
         self.maxRedPhaseTime = 0
@@ -114,7 +115,7 @@ class TrafficLight:
         # ASSIGNS A RULE SET INDIVIDUAL CURRENTLY BEING USED BY THE TRAFFIC LIGHT FOR A SIM RUN
     def assignIndividual(self):
         self.assignedIndividual = self.agentPool.selectIndividual()
-        print("Individual selected is", self.assignedIndividual)
+        #print("Individual selected is", self.assignedIndividual)
         self.assignedIndividual.selected() # Let Individual know it's been selected
 
         # RETURNS THE TOTAL NUMBER OF CARS WAITING AT THE TRAFFIC LIGHT'S INTERSECTION
@@ -169,7 +170,7 @@ class TrafficLight:
             self.recievedIntentions[intention.getTurn()] = []
         
         self.recievedIntentions[intention.getTurn()].append(intention)
-        print(self.getName(), "recieved an intention from", intention.getTrafficLight().getName(), "\n")
+        # print(self.getName(), "recieved an intention from", intention.getTrafficLight().getName(), "\n")
 
     def getCommunicatedIntentions(self):
         return self.recievedIntentions
@@ -183,7 +184,6 @@ class TrafficLight:
                 intentionsToRemove.append(intention)
         for intention in intentionsToRemove:
             self.recievedIntentions.pop(intention)
-        print("Removed all old intentions")
 
     def resetRecievedIntentions(self):
         self.recievedIntentions = {}
@@ -222,16 +222,15 @@ class TrafficLight:
         # DECIDE WHICH RULE TO APPLY AT CURRENT ACTION STEP
     def getNextRule(self, validRulesRS, validRulesRSint, time): 
         #for x in self.communicatedIntentions:
-            #print("TL is", self.getName(),". The intention is", self.communicatedIntentions[x].getAction())
-        
+            #print("TL is", self.getName(),". The intention is", self.communicatedIntentions[x].getAction())      
         self.numOfRulesSelected += 1
             # First, select a rule from RS and communicate it
         intendedRule = self.getAssignedIndividual().selectRule(validRulesRS)    # Get intended rule to apply
         #print("Intended rule is", intendedRule, "!\n\n\n")    
         if intendedRule == -1:
+            self.numOfTimesNoRSRuleWasValid += 1
             if self.currentRule is None or self.currentRule == -1:
                 self.setIntention(Intention(self, len(self.getAgentPool().getActionSet())-1, time)) # Return the Do Nothing action
-                return -1
             else:
                 #print("Using current rule instead. It is", self.currentRule)
                 self.setIntention(Intention(self, self.currentRule.getAction(), time))
@@ -239,8 +238,8 @@ class TrafficLight:
             if self.currentRule is None or self.currentRule == -1:
                 #print('In else. Intended rule is', intendedRule)
                 self.setIntention(Intention(self, len(self.getAgentPool().getActionSet())-1, time))
-                return -1
-            self.setIntention(Intention(self, intendedRule.getAction(), time))
+            else:
+                self.setIntention(Intention(self, intendedRule.getAction(), time))
             
             # If intended rule isn't user-defined, select a rule from RSint and then decide between the two
         coopRule = self.getAssignedIndividual().selectCoopRule(validRulesRSint)
@@ -281,3 +280,6 @@ class TrafficLight:
 
     def getCoopRuleValidRate(self):
         return (self.numOfTimesNoCoopRuleWasValid/self.numOfRulesSelected)*100
+    
+    def getRSRuleValidRate(self):
+        return (self.numOfTimesNoRSRuleWasValid/self.numOfRulesSelected)*100

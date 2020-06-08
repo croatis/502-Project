@@ -1,5 +1,7 @@
 import os
 import sys
+tools = os.path.join(os.environ['SUMO_HOME'], 'share/sumo/tools')
+sys.path.append(tools)
 import optparse
 import traci
 

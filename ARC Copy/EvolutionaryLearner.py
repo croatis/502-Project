@@ -175,7 +175,7 @@ def createRandomRule(agentPool, ruleType):
     action = randrange(0, len(agentPool.getActionSet()))     # Set rule action to a random action from ActionSet pertaining to Agent Pool being serviced
     if action == -1:    
         import pdb
-        print("Rule with action", action, "set.")
+        #print("Rule with action", action, "set.")
         pdb.set_trace()    #print("The action set is:", agentPool.getActionSet())
     rule = Rule(ruleType, conditions, action, agentPool)
 
@@ -324,9 +324,9 @@ def mutateRule(rule):
     rule.setConditions(ruleCond) # set rule's new conditions
     rule.setAction(rule.getAgentPool().getActionSet()[randrange(0, len(rule.getAgentPool().getActionSet()))])
     rule.setWeight(0)
-    if rule.getAction() == -1:
-        print("Rule has action -1!")
-        print(x)
+    # if rule.getAction() == -1:
+    #     print("Rule has action -1!")
+    #     print(x)
     return rule
 
     # RETURNS A PARENT TO BE BREED BASED ON FITNESS PROPOTIONAL SELECTION

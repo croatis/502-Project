@@ -5,197 +5,197 @@ import inspect
 from random import randrange
 
 #------------------------ intendedAction predicates -------------------------#
-def intendedActionIs_H_S_G(action):
-    if action == "H_S_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_H_S_G(action):
+#     if action == "H_S_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_H_S_Y(action):
-    if action == "H_S_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_H_S_Y(action):
+#     if action == "H_S_Y":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_H_L_G(action):
-    if action == "H_L_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_H_L_G(action):
+#     if action == "H_L_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_H_L_Y(action):
-    if action == "H_L_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_H_L_Y(action):
+#     if action == "H_L_Y":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_V_S_G(action):
-    if action == "V_S_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_V_S_G(action):
+#     if action == "V_S_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_V_S_Y(action):
-    if action == "V_S_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_V_S_Y(action):
+#     if action == "V_S_Y":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_V_L_G(action):
-    if action == "V_L_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_V_L_G(action):
+#     if action == "V_L_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_V_L_Y(action):
-    if action == "V_L_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_V_L_Y(action):
+#     if action == "V_L_Y":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_NS_S_G(action):
-    if action == "NS_S_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_NS_S_G(action):
+#     if action == "NS_S_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_NS_S_Y(action):
-    if action == "NS_S_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_NS_S_Y(action):
+#     if action == "NS_S_Y":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_NS_SL_G(action):
-    if action == "NS_S_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_NS_SL_G(action):
+#     if action == "NS_S_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_NS_SL_Y(action):
-    if action == "NS_S_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_NS_SL_Y(action):
+#     if action == "NS_S_Y":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_NS_L_G(action):
-    if action == "NS_L_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_NS_L_G(action):
+#     if action == "NS_L_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_NS_L_Y(action):
-    if action == "NS_L_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_NS_L_Y(action):
+#     if action == "NS_L_Y":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_SN_S_G(action):
-    if action == "SN_S_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_SN_S_G(action):
+#     if action == "SN_S_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_SN_S_Y(action):
-    if action == "SN_S_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_SN_S_Y(action):
+#     if action == "SN_S_Y":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_SN_SL_G(action):
-    if action == "SN_SL_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_SN_SL_G(action):
+#     if action == "SN_SL_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_SN_S_Y(action):
-    if action == "SN_SL_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_SN_S_Y(action):
+#     if action == "SN_SL_Y":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_SN_L_G(action):
-    if action == "SN_L_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_SN_L_G(action):
+#     if action == "SN_L_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_SN_L_Y(action):
-    if action == "SN_L_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_SN_L_Y(action):
+#     if action == "SN_L_Y":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_EW_S_G(action):
-    if action == "EW_S_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_EW_S_G(action):
+#     if action == "EW_S_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_EW_S_Y(action):
-    if action == "EW_S_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_EW_S_Y(action):
+#     if action == "EW_S_Y":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_EW_SL_G(action):
-    if action == "EW_S_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_EW_SL_G(action):
+#     if action == "EW_S_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_EW_SL_Y(action):
-    if action == "EW_S_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_EW_SL_Y(action):
+#     if action == "EW_S_Y":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_EW_L_G(action):
-    if action == "EW_L_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_EW_L_G(action):
+#     if action == "EW_L_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_EW_L_Y(action):
-    if action == "EW_L_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_EW_L_Y(action):
+#     if action == "EW_L_Y":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_WE_S_G(action):
-    if action == "WE_S_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_WE_S_G(action):
+#     if action == "WE_S_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_WE_S_Y(action):
-    if action == "WE_S_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_WE_S_Y(action):
+#     if action == "WE_S_Y":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_WE_SL_G(action):
-    if action == "WE_SL_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_WE_SL_G(action):
+#     if action == "WE_SL_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_WE_SL_Y(action):
-    if action == "WE_SL_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_WE_SL_Y(action):
+#     if action == "WE_SL_Y":
+#         return True
+#     else:
+#         return False
         
-def intendedActionIs_WE_L_G(action):
-    if action == "WE_L_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_WE_L_G(action):
+#     if action == "WE_L_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_WE_L_Y(action):
-    if action == "WE_L_Y":
-        return True
-    else:
-        return False       
+# def intendedActionIs_WE_L_Y(action):
+#     if action == "WE_L_Y":
+#         return True
+#     else:
+#         return False       
 #---------------------------------- end ---------------------------------------#
 
 #------------------- timeSinceLastCommunication predicates --------------------#
@@ -213,21 +213,18 @@ def timeSinceCommunication_0_5(timeSinceCommunication):
 
 def timeSinceCommunication_5_10(timeSinceCommunication):
     if 5 < timeSinceCommunication < 10:
-        print("timeSinceCommunication was between 5 and 10 seconds\n\n")
         return True
     else:
         return False
 
 def timeSinceCommunication_10_15(timeSinceCommunication):
     if 10 < timeSinceCommunication < 15:
-        print("timeSinceCommunication was between 10 and 15 seconds\n\n")
         return True
     else:
         return False
 
 def timeSinceCommunication_15_20(timeSinceCommunication):
     if 15 < timeSinceCommunication < 20:
-        print("timeSinceCommunication was between 15 and 20 seconds\n\n")
         return True
     else:
         return False
@@ -268,7 +265,7 @@ def getPredicateSet(agentPool):
     
     predicateList = predicateList + getAgentSpecificPredicates(agentPool)
     
-    print("Getting predicate set for", agentPool.getID(), "\n\n\n")
+    #print("Getting predicate set for", agentPool.getID(), "\n\n\n")
     #print("Predicate set contains", predicateList)
     return predicateList
     
@@ -295,14 +292,14 @@ def getRandomPredicate(agentPool):
 
 def getAgentSpecificPredicates(agentPool):
     customPredicates = []
-    print(agentPool.getID(), "(", agentPool, ") has the following assigned traffic lights:", agentPool.getAssignedTrafficLights())
+    #print(agentPool.getID(), "(", agentPool, ") has the following assigned traffic lights:", agentPool.getAssignedTrafficLights())
     for tl in agentPool.getAssignedTrafficLights():
         #print(tl.getName(), "has the following communication partners:", tl.getCommunicationPartners())
         for partner in tl.getCommunicationPartners():
             for action in partner.getAgentPool().getActionSet():
                 pred = partner.getName() + "_" + action
                 customPredicates.append(pred)
-    print("Custom predicates are", customPredicates)
+    #print("Custom predicates are", customPredicates)
     return customPredicates
 
 # def run():

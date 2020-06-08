@@ -31,7 +31,7 @@ if __name__ == "__main__":
     # ----------------------
     
     # --- USER-DEFINED RULES TOGGLE ---
-    maxGreenAndYellowPhaseTime_UDRule = False
+    maxGreenAndYellowPhaseTime_UDRule = True
     maxRedPhaseTime_UDRule = False
     assignGreenPhaseToSingleWaitingPhase_UDRule = True
     # ----------------------

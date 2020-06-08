@@ -31,7 +31,7 @@ if __name__ == "__main__":
     # ----------------------
     
     # --- USER-DEFINED RULES TOGGLE ---
-    maxGreenAndYellowPhaseTime_UDRule = False
+    maxGreenAndYellowPhaseTime_UDRule = True
     maxRedPhaseTime_UDRule = False
     assignGreenPhaseToSingleWaitingPhase_UDRule = True
     # ----------------------
@@ -149,5 +149,4 @@ if __name__ == "__main__":
 
     print("Start time:", simulationStartTime, "----- End time:", datetime.datetime.now())
     print("This simulation began at:", simulationStartTime)
-    print("PATH:", path)
     # Do something to save session stats here

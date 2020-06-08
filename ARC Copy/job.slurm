@@ -16,7 +16,7 @@
 echo "Working directory: `pwd`."
 
 module load sumo
-module load python/anaconada3-2018.12
+module load python/anaconda3-2018.12
 
 python main.py
 

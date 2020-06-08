@@ -265,7 +265,7 @@ def getPredicateSet(agentPool):
     
     predicateList = predicateList + getAgentSpecificPredicates(agentPool)
     
-    print("Getting predicate set for", agentPool.getID(), "\n\n\n")
+    #print("Getting predicate set for", agentPool.getID(), "\n\n\n")
     #print("Predicate set contains", predicateList)
     return predicateList
     
@@ -292,14 +292,14 @@ def getRandomPredicate(agentPool):
 
 def getAgentSpecificPredicates(agentPool):
     customPredicates = []
-    print(agentPool.getID(), "(", agentPool, ") has the following assigned traffic lights:", agentPool.getAssignedTrafficLights())
+    #print(agentPool.getID(), "(", agentPool, ") has the following assigned traffic lights:", agentPool.getAssignedTrafficLights())
     for tl in agentPool.getAssignedTrafficLights():
         #print(tl.getName(), "has the following communication partners:", tl.getCommunicationPartners())
         for partner in tl.getCommunicationPartners():
             for action in partner.getAgentPool().getActionSet():
                 pred = partner.getName() + "_" + action
                 customPredicates.append(pred)
-    print("Custom predicates are", customPredicates)
+    #print("Custom predicates are", customPredicates)
     return customPredicates
 
 # def run():

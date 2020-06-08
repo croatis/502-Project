@@ -113,7 +113,9 @@ class Individual:
     def selectRule(self, validRules):
         if len(validRules) == 0:
             return -1
-        
+        elif len(validRules) == 1:
+            return validRules[0]
+
         ruleSets = self.subDivideValidRules(validRules)
         rules = []
         probabilities = []  
@@ -164,6 +166,9 @@ class Individual:
     def selectCoopRule(self, validRules):
         if len(validRules) == 0:
             return -1
+        
+        elif len(validRules) == 1:
+            return validRules[0]
         
         ruleSets = self.subDivideValidRules(validRules)
 
