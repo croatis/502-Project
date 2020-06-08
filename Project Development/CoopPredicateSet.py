@@ -213,21 +213,18 @@ def timeSinceCommunication_0_5(timeSinceCommunication):
 
 def timeSinceCommunication_5_10(timeSinceCommunication):
     if 5 < timeSinceCommunication < 10:
-        print("timeSinceCommunication was between 5 and 10 seconds\n\n")
         return True
     else:
         return False
 
 def timeSinceCommunication_10_15(timeSinceCommunication):
     if 10 < timeSinceCommunication < 15:
-        print("timeSinceCommunication was between 10 and 15 seconds\n\n")
         return True
     else:
         return False
 
 def timeSinceCommunication_15_20(timeSinceCommunication):
     if 15 < timeSinceCommunication < 20:
-        print("timeSinceCommunication was between 15 and 20 seconds\n\n")
         return True
     else:
         return False

@@ -5,197 +5,197 @@ import inspect
 from random import randrange
 
 #------------------------ intendedAction predicates -------------------------#
-def intendedActionIs_H_S_G(action):
-    if action == "H_S_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_H_S_G(action):
+#     if action == "H_S_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_H_S_Y(action):
-    if action == "H_S_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_H_S_Y(action):
+#     if action == "H_S_Y":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_H_L_G(action):
-    if action == "H_L_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_H_L_G(action):
+#     if action == "H_L_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_H_L_Y(action):
-    if action == "H_L_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_H_L_Y(action):
+#     if action == "H_L_Y":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_V_S_G(action):
-    if action == "V_S_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_V_S_G(action):
+#     if action == "V_S_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_V_S_Y(action):
-    if action == "V_S_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_V_S_Y(action):
+#     if action == "V_S_Y":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_V_L_G(action):
-    if action == "V_L_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_V_L_G(action):
+#     if action == "V_L_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_V_L_Y(action):
-    if action == "V_L_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_V_L_Y(action):
+#     if action == "V_L_Y":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_NS_S_G(action):
-    if action == "NS_S_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_NS_S_G(action):
+#     if action == "NS_S_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_NS_S_Y(action):
-    if action == "NS_S_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_NS_S_Y(action):
+#     if action == "NS_S_Y":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_NS_SL_G(action):
-    if action == "NS_S_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_NS_SL_G(action):
+#     if action == "NS_S_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_NS_SL_Y(action):
-    if action == "NS_S_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_NS_SL_Y(action):
+#     if action == "NS_S_Y":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_NS_L_G(action):
-    if action == "NS_L_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_NS_L_G(action):
+#     if action == "NS_L_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_NS_L_Y(action):
-    if action == "NS_L_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_NS_L_Y(action):
+#     if action == "NS_L_Y":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_SN_S_G(action):
-    if action == "SN_S_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_SN_S_G(action):
+#     if action == "SN_S_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_SN_S_Y(action):
-    if action == "SN_S_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_SN_S_Y(action):
+#     if action == "SN_S_Y":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_SN_SL_G(action):
-    if action == "SN_SL_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_SN_SL_G(action):
+#     if action == "SN_SL_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_SN_S_Y(action):
-    if action == "SN_SL_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_SN_S_Y(action):
+#     if action == "SN_SL_Y":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_SN_L_G(action):
-    if action == "SN_L_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_SN_L_G(action):
+#     if action == "SN_L_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_SN_L_Y(action):
-    if action == "SN_L_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_SN_L_Y(action):
+#     if action == "SN_L_Y":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_EW_S_G(action):
-    if action == "EW_S_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_EW_S_G(action):
+#     if action == "EW_S_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_EW_S_Y(action):
-    if action == "EW_S_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_EW_S_Y(action):
+#     if action == "EW_S_Y":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_EW_SL_G(action):
-    if action == "EW_S_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_EW_SL_G(action):
+#     if action == "EW_S_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_EW_SL_Y(action):
-    if action == "EW_S_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_EW_SL_Y(action):
+#     if action == "EW_S_Y":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_EW_L_G(action):
-    if action == "EW_L_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_EW_L_G(action):
+#     if action == "EW_L_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_EW_L_Y(action):
-    if action == "EW_L_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_EW_L_Y(action):
+#     if action == "EW_L_Y":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_WE_S_G(action):
-    if action == "WE_S_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_WE_S_G(action):
+#     if action == "WE_S_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_WE_S_Y(action):
-    if action == "WE_S_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_WE_S_Y(action):
+#     if action == "WE_S_Y":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_WE_SL_G(action):
-    if action == "WE_SL_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_WE_SL_G(action):
+#     if action == "WE_SL_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_WE_SL_Y(action):
-    if action == "WE_SL_Y":
-        return True
-    else:
-        return False
+# def intendedActionIs_WE_SL_Y(action):
+#     if action == "WE_SL_Y":
+#         return True
+#     else:
+#         return False
         
-def intendedActionIs_WE_L_G(action):
-    if action == "WE_L_G":
-        return True
-    else:
-        return False
+# def intendedActionIs_WE_L_G(action):
+#     if action == "WE_L_G":
+#         return True
+#     else:
+#         return False
 
-def intendedActionIs_WE_L_Y(action):
-    if action == "WE_L_Y":
-        return True
-    else:
-        return False       
+# def intendedActionIs_WE_L_Y(action):
+#     if action == "WE_L_Y":
+#         return True
+#     else:
+#         return False       
 #---------------------------------- end ---------------------------------------#
 
 #------------------- timeSinceLastCommunication predicates --------------------#

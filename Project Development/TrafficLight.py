@@ -169,7 +169,7 @@ class TrafficLight:
             self.recievedIntentions[intention.getTurn()] = []
         
         self.recievedIntentions[intention.getTurn()].append(intention)
-        # print(self.getName(), "recieved an intention from", intention.getTrafficLight().getName(), "\n")
+        print(self.getName(), "recieved an intention from", intention.getTrafficLight().getName(), "\n")
 
     def getCommunicatedIntentions(self):
         return self.recievedIntentions
@@ -183,6 +183,7 @@ class TrafficLight:
                 intentionsToRemove.append(intention)
         for intention in intentionsToRemove:
             self.recievedIntentions.pop(intention)
+        print("Removed all old intentions")
 
     def resetRecievedIntentions(self):
         self.recievedIntentions = {}
@@ -198,13 +199,13 @@ class TrafficLight:
     def initPhaseTimeSpentInRedArray(self):
         for i in range(len(self.agentPool.getActionSet())-1):
             self.phaseTimeSpentInRed.append(0)
-        print('Array initialized!', self.phaseTimeSpentInRed)
+        #print('Array initialized!', self.phaseTimeSpentInRed)
     
     def updateTimePhaseSpentInRed(self, currentPhase, time):
-        print("The phaseTimeSpentInRed array is", self.phaseTimeSpentInRed, "and the max red phase time is", self.maxRedPhaseTime)
-        print("The current phase is", currentPhase)
+        #print("The phaseTimeSpentInRed array is", self.phaseTimeSpentInRed, "and the max red phase time is", self.maxRedPhaseTime)
+        #print("The current phase is", currentPhase)
         for x in range(len(self.phaseTimeSpentInRed)):
-            print('x is', x)
+            #print('x is', x)
             if x != currentPhase:
                 self.phaseTimeSpentInRed[x] += time
         self.phaseTimeSpentInRed[currentPhase] = 0
@@ -213,7 +214,7 @@ class TrafficLight:
         index = 0
         for x in self.phaseTimeSpentInRed:
             if x >= self.maxRedPhaseTime:
-                print("Max time reached. Returning index:", index)
+                #print("Max time reached. Returning index:", index)
                 return index
             index += 1
         return False
@@ -226,17 +227,18 @@ class TrafficLight:
         self.numOfRulesSelected += 1
             # First, select a rule from RS and communicate it
         intendedRule = self.getAssignedIndividual().selectRule(validRulesRS)    # Get intended rule to apply
-        print("Intended rule is", intendedRule, "!\n\n\n")    
+        #print("Intended rule is", intendedRule, "!\n\n\n")    
         if intendedRule == -1:
             if self.currentRule is None or self.currentRule == -1:
-                print('In if statement. Current rule is', self.currentRule)
+                self.setIntention(Intention(self, len(self.getAgentPool().getActionSet())-1, time)) # Return the Do Nothing action
                 return -1
             else:
                 #print("Using current rule instead. It is", self.currentRule)
                 self.setIntention(Intention(self, self.currentRule.getAction(), time))
         else:
             if self.currentRule is None or self.currentRule == -1:
-                print('In else. Intended rule is', intendedRule)
+                #print('In else. Intended rule is', intendedRule)
+                self.setIntention(Intention(self, len(self.getAgentPool().getActionSet())-1, time))
                 return -1
             self.setIntention(Intention(self, intendedRule.getAction(), time))
             
@@ -244,31 +246,37 @@ class TrafficLight:
         coopRule = self.getAssignedIndividual().selectCoopRule(validRulesRSint)
         if coopRule == -1:
             self.numOfTimesNoCoopRuleWasValid += 1
-            print("No valid rule from RSint.")
+            #print("No valid rule from RSint.")
        
         if intendedRule == -1 and coopRule == -1:
             #print("Neither intended nor coopRule valid.")
             if self.currentRule is None or self.currentRule == -1:
-                print('In if statement. Current rule is', self.currentRule)
+                #print('In if statement. Current rule is', self.currentRule)
+                self.setIntention(Intention(self, len(self.getAgentPool().getActionSet())-1, time))
                 return -1            
             else:
-                print("Returning currentRule with action", self.currentRule.getAction())
+                #print("Returning currentRule with action", self.currentRule.getAction())
+                self.setIntention(Intention(self, self.currentRule.getAction(), time))
                 return self.currentRule
             # If no valid rules apply from RSint, return the intented rule from RS
         elif coopRule == -1 and intendedRule != -1:
-            print("CoopRule invalid. Applying intended rule:", intendedRule)
+            #print("CoopRule invalid. Applying intended rule:", intendedRule)
+            self.setIntention(Intention(self, intendedRule.getAction(), time))
             return intendedRule
         
         elif coopRule != -1 and intendedRule == -1:
-            print("Intended rule invalid. Applying coop rule:", coopRule)
+            #print("Intended rule invalid. Applying coop rule:", coopRule)
+            self.setIntention(Intention(self, coopRule.getAction(), time))
             return coopRule
 
         elif coopRule.getWeight() >= intendedRule.getWeight():
-            print("CoopRule has higher weight than intended rule. Applying it:", coopRule)
+            #print("CoopRule has higher weight than intended rule. Applying it:", coopRule)
+            self.setIntention(Intention(self, coopRule.getAction(), time))
             return coopRule
         else:
             rule = choice([coopRule, intendedRule], 1, p = [pCoop, (1-pCoop)])  # Select one of the two rules based on pCoop value
-            print("The rule options are", rule, "and we chose", rule[0])
+            #print("The rule options are", rule, "and we chose", rule[0])
+            self.setIntention(Intention(self, rule[0].getAction(), time))
             return rule[0]                                                      # Choice returns an array, so we take the only element of it
 
     def getCoopRuleValidRate(self):

@@ -101,6 +101,9 @@ class Driver:
                             nextRule = tl.getNextRule(validRules[0], validRules[1], traci.simulation.getTime()) # Get a rule from assigned Individual
                        
                         print("Valid rules for RS are", validRules[0], "and valid rules for RSint are", validRules[1])
+                        for rule in validRules[1]:
+                            print("Valid rule", rule, "has conditions:", rule.getConditions(), "\n\n")
+                        
                         print("The nextRule is", nextRule)
                             # if no valid rule applicable, apply the Do Nothing rule.
                         if nextRule == -1:
@@ -284,6 +287,7 @@ class Driver:
             # Find valid RSint rules
         for rule in individual.getRSint():
             if self.evaluateCoopRule(trafficLight, rule):
+                print("Evaluating coop rule...")
                 validRSint.append(rule)
 
         return (validRS, validRSint)
@@ -312,11 +316,14 @@ class Driver:
             
         intentions = trafficLight.getCommunicatedIntentions()   
 
+        print("Outside main for loop to check coop rules. Intentions array contains", intentions)
         for x in intentions:
+            print("The intentions[x] array contains", intentions[x])
             for i in intentions[x]:
+                print("Inside intentions loop")
                     # For each condition, its parameters are acquired and the condition predicate is evaluated
                 for cond in rule.getConditions():
-                    # print("\n\n\nChecking cond", cond, "out of", rule.getConditions())
+                    print("\n\n\nChecking cond", cond, "out of", rule.getConditions())
                     predicateSplit = cond.split("_")
                     predicate = predicateSplit[0]
                     
