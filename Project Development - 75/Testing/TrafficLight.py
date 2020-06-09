@@ -7,7 +7,8 @@ class TrafficLight:
 
     global pCoop                    # Probability of choosing rule from RS vs RSint as defined in "Learning cooperative behaviour for the shout-ahead architecture" (2014) 
     global assignedIndividual
-
+    global maxIntentionRecievedTime
+    maxIntentionRecievedTime = 40
     pCoop = 0.5
 
     def __init__ (self, name, lanes):
@@ -16,19 +17,20 @@ class TrafficLight:
         self.edges = []
         self._setEdges(self.lanes)
         self.phases = []
-        self.currentRule = None 
+        self.currentRule = -1 
         self.carsWaiting = {}
         self.waitTime = 0
         self.doNothingCount = 0
         self.communicationPartners = []
         self.communicatedIntentions = {}
         self.recievedIntentions = {}
+        self.numOfTimesNoCoopRuleWasValid = 0
+        self.numOfRulesSelected = 0
         self.timeInCurrentPhase = 0
         self.currentPhase = None
         self.maxRedPhaseTime = 0
         self.phaseTimeSpentInRed = []
-
-
+        
         # RETURNS THE TRAFFIC LIGHT'S NAME
     def getName(self):
         return self.name
@@ -147,6 +149,10 @@ class TrafficLight:
     def setCommunicationPartners(self, commPartners):
         self.communicationPartners = commPartners
 
+        # ADD A COMMUNICATION PARTNER
+    def addCommunicationPartner(self, commPartner):
+        self.communicationPartners.append(commPartner)
+
         # SET TL'S NEXT INTENDED ACTION
     def setIntention(self, intention):
         self.communicateIntention(intention)
@@ -167,11 +173,24 @@ class TrafficLight:
 
     def getCommunicatedIntentions(self):
         return self.recievedIntentions
-    
+
+
+        # REMOVES ALL INTENTIONS SENT TOO LONG AGO
+    def removeOldIntentions(self, currentTime):
+        intentionsToRemove = []
+        for intention in self.recievedIntentions:
+            if (currentTime - intention) > maxIntentionRecievedTime:
+                intentionsToRemove.append(intention)
+        for intention in intentionsToRemove:
+            self.recievedIntentions.pop(intention)
+
+    def resetRecievedIntentions(self):
+        self.recievedIntentions = {}
+
         # SETS MAXIMUM TIME A TL EDGE CAN SPEND IN A RED PHASE (MaxGreenPhaseTime*NumOfGreenPhases + MaxYellowPhaseTime*NumOfGreenPhases)
     def setMaxRedPhaseTime(self, maxGreenPhaseTime, maxYellowPhaseTime):
         numberOfPhases = len(self.phases)/2
-        self.maxRedPhaseTime = ((numberOfPhases-2)/2)*maxGreenPhaseTime + ((numberOfPhases-2)/2)*maxYellowPhaseTime
+        self.maxRedPhaseTime = (numberOfPhases/2)*maxGreenPhaseTime + (numberOfPhases/2)*maxYellowPhaseTime
 
     def getMaxRedPhaseTime(self):
         return self.maxRedPhaseTime
@@ -201,24 +220,56 @@ class TrafficLight:
 
         # DECIDE WHICH RULE TO APPLY AT CURRENT ACTION STEP
     def getNextRule(self, validRulesRS, validRulesRSint, time): 
+        #for x in self.communicatedIntentions:
+            #print("TL is", self.getName(),". The intention is", self.communicatedIntentions[x].getAction())
+        
+        self.numOfRulesSelected += 1
             # First, select a rule from RS and communicate it
         intendedRule = self.getAssignedIndividual().selectRule(validRulesRS)    # Get intended rule to apply
-
+        print("Intended rule is", intendedRule, "!\n\n\n")    
         if intendedRule == -1:
-            return -1
-
-        self.setIntention(Intention(self, intendedRule.getAction(), time))
+            if self.currentRule is None or self.currentRule == -1:
+                print('In if statement. Current rule is', self.currentRule)
+                return -1
+            else:
+                #print("Using current rule instead. It is", self.currentRule)
+                self.setIntention(Intention(self, self.currentRule.getAction(), time))
+        else:
+            if self.currentRule is None or self.currentRule == -1:
+                print('In else. Intended rule is', intendedRule)
+                return -1
+            self.setIntention(Intention(self, intendedRule.getAction(), time))
             
             # If intended rule isn't user-defined, select a rule from RSint and then decide between the two
         coopRule = self.getAssignedIndividual().selectCoopRule(validRulesRSint)
-
-            # If no valid rules apply from RSint, return the intented rule from RS
         if coopRule == -1:
+            self.numOfTimesNoCoopRuleWasValid += 1
+            print("No valid rule from RSint.")
+       
+        if intendedRule == -1 and coopRule == -1:
+            #print("Neither intended nor coopRule valid.")
+            if self.currentRule is None or self.currentRule == -1:
+                print('In if statement. Current rule is', self.currentRule)
+                return -1            
+            else:
+                print("Returning currentRule with action", self.currentRule.getAction())
+                return self.currentRule
+            # If no valid rules apply from RSint, return the intented rule from RS
+        elif coopRule == -1 and intendedRule != -1:
+            print("CoopRule invalid. Applying intended rule:", intendedRule)
             return intendedRule
+        
+        elif coopRule != -1 and intendedRule == -1:
+            print("Intended rule invalid. Applying coop rule:", coopRule)
+            return coopRule
 
-        if coopRule.getWeight() >= intendedRule.getWeight():
+        elif coopRule.getWeight() >= intendedRule.getWeight():
+            print("CoopRule has higher weight than intended rule. Applying it:", coopRule)
             return coopRule
         else:
             rule = choice([coopRule, intendedRule], 1, p = [pCoop, (1-pCoop)])  # Select one of the two rules based on pCoop value
+            print("The rule options are", rule, "and we chose", rule[0])
             return rule[0]                                                      # Choice returns an array, so we take the only element of it
 
+    def getCoopRuleValidRate(self):
+        return (self.numOfTimesNoCoopRuleWasValid/self.numOfRulesSelected)*100

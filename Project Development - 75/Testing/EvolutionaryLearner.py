@@ -35,7 +35,7 @@ global newGenerationPoolSize
 maxRulePredicates = 3
 maxRules = 10
 maxRulesInNewGenerationSet = 20
-maxIndividuals = 50
+maxIndividuals = 30
 
     # How much runtime and rule weights matter when determining fitness of a simulation run
 global runtimeFactor
@@ -169,10 +169,14 @@ def createRandomRule(agentPool, ruleType):
             newCond = agentPool.getRandomRSintPredicate()
             if checkValidCond(newCond, conditions):
                 conditions.append(newCond)
+                #print("Conditions set now contains", conditions, "\n\n")
 
         # Get index of possible action. SUMO changes phases on indexes
     action = randrange(0, len(agentPool.getActionSet()))     # Set rule action to a random action from ActionSet pertaining to Agent Pool being serviced
-    #print("The action set is:", agentPool.getActionSet())
+    if action == -1:    
+        import pdb
+        print("Rule with action", action, "set.")
+        pdb.set_trace()    #print("The action set is:", agentPool.getActionSet())
     rule = Rule(ruleType, conditions, action, agentPool)
 
     return rule
@@ -320,7 +324,9 @@ def mutateRule(rule):
     rule.setConditions(ruleCond) # set rule's new conditions
     rule.setAction(rule.getAgentPool().getActionSet()[randrange(0, len(rule.getAgentPool().getActionSet()))])
     rule.setWeight(0)
-
+    if rule.getAction() == -1:
+        print("Rule has action -1!")
+        print(x)
     return rule
 
     # RETURNS A PARENT TO BE BREED BASED ON FITNESS PROPOTIONAL SELECTION
@@ -347,11 +353,19 @@ def chooseSecondParent(breedingPopulation, parent1):
     # ENSURE UNIQUE PREDICATE TYPES IN CONDITIONS
 def checkValidCond(cond, conditions):
     predicateType = cond.split("_")
+    condPredicateTypes = []
 
+    for x in conditions:
+        predSplit = x.split("_")
+        condPredicateTypes.append(predSplit[0])
+
+    #print('New conditions is', predicateType[0], "and the conditions set is", condPredicateTypes)
         #If predicate type already exists in conditions, return false
-    if predicateType[0] in conditions:
+    if predicateType[0] in condPredicateTypes:
+       # print("Predicate type already exists in conditions set.")
         return False
     else:
+        #print("Predicate type DOES NOT exist in conditions set.")
         return True
 
 def removeDuplicateRules(ruleSet):

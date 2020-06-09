@@ -25,9 +25,15 @@ import traci
 if __name__ == "__main__":
     print("Working...")
     # --- TRAINING OPTIONS ---
-    gui = False
-    totalGenerations = 20
+    gui = True
+    totalGenerations = 1
     individualRunsPerGen = 1  # Min number of training runs an individual gets per generation
+    # ----------------------
+    
+    # --- USER-DEFINED RULES TOGGLE ---
+    maxGreenAndYellowPhaseTime_UDRule = True
+    maxRedPhaseTime_UDRule = True
+    assignGreenPhaseToSingleWaitingPhase_UDRule = True
     # ----------------------
 
     # Attributes of the simulation
@@ -66,7 +72,7 @@ while generations <= totalGenerations:
     genStart = datetime.datetime.now()
     startTime = time.time()
 
-    simRunner = Driver(sumoCmd, setUpTuple, maxGreenPhaseTime, maxYellowPhaseTime)
+    simRunner = Driver(sumoCmd, setUpTuple, maxGreenPhaseTime, maxYellowPhaseTime, maxSimulationTime, maxGreenAndYellowPhaseTime_UDRule, maxRedPhaseTime_UDRule, assignGreenPhaseToSingleWaitingPhase_UDRule)
 
     print("Generation start time:", genStart)
     start = timeit.default_timer()
@@ -79,7 +85,9 @@ while generations <= totalGenerations:
     print("Start time:", simulationStartTime, "----- End time:", datetime.datetime.now())
     print("This simulation began at:", simulationStartTime)
     generationRuntimes.append(simRuntime)
-    generations += 1
+    if generations <= totalGenerations:    
+        generations += 1
+
 print(generationRuntimes)
-print("Average simulation time is", sum(generationRuntimes)/(generations-1))
+print("Average simulation time is", sum(generationRuntimes)/totalGenerations)
     # Do something to save session stats here

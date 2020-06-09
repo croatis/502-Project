@@ -26,7 +26,7 @@ def determineReward(throughputRatio, waitTimeReducedRatio):
     return (throughputFactor*throughputRatio) + (waitTimeReducedFactor*waitTimeReducedRatio)
 
 def determinePenalty(intersectionQueueDifference):
-    if intersectionQueueDifference >= 0:
+    if intersectionQueueDifference > 0:
         return intersectionQueueDifference*penaltyMultiplier
     else:
         return 0

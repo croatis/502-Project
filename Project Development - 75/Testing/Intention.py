@@ -16,7 +16,7 @@ class Intention:
 
         # RETURN INTENDED ACTION
     def getAction(self):
-        return self.action
+        return self.trafficLight.getAgentPool().getActionSet()[self.action]
 
         # RETURN TIME CREATED
     def getTime(self):

@@ -86,12 +86,14 @@ class Driver:
             if step % 5 == 0:  
                     # For every traffic light in simulation, select and evaluate new rule from its agent pool
                 for tl in trafficLights:
-                        
+                    applied = False  # Variable for user defined rules   
+
                         #USER DEFINED RULE CHECK
                     #-------------------------------------------------------
                     if self.assignGreenPhaseToSingleWaitingPhase_UDRule:
                         applied = self.checkAssignGreenPhaseToSingleWaitingPhaseRule(tl)   
                         if applied is True:
+                            print("Applied single lane waiting rule. Skipping the rest of these whores.")
                             # oldRule = tl.getCurrentRule()
                             # if oldRule != -1:
                             #     print("Next rule is", nextRule)
@@ -103,11 +105,13 @@ class Driver:
                     if self.maxGreenAndYellow_UDRule:
                         applied = self.checkMaxGreenAndYellowPhaseRule(tl, nextRule)                    
                         if applied is True:
+                            print("Applied green/yellow rule. Skipping the rest of these whores.")
                             continue
 
                     if self.maxRedPhaseTime_UDRule:
                         applied = self.checkMaxRedPhaseTimeRule(tl)
                         if applied is True:
+                            print("Applied the red rule. Skipping the rest of these whores.")
                             continue    
                         
                     # END USER DEFINED RULE CHECK
@@ -566,11 +570,11 @@ class Driver:
                         for i in range(len(lanesWithWaitingVehicles)):
                             if lanesWithWaitingVehicles[i] in possibleLanes0:
                                 posLanesWaiting.append(lanesWithWaitingVehicles[i])
-                #print("posLanesWaiting is", posLanesWaiting)
-                if posLanesWaiting == lanesWithWaitingVehicles:
+                print("posLanesWaiting is", posLanesWaiting, "and lanesWithWaitingVeh is", lanesWithWaitingVehicles)
+                if len(posLanesWaiting) > 0 and posLanesWaiting == lanesWithWaitingVehicles:
                     traci.trafficlight.setPhase(tl.getName(), 0)
+                    #print("Enforcing rule at posLane0;", tl.getName())
                     return True
-                    #print("Enoforcing rule at", tl.getName())
                     
             elif set(lanesWithWaitingVehicles).issubset(set(possibleLanes2)):
                 for i in range(len(lanesWithWaitingVehicles)+1):
@@ -578,10 +582,10 @@ class Driver:
                         for i in range(len(lanesWithWaitingVehicles)):
                             if lanesWithWaitingVehicles[i] in possibleLanes2:
                                 posLanesWaiting.append(lanesWithWaitingVehicles[i])
-                if posLanesWaiting == lanesWithWaitingVehicles:
+                if len(posLanesWaiting) > 0 and posLanesWaiting == lanesWithWaitingVehicles:
                     traci.trafficlight.setPhase(tl.getName(), 2)
+                    #print("Enforcing rule at posLane2;", tl.getName())
                     return True
-                    #print("Enoforcing rule at", tl.getName())
                     
             elif set(lanesWithWaitingVehicles).issubset(set(possibleLanes4)):
                 for i in range(len(lanesWithWaitingVehicles)+1):
@@ -589,10 +593,10 @@ class Driver:
                         for i in range(len(lanesWithWaitingVehicles)):
                             if lanesWithWaitingVehicles[i] in possibleLanes4:
                                 posLanesWaiting.append(lanesWithWaitingVehicles[i])
-                if posLanesWaiting == lanesWithWaitingVehicles:
+                if len(posLanesWaiting) > 0 and posLanesWaiting == lanesWithWaitingVehicles:
                     traci.trafficlight.setPhase(tl.getName(), 4)
+                    #print("Enforcing rule at posLane4;", tl.getName())
                     return True
-                    #print("Enoforcing rule at", tl.getName())
                     
             elif set(lanesWithWaitingVehicles).issubset(set(possibleLanes6)):
                 for i in range(len(lanesWithWaitingVehicles)+1):
@@ -600,10 +604,10 @@ class Driver:
                         for i in range(len(lanesWithWaitingVehicles)):
                             if lanesWithWaitingVehicles[i] in possibleLanes6:
                                 posLanesWaiting.append(lanesWithWaitingVehicles[i])
-                if posLanesWaiting == lanesWithWaitingVehicles:
+                if len(posLanesWaiting) > 0 and posLanesWaiting == lanesWithWaitingVehicles:
                     traci.trafficlight.setPhase(tl.getName(), 6)
+                    #print("Enforcing rule at posLane6;", tl.getName())
                     return True
-                    #print("Enoforcing rule at", tl.getName())
                     
         elif tl.getName() == "incoming":
             state = self.getState(tl)
@@ -612,7 +616,7 @@ class Driver:
                     lanesWithWaitingVehicles.append(x)
             
             possibleLanes0 = ["four-arm2incoming_0", "four-arm2incoming_1", "EB2incoming_0", "EB2incoming_1"]
-            possibleLanes2 = ["T2incoming_LTL_0", "T2incoming_LTL_1"]
+            possibleLanes2 = ["T-intersection2incoming_LTL_0", "T-intersection2incoming_LTL_1"]
             possibleLanes4 = ["NEB2incoming_LTL_0", "NEB2incoming_LTL_1"]
             posLanesWaiting = []
             
@@ -622,10 +626,9 @@ class Driver:
                         for i in range(len(lanesWithWaitingVehicles)):
                             if lanesWithWaitingVehicles[i] in possibleLanes0:
                                 posLanesWaiting.append(lanesWithWaitingVehicles[i])
-                if posLanesWaiting == lanesWithWaitingVehicles:
+                if len(posLanesWaiting) > 0 and posLanesWaiting == lanesWithWaitingVehicles:
                     traci.trafficlight.setPhase(tl.getName(), 0)
                     return True
-                    #print("Enoforcing rule at", tl.getName())
                     
             elif set(lanesWithWaitingVehicles).issubset(set(possibleLanes2)):
                 for i in range(len(lanesWithWaitingVehicles)+1):
@@ -633,10 +636,9 @@ class Driver:
                         for i in range(len(lanesWithWaitingVehicles)):
                             if lanesWithWaitingVehicles[i] in possibleLanes2:
                                 posLanesWaiting.append(lanesWithWaitingVehicles[i])
-                if posLanesWaiting == lanesWithWaitingVehicles:
+                if len(posLanesWaiting) > 0 and posLanesWaiting == lanesWithWaitingVehicles:
                     traci.trafficlight.setPhase(tl.getName(), 2)
                     return True
-                    #print("Enoforcing rule at", tl.getName())
                     
             elif set(lanesWithWaitingVehicles).issubset(set(possibleLanes4)):
                 for i in range(len(lanesWithWaitingVehicles)+1):
@@ -644,10 +646,9 @@ class Driver:
                         for i in range(len(lanesWithWaitingVehicles)):
                             if lanesWithWaitingVehicles[i] in possibleLanes4:
                                 posLanesWaiting.append(lanesWithWaitingVehicles[i])
-                if posLanesWaiting == lanesWithWaitingVehicles:
+                if len(posLanesWaiting) > 0 and posLanesWaiting == lanesWithWaitingVehicles:
                     traci.trafficlight.setPhase(tl.getName(), 4)
                     return True
-                    #print("Enoforcing rule at", tl.getName())
                     
         else:
             state = self.getState(tl)
@@ -655,8 +656,8 @@ class Driver:
                 if state[x] != [] and "2T" in x:
                     lanesWithWaitingVehicles.append(x)
             
-            possibleLanes0 = ["SEB2T_0", "SEB2T_1", "bend2T_LTL_0"]
-            possibleLanes2 = ["bend2T_LTL_1"]
+            possibleLanes0 = ["SEB2T-intersection_0", "SEB2T-intersection_1", "bend2T-intersection_LTL_0"]
+            possibleLanes2 = ["bend2T-intersection_LTL_1"]
             posLanesWaiting = []
             
             if set(lanesWithWaitingVehicles).issubset(set(possibleLanes0)):
@@ -665,10 +666,9 @@ class Driver:
                         for i in range(len(lanesWithWaitingVehicles)):
                             if lanesWithWaitingVehicles[i] in possibleLanes0:
                                 posLanesWaiting.append(lanesWithWaitingVehicles[i])
-                if posLanesWaiting == lanesWithWaitingVehicles:
+                if len(posLanesWaiting) > 0 and posLanesWaiting == lanesWithWaitingVehicles:
                     traci.trafficlight.setPhase(tl.getName(), 0)
                     return True
-                    #print("Enoforcing rule at", tl.getName())
                     
             elif set(lanesWithWaitingVehicles).issubset(set(possibleLanes2)):
                 for i in range(len(lanesWithWaitingVehicles)+1):
@@ -676,10 +676,9 @@ class Driver:
                         for i in range(len(lanesWithWaitingVehicles)):
                             if lanesWithWaitingVehicles[i] in possibleLanes2:
                                 posLanesWaiting.append(lanesWithWaitingVehicles[i])
-                if posLanesWaiting == lanesWithWaitingVehicles:
+                if len(posLanesWaiting) > 0 and posLanesWaiting == lanesWithWaitingVehicles:
                     traci.trafficlight.setPhase(tl.getName(), 2)
                     return True
-                    #print("Enoforcing rule at", tl.getName())
                     
                     
         #print("Lanes with waiting vehicles:", lanesWithWaitingVehicles)
